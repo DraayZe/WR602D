@@ -18,3 +18,8 @@
 /public/assets/
 /assets/vendor/
 ###< symfony/asset-mapper ###
+
+###> react/babel ###
+/assets/react/build/node_modules/
+/assets/react/dist/
+###< react/babel ###

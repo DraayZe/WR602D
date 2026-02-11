@@ -16,24 +16,25 @@
         <img class="absolute top-0 left-0 z-0" src="{{ asset('images/Ellipse1violet.png') }}">
         <img class="absolute top-0 right-0 z-0" src="{{ asset('images/Ellipse2bleu.png') }}">
 
-        <header class="relative z-10 px-6 pt-6">
+        <header class="relative z-10 pt-6">
             {% block nav %}
-                <nav class="mx-auto max-w-3/4    flex items-center justify-between px-6 py-3 bg-white/5 backdrop-blur-md rounded-2xl border border-white/15">
+                <nav class="mx-auto max-w-3/4 flex items-center justify-between px-6 py-3 bg-white/5 backdrop-blur-md rounded-2xl border border-white/15">
                     <div class="flex items-center gap-2">
-                        <img class="h-16 w-16" src="{{ asset('images/LogoLarryPDF.png') }}" alt="LarryPDF">
-                        <span class="text-white text-2xl font-bold">LarryPDF</span>
+c                        <span class="text-white text-2xl font-bold">LarryPDF</span>
                     </div>
 
                     <div class="flex items-center gap-8">
-                        <a href="#" class="text-stone-300 hover:text-white transition text-sm">Tarifs</a>
-                        <a href="#" class="text-stone-300 hover:text-white transition text-sm">Conversion</a>
-                        <a href="#" class="text-stone-300 hover:text-white transition text-sm">Historique</a>
-                        <a href="#" class="text-stone-300 hover:text-white transition text-sm">Contacts</a>
+                        <a href="#" class="text-stone-300 hover:text-white transition text-base">Outils</a>
+                        <a href="#" class="text-stone-300 hover:text-white transition text-base">Tarifs</a>
+                        <a href="#" class="text-stone-300 hover:text-white transition text-base">Conversion</a>
+                        <a href="#" class="text-stone-300 hover:text-white transition text-base">Historique</a>
                     </div>
 
                     <div class="flex items-center gap-4">
-                        <a href="#" class="text-stone-300 hover:text-white transition text-sm">Connexion</a>
-                        <a href="#" class="px-5 py-2 text-sm text-white rounded-xl border border-white/30 bg-white/10 hover:bg-white/20 transition">Démarrer</a>
+                        <a href="#" class="text-stone-300 hover:text-white transition text-base">Connexion</a>
+                        <a href="#" class="btn-larry-1">
+                            <span>Démarrer</span>
+                        </a>
                     </div>
                 </nav>
             {% endblock %}
@@ -42,5 +43,10 @@
         <main class="relative z-10">
             {% block body %}{% endblock %}
         </main>
+
+        <footer>
+
+            <img src="{{ asset('images/background-footer.png') }}" alt="LarryPDF">
+        </footer>
     </body>
 </html>

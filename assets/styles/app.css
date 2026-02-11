@@ -1,5 +1,19 @@
 @import "tailwindcss";
 
+@theme {
+    --color-violet-larry: #B155FF;
+}
+
 body {
     background-color: #01030e;
 }
+
+.btn-larry-1 {
+    @apply p-[2px] rounded-2xl bg-gradient-to-b from-white/40 to-white/10 inline-block border-1 border-white shadow-[0_0_15px_3px_rgba(100,80,200,0.6)];
+}
+
+.btn-larry-1 span {
+    @apply block px-6 py-2 text-base text-white rounded-2xl bg-gradient-to-b from-[#6b6b8d] to-[#3b3260] hover:from-[#7a7a9d] hover:to-[#4a4170] transition;
+}
+
+

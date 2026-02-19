@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class ReactTestController extends AbstractController
 {
-    #[Route('/', name: 'app_react_test')]
+    #[Route('/test-react', name: 'app_react_test')]
     public function index(): Response
     {
         return $this->render('react/index.html.twig');

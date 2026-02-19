@@ -1,0 +1,154 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}LarryPDF - Convertissez vos PDFs en quelques secondes{% endblock %}
+
+{% block body %}
+{# ════════════════════ HERO SECTION ════════════════════ #}
+<section class="pt-16 pb-8">
+    <div class="flex items-center justify-center mx-auto max-w-3/4 gap-16">
+        <div class="flex-1 flex flex-col gap-6">
+            <h1 class="text-white text-6xl font-bold leading-tight">Convertissez vos PDFs<br>
+                <span class="text-violet-larry">en quelques secondes</span>
+            </h1>
+            <p class="text-stone-300 text-lg max-w-xl">Plateforme professionnelle de conversion et création de PDF. Rapide, sécurisé et sans limite.</p>
+            <div class="flex items-center gap-4 mt-2">
+                <a href="#" class="text-black bg-[#F8F4F4] px-6 py-3 rounded-2xl transition text-base font-medium hover:bg-white">Commencer gratuitement</a>
+                <a href="#" class="btn-larry-1">
+                    <span>Partager</span>
+                </a>
+            </div>
+        </div>
+        <div class="flex-1 flex justify-end">
+            <img class="h-114 w-auto" src="{{ asset('images/ImageHeroSection.png') }}" alt="Image d'illustration">
+        </div>
+    </div>
+
+    {# Scroll indicator #}
+    <div class="flex justify-center mt-12">
+        <svg class="scroll-arrow w-8 h-8 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+        </svg>
+    </div>
+</section>
+
+{# ════════════════════ FEATURES SECTION ════════════════════ #}
+<section class="py-24">
+    <div class="mx-auto max-w-3/4">
+        <div class="text-center mb-16">
+            <h2 class="text-white text-4xl font-bold mb-4">Tout ce dont vous avez besoin</h2>
+            <p class="text-stone-400 text-lg">Des outils pour tous vos besoins PDF</p>
+        </div>
+
+        <div class="grid grid-cols-3 gap-6">
+            {# Card 1 - Conversion Rapide #}
+            <div class="feature-card fade-up fade-up-delay-1">
+                <div class="feature-icon">
+                    <svg class="w-6 h-6 text-violet-larry" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                </div>
+                <h3 class="text-white text-lg font-semibold mb-2">Conversion Rapide</h3>
+                <p class="text-stone-400 text-sm leading-relaxed">Convertissez vos documents en PDF instantanément. Prise en charge de nombreux formats d'entrée.</p>
+            </div>
+
+            {# Card 2 - Protection de compte #}
+            <div class="feature-card fade-up fade-up-delay-2">
+                <div class="feature-icon">
+                    <svg class="w-6 h-6 text-violet-larry" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                    </svg>
+                </div>
+                <h3 class="text-white text-lg font-semibold mb-2">Protection de compte</h3>
+                <p class="text-stone-400 text-sm leading-relaxed">Protégez vos PDFs avec un mot de passe et un chiffrement de niveau professionnel.</p>
+            </div>
+
+            {# Card 3 - Qualité préservée #}
+            <div class="feature-card fade-up fade-up-delay-3">
+                <div class="feature-icon">
+                    <svg class="w-6 h-6 text-violet-larry" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+                    </svg>
+                </div>
+                <h3 class="text-white text-lg font-semibold mb-2">Qualité préservée</h3>
+                <p class="text-stone-400 text-sm leading-relaxed">Conservation parfaite de la mise en forme, des polices et des images lors de la conversion.</p>
+            </div>
+
+            {# Card 4 - Historique #}
+            <div class="feature-card fade-up fade-up-delay-4">
+                <div class="feature-icon">
+                    <svg class="w-6 h-6 text-violet-larry" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <h3 class="text-white text-lg font-semibold mb-2">Historique</h3>
+                <p class="text-stone-400 text-sm leading-relaxed">Retrouvez tous vos PDFs modifiés dans votre historique personnel et téléchargez-les à nouveau.</p>
+            </div>
+
+            {# Card 5 - Gestion des contacts #}
+            <div class="feature-card fade-up fade-up-delay-5">
+                <div class="feature-icon">
+                    <svg class="w-6 h-6 text-violet-larry" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                    </svg>
+                </div>
+                <h3 class="text-white text-lg font-semibold mb-2">Gestion des contacts</h3>
+                <p class="text-stone-400 text-sm leading-relaxed">Partagez vos PDFs à vos contacts et gérez les autorisations de partage facilement.</p>
+            </div>
+
+            {# Card 6 - À définir #}
+            <div class="feature-card fade-up fade-up-delay-6">
+                <div class="feature-icon">
+                    <svg class="w-6 h-6 text-violet-larry" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                </div>
+                <h3 class="text-white text-lg font-semibold mb-2">À définir</h3>
+                <p class="text-stone-400 text-sm leading-relaxed">De nouvelles fonctionnalités arrivent bientôt. Restez connecté pour les découvrir.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# ════════════════════ PRICING SECTION ════════════════════ #}
+<section class="py-24">
+    <div class="mx-auto max-w-3/4">
+        <div class="flex items-center justify-center gap-16 mb-16">
+            <img class="h-80 w-auto" src="{{ asset('images/Personnage1.png') }}" alt="Mascotte LarryPDF">
+            <div class="flex flex-col gap-4">
+                <h2 class="text-white text-4xl font-bold">Choisissez votre formule</h2>
+                <p class="text-stone-400 text-lg max-w-md">Des tarifs pour tous types de portefeuilles, adaptés à tous vos besoins.</p>
+            </div>
+        </div>
+
+        <div class="flex justify-center items-center gap-8">
+            {% for plan in plans %}
+                {% set isFeatured = plan.name == 'BASIC' %}
+                <div class="{{ isFeatured ? 'pricing-card pricing-card--featured' : 'pricing-card' }}">
+                    {% if isFeatured %}
+                        <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-white text-black text-xs font-semibold px-4 py-1.5 rounded-full whitespace-nowrap">
+                            Le plus populaire
+                        </span>
+                    {% endif %}
+
+                    <div>
+                        <h3 class="text-white text-lg font-semibold mb-1">{{ plan.name|capitalize }}</h3>
+                        <p class="text-stone-400 text-sm leading-relaxed">{{ plan.description }}</p>
+                    </div>
+
+                    <div class="mt-2">
+                        <span class="text-white text-5xl font-bold">{{ plan.price|number_format(plan.price % 1 == 0 ? 0 : 2, ',', ' ') }}€</span>
+                        <span class="text-stone-400 text-base ml-1">/mois</span>
+                    </div>
+
+                    <div class="mt-4">
+                        <a href="#" class="btn-larry-1 w-full text-center">
+                            <span>Commencer</span>
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

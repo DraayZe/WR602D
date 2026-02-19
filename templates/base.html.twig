@@ -12,13 +12,114 @@
             {% block importmap %}{{ importmap('app') }}{% endblock %}
         {% endblock %}
     </head>
-    <header>
-        {% block nav %}
-        LarryPDF
-        {% endblock %}
-    </header>
-    <body>
-        {% block body %}{% endblock %}
+    <body class="min-h-screen bg-[#0a0118] relative overflow-x-hidden">
+        <img class="absolute top-0 left-0 z-0" src="{{ asset('images/Ellipse1violet.png') }}">
+        <img class="absolute top-0 right-0 z-0" src="{{ asset('images/Ellipse2bleu.png') }}">
+
+        <header class="relative z-10 pt-6">
+            {% block nav %}
+                <nav class="mx-auto max-w-3/4 flex items-center justify-between px-6 py-3 bg-white/5 backdrop-blur-md rounded-2xl border border-white/15">
+                    <div class="flex items-center gap-1">
+                        <img src="{{ asset('images/LogoLarryPDF.png') }}" alt="LarryPDF" class="h-auto w-18">
+                        <span class="text-white text-2xl font-bold">LarryPDF</span>
+                    </div>
+
+                    <div class="flex items-center gap-8">
+                        <a href="#" class="text-stone-300 hover:text-white transition text-base">Outils</a>
+                        <a href="#" class="text-stone-300 hover:text-white transition text-base">Tarifs</a>
+                        <a href="#" class="text-stone-300 hover:text-white transition text-base">Conversion</a>
+                        <a href="#" class="text-stone-300 hover:text-white transition text-base">Historique</a>
+                    </div>
+
+                    <div class="flex items-center gap-4">
+                        <a href="#" class="text-stone-300 hover:text-white transition text-base">Connexion</a>
+                        <a href="#" class="btn-larry-1">
+                            <span>Démarrer</span>
+                        </a>
+                    </div>
+                </nav>
+            {% endblock %}
+        </header>
+
+        <div class="absolute bottom-0 left-0 w-full z-[1] pointer-events-none">
+            <img src="{{ asset('images/background-footer.png') }}" alt="" class="w-full object-cover">
+        </div>
+
+        <main class="relative z-10">
+            {% block body %}{% endblock %}
+        </main>
+
+        <footer class="relative z-10 mt-24 backdrop-blur-lg border-white/20 border-t-1">
+            <div class="mx-auto max-w-3/4 px-6 pt-16 ">
+
+                <div class="grid grid-cols-4 gap-12 pb-12">
+                    <div class="col-span-1">
+                        <div class="flex items-center justify-start">
+                            <img src="{{ asset('images/LogoLarryPDF.png') }}" alt="LarryPDF" class="h-auto w-18">
+                            <span class="text-white text-xl font-bold">LarryPDF</span>
+                        </div>
+                        <p class="text-stone-400 text-sm leading-relaxed">
+                            Plateforme professionnelle de conversion et création de PDF. Rapide, sécurisé et sans limite.
+                        </p>
+                        <div class="flex gap-2 mt-14 mb-8">
+                            <div class="footer-bg-social-media">
+                                <img src="{{ asset('images/icone_linkedin.png') }}" alt="Linkedin" class="h-6 w-6">
+                            </div>
+                            <div class="footer-bg-social-media">
+                                <img src="{{ asset('images/icone_instagram.png') }}" alt="Instagram" class="h-6 w-6">
+                            </div>
+                            <div class="footer-bg-social-media">
+                                <img src="{{ asset('images/icone_github.png') }}" alt="GitHub" class="h-6 w-6">
+                            </div>
+                            <div class="footer-bg-social-media">
+                                <img src="{{ asset('images/icone_x.png') }}" alt="X" class="h-6 w-6">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-white font-semibold text-sm mb-4 uppercase tracking-wider">Produit vers PDF</h4>
+                        <ul class="flex flex-col gap-3">
+                            <li><a href="#" class="footer-link">URL vers PDF</a></li>
+                            <li><a href="#" class="footer-link">Page vers PDF</a></li>
+                            <li><a href="#" class="footer-link">Word vers PDF</a></li>
+                            <li><a href="#" class="footer-link">Division</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="text-white font-semibold text-sm mb-4 uppercase tracking-wider">PDF vers produit</h4>
+                        <ul class="flex flex-col gap-3">
+                            <li><a href="#" class="footer-link">URL vers PDF</a></li>
+                            <li><a href="#" class="footer-link">Page vers PDF</a></li>
+                            <li><a href="#" class="footer-link">Word vers PDF</a></li>
+                            <li><a href="#" class="footer-link">Division</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="text-white font-semibold text-sm mb-4 uppercase tracking-wider">Ressources</h4>
+                        <ul class="flex flex-col gap-3">
+                            <li><a href="#" class="footer-link">FAQ</a></li>
+                            <li><a href="#" class="footer-link">Contactez-nous</a></li>
+                            <li><a href="#" class="footer-link">API</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="footer-divider"></div>
+
+                <div class="flex items-center justify-between py-6">
+                    <p class="text-stone-500 text-sm">&copy; 2026 LarryPDF. All rights reserved.</p>
+                    <div class="flex items-center gap-6">
+                        <a href="#" class="footer-link">Politique de confidentialité</a>
+                        <a href="#" class="footer-link">Conditions d'utilisation</a>
+                        <a href="#" class="footer-link">Paramètres des cookies</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
 
     </body>
 </html>

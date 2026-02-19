@@ -3,34 +3,36 @@
 {% block title %}Email envoyé - LarryPDF{% endblock %}
 
 {% block body %}
-    <div style="max-width: 420px; margin: 0 auto;">
+    <div class="max-w-md mx-auto">
 
         {# ── Logo ── #}
-        <div style="text-align:center; margin-bottom: 2.5rem;">
-            <a href="{{ path('app_home') }}" style="display:inline-flex; align-items:center; gap:0.5rem; text-decoration:none;">
-                <img src="{{ asset('images/LogoLarryPDF.png') }}" alt="LarryPDF" style="height:48px; width:auto;">
-                <span style="color:#fff; font-size:1.6rem; font-weight:700;">LarryPDF</span>
+        <div class="text-center mb-10">
+            <a href="{{ path('app_home') }}" class="inline-flex items-center gap-2 no-underline">
+                <img src="{{ asset('images/LogoLarryPDF.png') }}" alt="LarryPDF" class="h-12 w-auto">
+                <span class="text-white text-2xl font-bold">LarryPDF</span>
             </a>
         </div>
 
         {# ── Card ── #}
-        <div class="auth-card" style="text-align:center;">
-            <div style="width:56px; height:56px; border-radius:50%; background:linear-gradient(135deg, rgba(177,85,255,0.25), rgba(80,120,255,0.25)); border:1px solid rgba(177,85,255,0.3); display:inline-flex; align-items:center; justify-content:center; margin-bottom:1.25rem;">
-                <i class="fa-solid fa-envelope-circle-check" style="color:#B155FF; font-size:1.3rem;"></i>
+        <div class="auth-card text-center">
+            <div class="w-14 h-14 rounded-full bg-gradient-to-br from-violet-larry/25 to-blue-500/25 border border-violet-larry/30 inline-flex items-center justify-center mb-5">
+                <i class="fa-solid fa-envelope-circle-check text-violet-larry text-xl"></i>
             </div>
-            <h1 style="color:#fff; font-size:1.5rem; font-weight:700; margin:0 0 0.75rem 0;">Email envoyé</h1>
-            <p style="color:rgba(255,255,255,0.5); font-size:0.85rem; line-height:1.6; margin:0 0 1.25rem 0;">
+            <h1 class="text-white text-2xl font-bold mb-3">Email envoyé</h1>
+            <p class="text-white/50 text-sm leading-relaxed mb-5">
                 Si un compte correspond à votre adresse email, un lien de réinitialisation vient d'être envoyé.
                 Ce lien expirera dans {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
             </p>
-            <p style="color:rgba(255,255,255,0.35); font-size:0.8rem; line-height:1.5; margin:0;">
+            <p class="text-white/35 text-xs leading-relaxed">
                 Vous n'avez pas reçu d'email ? Vérifiez vos spams ou
-                <a href="{{ path('app_forgot_password_request') }}" class="auth-link">réessayez</a>.
+                <a href="{{ path('app_forgot_password_request') }}" class="text-violet-larry hover:underline">réessayez</a>.
             </p>
         </div>
 
-        <p style="text-align:center; color:rgba(255,255,255,0.4); font-size:0.85rem; margin-top:1.75rem;">
-            <a href="{{ path('app_login') }}" class="auth-link"><i class="fa-solid fa-arrow-left" style="font-size:0.75rem; margin-right:0.4rem;"></i>Retour à la connexion</a>
+        <p class="text-center text-white/40 text-sm mt-7">
+            <a href="{{ path('app_login') }}" class="text-violet-larry hover:text-white transition font-medium">
+                <i class="fa-solid fa-arrow-left text-xs mr-1"></i>Retour à la connexion
+            </a>
         </p>
     </div>
 {% endblock %}

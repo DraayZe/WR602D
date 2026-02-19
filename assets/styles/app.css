@@ -108,3 +108,91 @@ body {
 .fade-up-delay-4 { animation-delay: 0.4s; }
 .fade-up-delay-5 { animation-delay: 0.5s; }
 .fade-up-delay-6 { animation-delay: 0.6s; }
+
+/* ── Auth pages ── */
+.auth-card {
+    @apply bg-white/[0.04] backdrop-blur-xl rounded-2xl border border-white/[0.08] p-10 relative z-1;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.05);
+}
+
+.auth-card::before {
+    content: '';
+    @apply absolute top-0 left-1/2 -translate-x-1/2 w-3/5 h-px;
+    background: linear-gradient(90deg, transparent, rgba(177,85,255,0.4), transparent);
+}
+
+.auth-input {
+    @apply w-full bg-white/[0.04] border border-white/10 rounded-xl py-3 pl-11 pr-4 text-white text-sm outline-none transition-all duration-200;
+}
+
+.auth-input::placeholder {
+    @apply text-white/25;
+}
+
+.auth-input:focus {
+    @apply border-violet-larry/50 bg-white/[0.07];
+    box-shadow: 0 0 0 3px rgba(177, 85, 255, 0.08), 0 0 20px rgba(177,85,255,0.06);
+}
+
+.auth-input:-webkit-autofill,
+.auth-input:-webkit-autofill:hover,
+.auth-input:-webkit-autofill:focus {
+    -webkit-text-fill-color: #ffffff;
+    -webkit-box-shadow: 0 0 0 1000px rgba(30, 15, 50, 0.99) inset;
+    border-color: rgba(177, 85, 255, 0.3);
+    caret-color: #ffffff;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+.auth-input[type="date"] {
+    color-scheme: dark;
+}
+
+.auth-input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1) brightness(0.7);
+    @apply cursor-pointer;
+}
+
+.auth-select {
+    @apply bg-white/[0.04] border border-white/10 rounded-xl py-3 px-2 text-white text-sm outline-none transition-all duration-200 w-full appearance-none;
+}
+
+.auth-select:focus {
+    @apply border-violet-larry/50 bg-white/[0.07];
+}
+
+.auth-select option {
+    background: #1a0e2e;
+    @apply text-white;
+}
+
+.auth-submit {
+    @apply w-full p-[2px] rounded-xl bg-gradient-to-b from-white/35 to-white/[0.08] block border border-white/80 cursor-pointer mt-2;
+    box-shadow: 0 0 18px 3px rgba(100, 80, 200, 0.5);
+    transition: box-shadow 0.3s;
+}
+
+.auth-submit:hover {
+    box-shadow: 0 0 25px 5px rgba(130, 90, 230, 0.6);
+}
+
+.auth-submit span {
+    @apply block w-full py-3 text-base text-white font-semibold rounded-xl bg-gradient-to-b from-[#6b6b8d] to-[#3b3260] text-center transition-all duration-200;
+}
+
+.auth-submit:hover span {
+    @apply bg-gradient-to-b from-[#7d7d9f] to-[#4a4170];
+}
+
+.auth-icon-wrap .has-value-icon {
+    @apply text-violet-larry;
+}
+
+.auth-fade-in {
+    @apply opacity-0 translate-y-4;
+    animation: authFadeIn 0.5s ease forwards;
+}
+
+@keyframes authFadeIn {
+    to { opacity: 1; transform: translateY(0); }
+}

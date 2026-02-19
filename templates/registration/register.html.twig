@@ -3,31 +3,31 @@
 {% block title %}Inscription - LarryPDF{% endblock %}
 
 {% block body %}
-    <div style="max-width: 520px; margin: 0 auto;">
+    <div class="max-w-lg mx-auto">
 
         {# ── Logo ── #}
-        <div style="text-align:center; margin-bottom: 2.5rem;">
-            <a href="{{ path('app_home') }}" style="display:inline-flex; align-items:center; gap:0.5rem; text-decoration:none;">
-                <img src="{{ asset('images/LogoLarryPDF.png') }}" alt="LarryPDF" style="height:48px; width:auto;">
-                <span style="color:#fff; font-size:1.6rem; font-weight:700;">LarryPDF</span>
+        <div class="text-center mb-10">
+            <a href="{{ path('app_home') }}" class="inline-flex items-center gap-2 no-underline">
+                <img src="{{ asset('images/LogoLarryPDF.png') }}" alt="LarryPDF" class="h-12 w-auto">
+                <span class="text-white text-2xl font-bold">LarryPDF</span>
             </a>
         </div>
 
         {# ── Card ── #}
         <div class="auth-card">
-            <h1 style="color:#fff; font-size:1.5rem; font-weight:700; text-align:center; margin:0 0 0.3rem 0;">Créer un compte</h1>
-            <p style="color:rgba(255,255,255,0.4); font-size:0.85rem; text-align:center; margin:0 0 2rem 0;">Rejoignez LarryPDF gratuitement</p>
+            <h1 class="text-white text-2xl font-bold text-center mb-1">Créer un compte</h1>
+            <p class="text-white/40 text-sm text-center mb-8">Rejoignez LarryPDF gratuitement</p>
 
             {# ── Flash errors ── #}
             {% for flash_error in app.flashes('verify_email_error') %}
-                <div class="auth-flash-error">
+                <div class="flex items-center gap-2 bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3 text-red-400 text-sm mb-6">
                     <i class="fa-solid fa-circle-exclamation"></i>
                     <span>{{ flash_error }}</span>
                 </div>
             {% endfor %}
 
             {% if registrationForm.vars.errors|length > 0 %}
-                <div class="auth-flash-error">
+                <div class="flex items-center gap-2 bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3 text-red-400 text-sm mb-6">
                     <i class="fa-solid fa-circle-exclamation"></i>
                     <span>{{ form_errors(registrationForm) }}</span>
                 </div>
@@ -35,96 +35,85 @@
 
             {{ form_start(registrationForm, {'attr': {'novalidate': 'novalidate'}}) }}
 
-                {# ── Nom / Prénom (2 cols) ── #}
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.25rem;">
-                    <div class="auth-field">
-                        <label class="auth-field-label" for="{{ registrationForm.lastname.vars.id }}">Nom</label>
-                        <div class="auth-icon-wrap">
-                            <i class="fa-solid fa-user"></i>
-                            {{ form_widget(registrationForm.lastname, {'attr': {
-                                'placeholder': 'Dupont'
-                            }}) }}
+                {# ── Nom / Prénom ── #}
+                <div class="grid grid-cols-2 gap-4 mb-5">
+                    <div>
+                        <label for="{{ registrationForm.lastname.vars.id }}" class="block text-white/60 text-sm font-medium mb-2">Nom</label>
+                        <div class="auth-icon-wrap relative">
+                            <i class="fa-solid fa-user absolute left-4 top-1/2 -translate-y-1/2 text-white/20 text-sm pointer-events-none z-2"></i>
+                            {{ form_widget(registrationForm.lastname, {'attr': {'class': 'auth-input', 'placeholder': 'Dupont'}}) }}
                         </div>
-                        {{ form_errors(registrationForm.lastname) }}
+                        <div class="text-red-400 text-xs mt-1">{{ form_errors(registrationForm.lastname) }}</div>
                     </div>
-                    <div class="auth-field">
-                        <label class="auth-field-label" for="{{ registrationForm.firstname.vars.id }}">Prénom</label>
-                        <div class="auth-icon-wrap">
-                            <i class="fa-solid fa-user"></i>
-                            {{ form_widget(registrationForm.firstname, {'attr': {
-                                'placeholder': 'Jean'
-                            }}) }}
+                    <div>
+                        <label for="{{ registrationForm.firstname.vars.id }}" class="block text-white/60 text-sm font-medium mb-2">Prénom</label>
+                        <div class="auth-icon-wrap relative">
+                            <i class="fa-solid fa-user absolute left-4 top-1/2 -translate-y-1/2 text-white/20 text-sm pointer-events-none z-2"></i>
+                            {{ form_widget(registrationForm.firstname, {'attr': {'class': 'auth-input', 'placeholder': 'Jean'}}) }}
                         </div>
-                        {{ form_errors(registrationForm.firstname) }}
+                        <div class="text-red-400 text-xs mt-1">{{ form_errors(registrationForm.firstname) }}</div>
                     </div>
                 </div>
 
                 {# ── Email ── #}
-                <div class="auth-field" style="margin-bottom:1.25rem;">
-                    <label class="auth-field-label" for="{{ registrationForm.email.vars.id }}">Adresse email</label>
-                    <div class="auth-icon-wrap">
-                        <i class="fa-solid fa-envelope"></i>
-                        {{ form_widget(registrationForm.email, {'attr': {
-                            'placeholder': 'exemple@email.com'
-                        }}) }}
+                <div class="mb-5">
+                    <label for="{{ registrationForm.email.vars.id }}" class="block text-white/60 text-sm font-medium mb-2">Adresse email</label>
+                    <div class="auth-icon-wrap relative">
+                        <i class="fa-solid fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-white/20 text-sm pointer-events-none z-2"></i>
+                        {{ form_widget(registrationForm.email, {'attr': {'class': 'auth-input', 'placeholder': 'exemple@email.com'}}) }}
                     </div>
-                    {{ form_errors(registrationForm.email) }}
+                    <div class="text-red-400 text-xs mt-1">{{ form_errors(registrationForm.email) }}</div>
                 </div>
 
                 {# ── Mot de passe ── #}
-                <div class="auth-field" style="margin-bottom:1.25rem;">
-                    <label class="auth-field-label" for="{{ registrationForm.plainPassword.vars.id }}">Mot de passe</label>
-                    <div class="auth-icon-wrap">
-                        <i class="fa-solid fa-lock"></i>
-                        {{ form_widget(registrationForm.plainPassword, {'attr': {
-                            'placeholder': 'Minimum 6 caractères'
-                        }}) }}
+                <div class="mb-5">
+                    <label for="{{ registrationForm.plainPassword.vars.id }}" class="block text-white/60 text-sm font-medium mb-2">Mot de passe</label>
+                    <div class="auth-icon-wrap relative">
+                        <i class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-white/20 text-sm pointer-events-none z-2"></i>
+                        {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'auth-input', 'placeholder': 'Minimum 6 caractères'}}) }}
                     </div>
-                    {{ form_errors(registrationForm.plainPassword) }}
+                    <div class="text-red-400 text-xs mt-1">{{ form_errors(registrationForm.plainPassword) }}</div>
                 </div>
 
-                {# ── Date de naissance / Téléphone (2 cols) ── #}
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.25rem;">
-                    <div class="auth-field">
-                        <label class="auth-field-label" for="{{ registrationForm.dob.vars.id }}">Date de naissance</label>
-                        <div class="auth-date-row">
-                            {{ form_widget(registrationForm.dob) }}
+                {# ── Date de naissance / Téléphone ── #}
+                <div class="grid grid-cols-2 gap-4 mb-5">
+                    <div>
+                        <label for="{{ registrationForm.dob.vars.id }}" class="block text-white/60 text-sm font-medium mb-2">Date de naissance</label>
+                        <div class="auth-icon-wrap relative">
+                            <i class="fa-solid fa-calendar absolute left-4 top-1/2 -translate-y-1/2 text-white/20 text-sm pointer-events-none z-2"></i>
+                            {{ form_widget(registrationForm.dob, {'attr': {'class': 'auth-input'}}) }}
                         </div>
-                        {{ form_errors(registrationForm.dob) }}
+                        <div class="text-red-400 text-xs mt-1">{{ form_errors(registrationForm.dob) }}</div>
                     </div>
-                    <div class="auth-field">
-                        <label class="auth-field-label" for="{{ registrationForm.phone.vars.id }}">Téléphone</label>
-                        <div class="auth-icon-wrap">
-                            <i class="fa-solid fa-phone"></i>
-                            {{ form_widget(registrationForm.phone, {'attr': {
-                                'placeholder': '06 12 34 56 78'
-                            }}) }}
+                    <div>
+                        <label for="{{ registrationForm.phone.vars.id }}" class="block text-white/60 text-sm font-medium mb-2">Téléphone</label>
+                        <div class="auth-icon-wrap relative">
+                            <i class="fa-solid fa-phone absolute left-4 top-1/2 -translate-y-1/2 text-white/20 text-sm pointer-events-none z-2"></i>
+                            {{ form_widget(registrationForm.phone, {'attr': {'class': 'auth-input', 'placeholder': '06 12 34 56 78'}}) }}
                         </div>
-                        {{ form_errors(registrationForm.phone) }}
+                        <div class="text-red-400 text-xs mt-1">{{ form_errors(registrationForm.phone) }}</div>
                     </div>
                 </div>
 
                 {# ── Couleur préférée ── #}
-                <div class="auth-field" style="margin-bottom:1.5rem;">
-                    <label class="auth-field-label" for="{{ registrationForm.favoriteColor.vars.id }}">Couleur préférée</label>
-                    <div class="auth-icon-wrap">
-                        <i class="fa-solid fa-palette"></i>
-                        {{ form_widget(registrationForm.favoriteColor, {'attr': {
-                            'placeholder': 'Violet, Bleu...'
-                        }}) }}
+                <div class="mb-6">
+                    <label for="{{ registrationForm.favoriteColor.vars.id }}" class="block text-white/60 text-sm font-medium mb-2">Couleur préférée</label>
+                    <div class="auth-icon-wrap relative">
+                        <i class="fa-solid fa-palette absolute left-4 top-1/2 -translate-y-1/2 text-white/20 text-sm pointer-events-none z-2"></i>
+                        {{ form_widget(registrationForm.favoriteColor, {'attr': {'class': 'auth-input', 'placeholder': 'Violet, Bleu...'}}) }}
                     </div>
-                    {{ form_errors(registrationForm.favoriteColor) }}
+                    <div class="text-red-400 text-xs mt-1">{{ form_errors(registrationForm.favoriteColor) }}</div>
                 </div>
 
                 {# ── Checkbox CGU ── #}
-                <div class="auth-checkbox-row" style="margin-bottom:1.5rem;">
-                    {{ form_widget(registrationForm.agreeTerms) }}
-                    <label for="{{ registrationForm.agreeTerms.vars.id }}">
-                        J'accepte les <a href="#">conditions d'utilisation</a>
-                        et la <a href="#">politique de confidentialité</a>
+                <div class="flex items-start gap-3 mb-6">
+                    {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'w-4 h-4 accent-violet-larry cursor-pointer shrink-0 mt-0.5'}}) }}
+                    <label for="{{ registrationForm.agreeTerms.vars.id }}" class="text-white/45 text-xs leading-relaxed cursor-pointer">
+                        J'accepte les <a href="#" class="text-violet-larry hover:underline">conditions d'utilisation</a>
+                        et la <a href="#" class="text-violet-larry hover:underline">politique de confidentialité</a>
                     </label>
                 </div>
-                {{ form_errors(registrationForm.agreeTerms) }}
+                <div class="text-red-400 text-xs mb-4">{{ form_errors(registrationForm.agreeTerms) }}</div>
 
                 {# ── Submit ── #}
                 <button type="submit" class="auth-submit">
@@ -135,9 +124,9 @@
         </div>
 
         {# ── Footer link ── #}
-        <p style="text-align:center; color:rgba(255,255,255,0.4); font-size:0.85rem; margin-top:1.75rem;">
+        <p class="text-center text-white/40 text-sm mt-7">
             Déjà un compte ?
-            <a href="{{ path('app_login') }}" class="auth-link">Se connecter</a>
+            <a href="{{ path('app_login') }}" class="text-violet-larry hover:text-white transition font-medium">Se connecter</a>
         </p>
     </div>
 {% endblock %}

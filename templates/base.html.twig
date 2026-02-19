@@ -51,8 +51,8 @@
                             </div>
                             <script>
                                 document.addEventListener('click', function(e) {
-                                    var dropdown = document.getElementById('profile-dropdown');
-                                    var menu = document.getElementById('profile-menu');
+                                    const dropdown = document.getElementById('profile-dropdown');
+                                    const menu = document.getElementById('profile-menu');
                                     if (dropdown && !dropdown.contains(e.target)) {
                                         menu.classList.add('hidden');
                                     }

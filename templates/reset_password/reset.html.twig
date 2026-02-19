@@ -1,0 +1,63 @@
+{% extends 'base_auth.html.twig' %}
+
+{% block title %}Nouveau mot de passe - LarryPDF{% endblock %}
+
+{% block body %}
+    <div class="max-w-md mx-auto">
+
+        {# ── Logo ── #}
+        <div class="text-center mb-10">
+            <a href="{{ path('app_home') }}" class="inline-flex items-center gap-2 no-underline">
+                <img src="{{ asset('images/LogoLarryPDF.png') }}" alt="LarryPDF" class="h-12 w-auto">
+                <span class="text-white text-2xl font-bold">LarryPDF</span>
+            </a>
+        </div>
+
+        {# ── Card ── #}
+        <div class="auth-card">
+            <div class="text-center mb-6">
+                <div class="w-14 h-14 rounded-full bg-gradient-to-br from-violet-larry/25 to-blue-500/25 border border-violet-larry/30 inline-flex items-center justify-center mb-4">
+                    <i class="fa-solid fa-lock text-violet-larry text-xl"></i>
+                </div>
+                <h1 class="text-white text-2xl font-bold mb-1">Nouveau mot de passe</h1>
+                <p class="text-white/40 text-sm">Choisissez votre nouveau mot de passe</p>
+            </div>
+
+            {{ form_start(resetForm, {'attr': {'novalidate': 'novalidate'}}) }}
+
+                {# ── Nouveau mot de passe ── #}
+                <div class="mb-5">
+                    <label for="{{ resetForm.plainPassword.first.vars.id }}" class="block text-white/60 text-sm font-medium mb-2">Nouveau mot de passe</label>
+                    <div class="auth-icon-wrap relative">
+                        <i class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-white/20 text-sm pointer-events-none z-2"></i>
+                        {{ form_widget(resetForm.plainPassword.first, {'attr': {'class': 'auth-input', 'placeholder': 'Minimum 6 caractères'}}) }}
+                    </div>
+                    <div class="text-red-400 text-xs mt-1">{{ form_errors(resetForm.plainPassword.first) }}</div>
+                </div>
+
+                {# ── Confirmer mot de passe ── #}
+                <div class="mb-7">
+                    <label for="{{ resetForm.plainPassword.second.vars.id }}" class="block text-white/60 text-sm font-medium mb-2">Confirmer le mot de passe</label>
+                    <div class="auth-icon-wrap relative">
+                        <i class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-white/20 text-sm pointer-events-none z-2"></i>
+                        {{ form_widget(resetForm.plainPassword.second, {'attr': {'class': 'auth-input', 'placeholder': 'Retapez votre mot de passe'}}) }}
+                    </div>
+                    <div class="text-red-400 text-xs mt-1">{{ form_errors(resetForm.plainPassword.second) }}</div>
+                </div>
+
+                <div class="text-red-400 text-xs mb-4">{{ form_errors(resetForm.plainPassword) }}</div>
+
+                <button type="submit" class="auth-submit">
+                    <span>Réinitialiser le mot de passe</span>
+                </button>
+
+            {{ form_end(resetForm) }}
+        </div>
+
+        <p class="text-center text-white/40 text-sm mt-7">
+            <a href="{{ path('app_login') }}" class="text-violet-larry hover:text-white transition font-medium">
+                <i class="fa-solid fa-arrow-left text-xs mr-1"></i>Retour à la connexion
+            </a>
+        </p>
+    </div>
+{% endblock %}

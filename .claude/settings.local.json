@@ -8,7 +8,10 @@
       "WebFetch(domain:gotenberg.dev)",
       "Bash(docker logs:*)",
       "Bash(docker exec WR602D-web curl -v http://WR602D-gotenberg:3000/)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(php /home/WR602D/www/html/wr602d/bin/console debug:asset-map:*)",
+      "Bash(php:*)",
+      "Bash(curl:*)"
     ]
   }
 }

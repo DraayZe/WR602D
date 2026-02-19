@@ -2,8 +2,11 @@
 
 @theme {
     --color-violet-larry: #B155FF;
+    --color-violet-larry-dark: #7C4DFF;
+    --color-bg-dark: #01030e;
+    --color-card-bg: rgba(255, 255, 255, 0.04);
+    --color-card-border: rgba(255, 255, 255, 0.1);
 }
-
 body {
     background-color: #01030e;
 }
@@ -16,4 +19,92 @@ body {
     @apply block px-6 py-2 text-base text-white rounded-2xl bg-gradient-to-b from-[#6b6b8d] to-[#3b3260] hover:from-[#7a7a9d] hover:to-[#4a4170] transition;
 }
 
+.scroll-arrow {
+    animation: bounce-down 2s ease-in-out infinite;
+}
 
+@keyframes bounce-down {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(12px); }
+}
+
+.feature-card {
+    @apply relative bg-white/[0.04] backdrop-blur-md rounded-xl border border-white/10 p-6 transition-all duration-300;
+}
+
+.feature-card:hover {
+    @apply bg-white/[0.08] border-violet-larry/30;
+    box-shadow: 0 0 30px rgba(177, 85, 255, 0.08);
+}
+
+.feature-icon {
+    @apply w-12 h-12 rounded-full flex items-center justify-center mb-4;
+    background: linear-gradient(135deg, rgba(177, 85, 255, 0.25), rgba(80, 120, 255, 0.25));
+    border: 1px solid rgba(177, 85, 255, 0.3);
+}
+
+.pricing-card {
+    @apply relative bg-white/[0.04] backdrop-blur-sm rounded-xl border border-white/10 p-8 flex flex-col gap-4 w-72;
+    transition: all 0.3s ease;
+}
+
+.pricing-card:hover {
+    @apply bg-white/[0.07];
+}
+
+.pricing-card--featured {
+    @apply bg-violet-larry/[0.20] border-violet-larry/40 scale-105;
+    box-shadow: 0 0 40px rgba(177, 85, 255, 0.15);
+}
+
+.pricing-card--featured:hover {
+    @apply bg-violet-larry/[0.12];
+}
+
+.footer-main {
+    position: relative;
+    overflow: hidden;
+}
+
+.footer-main::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background: linear-gradient(to top, rgba(177, 85, 255, 0.06), transparent);
+    pointer-events: none;
+}
+
+.footer-bg-social-media {
+    @apply bg-violet-larry-dark/30 backdrop-blur-lg border-white/30 border-1 rounded-md p-2
+}
+
+.footer-link {
+    @apply text-stone-400 hover:text-white transition-colors duration-200 text-sm;
+}
+
+.footer-divider {
+    @apply border-t border-white/20;
+}
+
+.fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeUp 0.7s ease forwards;
+}
+
+@keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-up-delay-1 { animation-delay: 0.1s; }
+.fade-up-delay-2 { animation-delay: 0.2s; }
+.fade-up-delay-3 { animation-delay: 0.3s; }
+.fade-up-delay-4 { animation-delay: 0.4s; }
+.fade-up-delay-5 { animation-delay: 0.5s; }
+.fade-up-delay-6 { animation-delay: 0.6s; }

@@ -1,0 +1,150 @@
+{% extends 'base_auth.html.twig' %}
+
+{% block title %}Lien en PDF - LarryPDF{% endblock %}
+
+{% block body %}
+    <section class="mx-auto max-w-5xl px-6 pt-16 pb-24">
+
+        {# ── Header ── #}
+        <div class="text-center mb-12 fade-up">
+            <div class="inline-flex items-center gap-2 bg-violet-larry/10 border border-violet-larry/20 rounded-full px-4 py-1.5 mb-6">
+                <i class="fa-solid fa-link text-violet-larry text-sm"></i>
+                <span class="text-violet-larry text-sm font-medium">Outil gratuit</span>
+            </div>
+            <h1 class="text-white text-4xl font-bold mb-4">Lien en PDF</h1>
+            <p class="text-stone-400 text-lg max-w-xl mx-auto">Convertissez n'importe quelle page web en document PDF en un clic.</p>
+        </div>
+
+        {# ── Formulaire ── #}
+        <div class="max-w-2xl mx-auto mb-10 fade-up fade-up-delay-1">
+            <div class="bg-white/[0.04] backdrop-blur-xl rounded-2xl border border-white/[0.08] p-6">
+                <form id="url-to-pdf-form" class="flex gap-3">
+                    <div class="relative flex-1">
+                        <i class="fa-solid fa-link absolute left-4 top-1/2 -translate-y-1/2 text-white/20 text-sm pointer-events-none"></i>
+                        <input type="url" id="url-input"
+                               class="auth-input"
+                               placeholder="https://example.com"
+                               required>
+                    </div>
+                    <button type="submit" id="convert-btn" class="btn-larry-1 shrink-0">
+                        <span class="flex items-center gap-2">
+                            <i class="fa-solid fa-file-pdf" id="convert-icon"></i>
+                            Convertir
+                        </span>
+                    </button>
+                </form>
+
+                {# ── Erreur ── #}
+                <div id="error-message" class="hidden mt-4 flex items-center gap-2 bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3 text-red-400 text-sm">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <span id="error-text"></span>
+                </div>
+            </div>
+        </div>
+
+        {# ── Preview ── #}
+        <div id="pdf-preview-container" class="hidden max-w-4xl mx-auto fade-up">
+            <div class="bg-white/[0.04] backdrop-blur-xl rounded-2xl border border-white/[0.08] p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-file-pdf text-violet-larry text-lg"></i>
+                        <span class="text-white font-medium" id="pdf-filename">document.pdf</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <a id="pdf-download" href="#" download class="inline-flex items-center gap-2 bg-violet-larry/15 border border-violet-larry/30 rounded-xl px-4 py-2 text-violet-larry text-sm font-medium hover:bg-violet-larry/25 transition">
+                            <i class="fa-solid fa-download"></i>
+                            Télécharger
+                        </a>
+                        <a id="pdf-open" href="#" target="_blank" class="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-stone-300 text-sm font-medium hover:bg-white/10 transition">
+                            <i class="fa-solid fa-up-right-from-square"></i>
+                            Ouvrir
+                        </a>
+                    </div>
+                </div>
+                <div class="rounded-xl overflow-hidden border border-white/10 bg-white">
+                    <iframe id="pdf-iframe" class="w-full" style="height: 600px;"></iframe>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('url-to-pdf-form');
+            const input = document.getElementById('url-input');
+            const btn = document.getElementById('convert-btn');
+            const icon = document.getElementById('convert-icon');
+            const errorBox = document.getElementById('error-message');
+            const errorText = document.getElementById('error-text');
+            const previewContainer = document.getElementById('pdf-preview-container');
+            const iframe = document.getElementById('pdf-iframe');
+            const downloadLink = document.getElementById('pdf-download');
+            const openLink = document.getElementById('pdf-open');
+            const filenameEl = document.getElementById('pdf-filename');
+
+            let currentBlobUrl = null;
+
+            form.addEventListener('submit', async function (e) {
+                e.preventDefault();
+
+                const url = input.value.trim();
+                if (!url) return;
+
+                // Reset
+                errorBox.classList.add('hidden');
+                btn.disabled = true;
+                icon.className = 'fa-solid fa-spinner fa-spin';
+
+                // Clean previous blob
+                if (currentBlobUrl) {
+                    URL.revokeObjectURL(currentBlobUrl);
+                    currentBlobUrl = null;
+                }
+
+                try {
+                    const response = await fetch('{{ path("app_pdf_from_url") }}', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ url: url })
+                    });
+
+                    if (!response.ok) {
+                        let msg = 'Erreur lors de la conversion';
+                        try {
+                            const data = await response.json();
+                            msg = data.error || data.message || msg;
+                        } catch (_) {}
+                        throw new Error(msg);
+                    }
+
+                    const blob = await response.blob();
+                    currentBlobUrl = URL.createObjectURL(blob);
+
+                    // Filename
+                    const hostname = new URL(url).hostname.replace('www.', '');
+                    const filename = hostname + '.pdf';
+                    filenameEl.textContent = filename;
+
+                    // Show preview
+                    iframe.src = currentBlobUrl;
+                    downloadLink.href = currentBlobUrl;
+                    downloadLink.download = filename;
+                    openLink.href = currentBlobUrl;
+                    previewContainer.classList.remove('hidden');
+
+                    // Scroll to preview
+                    previewContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+                } catch (err) {
+                    errorText.textContent = err.message;
+                    errorBox.classList.remove('hidden');
+                    previewContainer.classList.add('hidden');
+                } finally {
+                    btn.disabled = false;
+                    icon.className = 'fa-solid fa-file-pdf';
+                }
+            });
+        });
+    </script>
+{% endblock %}

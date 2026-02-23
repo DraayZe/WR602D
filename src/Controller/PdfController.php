@@ -35,14 +35,20 @@ final class PdfController extends AbstractController
         );
     }
 
+    #[Route('/tools/url-to-pdf', name: 'app_tool_url_to_pdf', methods: ['GET'])]
+    public function urlToPdfPage(): Response
+    {
+        return $this->render('tools/url-to-pdf.html.twig');
+    }
+
     #[Route('/forms/chromium/convert/url', name: 'app_pdf_from_url', methods: ['POST', 'GET'])]
     public function fromUrl(Request $request): Response
     {
         $url = $request->query->get('url');
 
-        if (!$url && $request->getContentType() === 'json') {
+        if (!$url) {
             $data = json_decode($request->getContent(), true);
-            $url = $data['url'] ?? null;
+            $url = $data['url'] ?? $request->request->get('url');
         }
 
         if (!$url) {

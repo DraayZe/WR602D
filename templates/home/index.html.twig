@@ -3,49 +3,48 @@
 {% block title %}LarryPDF - Convertissez vos PDFs en quelques secondes{% endblock %}
 
 {% block body %}
-{# ════════════════════ HERO SECTION ════════════════════ #}
-<section class="pt-16 pb-8">
-    <div class="flex items-center justify-center mx-auto max-w-3/4 gap-16">
-        <div class="flex-1 flex flex-col gap-6">
-            <h1 class="text-white text-6xl font-bold leading-tight">Convertissez vos PDFs<br>
-                <span class="text-violet-larry">en quelques secondes</span>
-            </h1>
-            <p class="text-stone-300 text-lg max-w-xl">Plateforme professionnelle de conversion et création de PDF. Rapide, sécurisé et sans limite.</p>
-            <div class="flex items-center gap-4 mt-2">
-                <a href="#" class="text-black bg-[#F8F4F4] px-6 py-3 rounded-2xl transition text-base font-medium hover:bg-white">Commencer gratuitement</a>
-                <a href="#" class="btn-larry-1">
-                    <span>Partager</span>
-                </a>
+    <section class="min-h-screen flex flex-col justify-center mx-auto max-w-3/4 ">
+        <div class="flex items-center justify-center gap-16 mb-14">
+            <div class="flex-1 flex flex-col gap-6 ">
+                <h1 class="text-white text-6xl font-bold leading-tight">Convertissez vos PDFs<br>
+                    <span class="text-violet-larry">en quelques secondes</span>
+                </h1>
+                <p class="text-stone-300 text-lg max-w-xl">Plateforme professionnelle de conversion et création de PDF. Rapide, sécurisé et sans limite.</p>
+                <div class="flex items-center gap-4 mt-2">
+                    <a href="#" class="text-black bg-[#F8F4F4] px-6 py-3 rounded-2xl transition text-base font-medium hover:bg-white">Commencer gratuitement</a>
+                    <a href="#" class="btn-larry-1">
+                        <span>Partager</span>
+                    </a>
+                </div>
+            </div>
+            <div class="flex-1 flex justify-end">
+                <img class="h-114 w-auto" src="{{ asset('images/ImageHeroSection.png') }}" alt="Image d'illustration">
             </div>
         </div>
-        <div class="flex-1 flex justify-end">
-            <img class="h-114 w-auto" src="{{ asset('images/ImageHeroSection.png') }}" alt="Image d'illustration">
-        </div>
-    </div>
 
-    {# Scroll indicator #}
-    <div class="flex justify-center mt-12">
-        <svg class="scroll-arrow w-8 h-8 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
-        </svg>
-    </div>
+        <div class="flex justify-center mt-12">
+            <svg class="scroll-arrow w-8 h-8 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+            </svg>
+        </div>
 </section>
 
-{# ════════════════════ FEATURES SECTION ════════════════════ #}
-<section class="py-24">
+<section class="">
     <div class="mx-auto max-w-3/4">
         <div class="text-center mb-16">
             <h2 class="text-white text-4xl font-bold mb-4">Tout ce dont vous avez besoin</h2>
             <p class="text-stone-400 text-lg">Des outils pour tous vos besoins PDF</p>
         </div>
 
-        <div class="grid grid-cols-3 gap-6">
+        <div class="grid grid-cols-4 gap-6">
             {% for tool in tools %}
             <div class="feature-card fade-up fade-up-delay-{{ loop.index }}">
-                <div class="w-12 h-12 rounded-full block items-center justify-center mb-4" style="background-color: {{ tool.color }}20; border: 1px solid {{ tool.color }}40;">
-                    <i class="{{ tool.icon }} text-xl" style="color: {{ tool.color }}"></i>
+                <div class="flex items-center">
+                    <div class="w-10 h-10 flex rounded-xl items-center justify-center mb-4" style="background-color: {{ tool.color }}20; border: 1px solid {{ tool.color }}40;">
+                        <i class="{{ tool.icon }} text-lg" style="color: {{ tool.color }}"></i>
+                    </div>
+                    <h3 class="text-white text-lg font-semibold mb-2 ml-2">{{ tool.name }}</h3>
                 </div>
-                <h3 class="text-white text-lg font-semibold mb-2">{{ tool.name }}</h3>
                 <p class="text-stone-400 text-sm leading-relaxed">{{ tool.description }}</p>
             </div>
             {% endfor %}
@@ -53,7 +52,6 @@
     </div>
 </section>
 
-{# ════════════════════ PRICING SECTION ════════════════════ #}
 <section class="py-24">
     <div class="mx-auto max-w-3/4">
         <div class="flex items-center justify-center gap-16 mb-16">

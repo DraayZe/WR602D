@@ -49,6 +49,33 @@ class AppFixtures extends Fixture
         $toolHTML->addPlan($planFree);
         $manager->persist($toolHTML);
 
+        $toolLien = new Tool();
+        $toolLien->setName("Lien en PDF");
+        $toolLien->setIcon("fa-solid fa-link");
+        $toolLien->setDescription("Convertissez un lien en PDF");
+        $toolLien->setColor("#EAB308");
+        $toolLien->setIsActive(true);
+        $toolLien->addPlan($planFree);
+        $manager->persist($toolLien);
+
+        $toolFusionner  = new Tool();
+        $toolFusionner->setName("Fusionner des PDF");
+        $toolFusionner->setIcon("fa-solid fa-code-merge");
+        $toolFusionner->setDescription("Fusionnez vos fichiers PDFs en un seul");
+        $toolFusionner->setColor("#22C55E");
+        $toolFusionner->setIsActive(true);
+        $toolFusionner->addPlan($planFree);
+        $manager->persist($toolFusionner);
+
+        $toolCompresser  = new Tool();
+        $toolCompresser->setName("Compresser un PDF");
+        $toolCompresser->setIcon("fa-solid fa-down-left-and-up-right-to-center");
+        $toolCompresser->setDescription("Réduisez la taille de votre fichier PDF");
+        $toolCompresser->setColor("#3B82F6");
+        $toolCompresser->setIsActive(true);
+        $toolCompresser->addPlan($planFree);
+        $manager->persist($toolCompresser);
+
         $manager->flush();
     }
 

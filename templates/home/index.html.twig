@@ -3,93 +3,10 @@
 {% block title %}LarryPDF - Convertissez vos PDFs en quelques secondes{% endblock %}
 
 {% block body %}
-    <section class="min-h-screen flex flex-col justify-center mx-auto max-w-3/4 ">
-        <div class="flex items-center justify-center gap-16 mb-14">
-            <div class="flex-1 flex flex-col gap-6 ">
-                <h1 class="text-white text-6xl font-bold leading-tight">Convertissez vos PDFs<br>
-                    <span class="text-violet-larry">en quelques secondes</span>
-                </h1>
-                <p class="text-stone-300 text-lg max-w-xl">Plateforme professionnelle de conversion et création de PDF. Rapide, sécurisé et sans limite.</p>
-                <div class="flex items-center gap-4 mt-2">
-                    <a href="#" class="text-black bg-[#F8F4F4] px-6 py-3 rounded-2xl transition text-base font-medium hover:bg-white">Commencer gratuitement</a>
-                    <a href="#" class="btn-larry-1">
-                        <span>Partager</span>
-                    </a>
-                </div>
-            </div>
-            <div class="flex-1 flex justify-end">
-                <img class="h-114 w-auto" src="{{ asset('images/ImageHeroSection.png') }}" alt="Image d'illustration">
-            </div>
-        </div>
-
-        <div class="flex justify-center mt-12">
-            <svg class="scroll-arrow w-8 h-8 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
-            </svg>
-        </div>
-</section>
-
-<section class="">
-    <div class="mx-auto max-w-3/4">
-        <div class="text-center mb-16">
-            <h2 class="text-white text-4xl font-bold mb-4">Tout ce dont vous avez besoin</h2>
-            <p class="text-stone-400 text-lg">Des outils pour tous vos besoins PDF</p>
-        </div>
-
-        <div class="grid grid-cols-4 gap-6">
-            {% for tool in tools %}
-            <div class="feature-card fade-up fade-up-delay-{{ loop.index }}">
-                <div class="flex items-center">
-                    <div class="w-10 h-10 flex rounded-xl items-center justify-center mb-4" style="background-color: {{ tool.color }}20; border: 1px solid {{ tool.color }}40;">
-                        <i class="{{ tool.icon }} text-lg" style="color: {{ tool.color }}"></i>
-                    </div>
-                    <h3 class="text-white text-lg font-semibold mb-2 ml-2">{{ tool.name }}</h3>
-                </div>
-                <p class="text-stone-400 text-sm leading-relaxed">{{ tool.description }}</p>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</section>
-
-<section class="py-24">
-    <div class="mx-auto max-w-3/4">
-        <div class="flex items-center justify-center gap-16 mb-16">
-            <img class="h-80 w-auto" src="{{ asset('images/Personnage1.png') }}" alt="Mascotte LarryPDF">
-            <div class="flex flex-col gap-4">
-                <h2 class="text-white text-4xl font-bold">Choisissez votre formule</h2>
-                <p class="text-stone-400 text-lg max-w-md">Des tarifs pour tous types de portefeuilles, adaptés à tous vos besoins.</p>
-            </div>
-        </div>
-
-        <div class="flex justify-center items-center gap-8">
-            {% for plan in plans %}
-                {% set isFeatured = plan.name == 'BASIC' %}
-                <div class="{{ isFeatured ? 'pricing-card pricing-card--featured' : 'pricing-card' }}">
-                    {% if isFeatured %}
-                        <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-white text-black text-xs font-semibold px-4 py-1.5 rounded-full whitespace-nowrap">
-                            Le plus populaire
-                        </span>
-                    {% endif %}
-
-                    <div>
-                        <h3 class="text-white text-lg font-semibold mb-1">{{ plan.name|capitalize }}</h3>
-                        <p class="text-stone-400 text-sm leading-relaxed">{{ plan.description }}</p>
-                    </div>
-
-                    <div class="mt-2">
-                        <span class="text-white text-5xl font-bold">{{ plan.price|number_format(plan.price % 1 == 0 ? 0 : 2, ',', ' ') }}€</span>
-                        <span class="text-stone-400 text-base ml-1">/mois</span>
-                    </div>
-
-                    <div class="mt-4">
-                        <a href="#" class="btn-larry-1 w-full text-center">
-                            <span>Commencer</span>
-                        </a>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-    </div>
-</section>
+    <div {{ react_component('pages/Home', {
+        tools: tools,
+        plans: plans,
+        heroImageUrl: asset('images/ImageHeroSection.png'),
+        mascotImageUrl: asset('images/Personnage1.png')
+    }) }}></div>
 {% endblock %}

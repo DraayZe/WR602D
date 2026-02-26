@@ -46,7 +46,7 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('lastname')
             ->add('firstname')
-            ->add('dob', DateType::class)
+            ->add('dob', DateType::class, ['widget' => 'single_text'])
             ->add('phone')
             ->add('favoriteColor')
         ;
@@ -56,6 +56,8 @@ class RegistrationFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'csrf_protection' => false,
+            'allow_extra_fields' => true,
         ]);
     }
 }

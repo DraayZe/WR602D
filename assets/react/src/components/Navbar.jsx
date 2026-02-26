@@ -15,7 +15,7 @@ export default function Navbar({ user, logoutUrl, loginUrl, registerUrl, logoUrl
     }, []);
 
     return (
-        <header className="relative z-10 pt-10">
+        <header className="relative z-50 pt-10">
             <nav className="mx-auto max-w-3/4 flex items-center justify-between px-6 py-3 bg-white/5 backdrop-blur-md rounded-2xl border border-white/15">
                 <div className="flex items-center gap-1">
                     <img src={logoUrl} alt="LarryPDF" className="h-auto w-8 mr-2" />

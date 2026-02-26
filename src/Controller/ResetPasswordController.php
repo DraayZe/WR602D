@@ -48,8 +48,15 @@ class ResetPasswordController extends AbstractController
             );
         }
 
+        $errors = [];
+        foreach ($form->getErrors(true) as $error) {
+            $field = $error->getOrigin()->getName();
+            $errors[$field] = $errors[$field] ?? $error->getMessage();
+        }
+
         return $this->render('reset_password/request.html.twig', [
             'requestForm' => $form,
+            'errors' => $errors,
         ]);
     }
 
@@ -124,8 +131,15 @@ class ResetPasswordController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
+        $errors = [];
+        foreach ($form->getErrors(true) as $error) {
+            $field = $error->getOrigin()->getName();
+            $errors[$field] = $errors[$field] ?? $error->getMessage();
+        }
+
         return $this->render('reset_password/reset.html.twig', [
             'resetForm' => $form,
+            'errors' => $errors,
         ]);
     }
 

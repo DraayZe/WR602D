@@ -46,6 +46,7 @@ class AppFixtures extends Fixture
         $toolHTML->setDescription("Convertissez une page HTML en PDF");
         $toolHTML->setColor("#EF4444");
         $toolHTML->setIsActive(true);
+        $toolHTML->setRoute(null);
         $toolHTML->addPlan($planFree);
         $manager->persist($toolHTML);
 
@@ -55,6 +56,7 @@ class AppFixtures extends Fixture
         $toolLien->setDescription("Convertissez un lien en PDF");
         $toolLien->setColor("#EAB308");
         $toolLien->setIsActive(true);
+        $toolLien->setRoute("app_tool_url_to_pdf");
         $toolLien->addPlan($planFree);
         $manager->persist($toolLien);
 
@@ -64,6 +66,7 @@ class AppFixtures extends Fixture
         $toolFusionner->setDescription("Fusionnez vos fichiers PDFs en un seul");
         $toolFusionner->setColor("#22C55E");
         $toolFusionner->setIsActive(true);
+        $toolFusionner->setRoute(null);
         $toolFusionner->addPlan($planFree);
         $manager->persist($toolFusionner);
 
@@ -73,6 +76,7 @@ class AppFixtures extends Fixture
         $toolCompresser->setDescription("Réduisez la taille de votre fichier PDF");
         $toolCompresser->setColor("#3B82F6");
         $toolCompresser->setIsActive(true);
+        $toolCompresser->setRoute(null);
         $toolCompresser->addPlan($planFree);
         $manager->persist($toolCompresser);
 

@@ -37,6 +37,9 @@ class Tool
     #[ORM\ManyToMany(targetEntity: Plan::class, inversedBy: 'tools')]
     private Collection $plans;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $route = null;
+
     public function __construct()
     {
         $this->plans = new ArrayCollection();
@@ -127,6 +130,18 @@ class Tool
     public function removePlan(Plan $plan): static
     {
         $this->plans->removeElement($plan);
+
+        return $this;
+    }
+
+    public function getRoute(): ?string
+    {
+        return $this->route;
+    }
+
+    public function setRoute(?string $route): static
+    {
+        $this->route = $route;
 
         return $this;
     }

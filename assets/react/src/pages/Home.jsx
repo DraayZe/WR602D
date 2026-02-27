@@ -49,23 +49,27 @@ export default function Home({ tools = [], plans = [], heroImageUrl, mascotImage
                     </div>
 
                     <div className="grid grid-cols-4 gap-6">
-                        {tools.map((tool, index) => (
-                            <div key={index} className={`feature-card fade-up fade-up-delay-${index + 1}`}>
-                                <div className="flex items-center">
-                                    <div
-                                        className="w-10 h-10 flex rounded-xl items-center justify-center mb-4"
-                                        style={{
-                                            backgroundColor: tool.color + '20',
-                                            border: `1px solid ${tool.color}40`,
-                                        }}
-                                    >
-                                        <i className={`${tool.icon} text-lg`} style={{ color: tool.color }}></i>
+                        {tools.map((tool, index) => {
+                            const Tag = tool.url ? 'a' : 'div';
+                            const linkProps = tool.url ? { href: tool.url } : {};
+                            return (
+                                <Tag key={index} className={`feature-card fade-up fade-up-delay-${index + 1}${tool.url ? ' cursor-pointer' : ''}`} {...linkProps}>
+                                    <div className="flex items-center mb-2">
+                                        <div
+                                            className="w-10 h-10 flex rounded-xl items-center justify-center"
+                                            style={{
+                                                backgroundColor: tool.color + '20',
+                                                border: `1px solid ${tool.color}40`,
+                                            }}
+                                        >
+                                            <i className={`${tool.icon} text-lg`} style={{ color: tool.color }}></i>
+                                        </div>
+                                        <h3 className="text-white text-lg font-semibold ml-2">{tool.name}</h3>
                                     </div>
-                                    <h3 className="text-white text-lg font-semibold mb-2 ml-2">{tool.name}</h3>
-                                </div>
-                                <p className="text-stone-400 text-sm leading-relaxed">{tool.description}</p>
-                            </div>
-                        ))}
+                                    <p className="text-stone-400 text-sm leading-relaxed">{tool.description}</p>
+                                </Tag>
+                            );
+                        })}
                     </div>
                 </div>
             </section>

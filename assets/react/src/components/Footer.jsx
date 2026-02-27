@@ -16,7 +16,7 @@ export default function Footer({ logoUrl, linkedinUrl, instagramUrl, githubUrl, 
                         </p>
                         <div className="flex gap-2 pb-4">
                             <div className="footer-bg-social-media">
-                                <img src={linkedinUrl} alt="Linkedin" className="h-6 w-6" />
+                                <img src={linkedinUrl} alt="Linkedin" className="h-4 w-4" />
                             </div>
                             <div className="footer-bg-social-media">
                                 <img src={instagramUrl} alt="Instagram" className="h-6 w-6" />

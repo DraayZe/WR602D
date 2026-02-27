@@ -26,6 +26,7 @@ final class HomeController extends AbstractController
             'icon' => $t->getIcon(),
             'color' => $t->getColor(),
             'description' => $t->getDescription(),
+            'url' => $t->getRoute() ? $this->generateUrl($t->getRoute()) : null,
         ], $toolRepository->findAll());
 
         return $this->render('home/index.html.twig', [

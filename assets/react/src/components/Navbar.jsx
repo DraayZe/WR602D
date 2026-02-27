@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-export default function Navbar({ user, logoutUrl, loginUrl, registerUrl, logoUrl }) {
+export default function Navbar({ user, logoutUrl, loginUrl, registerUrl, logoUrl, pathHomeUrl }) {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
 
@@ -17,10 +17,12 @@ export default function Navbar({ user, logoutUrl, loginUrl, registerUrl, logoUrl
     return (
         <header className="relative z-50 pt-10">
             <nav className="mx-auto max-w-3/4 flex items-center justify-between px-6 py-5 bg-white/5 backdrop-blur-md rounded-2xl border border-white/15">
-                <div className="flex items-center gap-1">
-                    <img src={logoUrl} alt="LarryPDF" className="h-auto w-8 mr-2" />
-                    <span className="text-white text-2xl font-bold">LarryPDF</span>
-                </div>
+                <a href={pathHomeUrl}>
+                    <div className="flex items-center gap-1">
+                        <img src={logoUrl} alt="LarryPDF" className="h-auto w-8 mr-2" />
+                        <span className="text-white text-2xl font-bold">LarryPDF</span>
+                    </div>
+                </a>
 
                 <div className="flex items-center gap-8">
                     <a href="#" className="text-stone-300 hover:text-white transition text-base">Outils</a>

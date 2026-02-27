@@ -3,130 +3,14 @@
 {% block title %}Inscription - LarryPDF{% endblock %}
 
 {% block body %}
-    <div class="max-w-lg mx-auto">
-
-        {# ── Logo ── #}
-        <div class="text-center mb-10">
-            <a href="{{ path('app_home') }}" class="inline-flex items-center gap-2 no-underline">
-                <img src="{{ asset('images/LogoLarryPDF.png') }}" alt="LarryPDF" class="h-12 w-auto">
-                <span class="text-white text-2xl font-bold">LarryPDF</span>
-            </a>
-        </div>
-
-        {# ── Card ── #}
-        <div class="auth-card">
-            <h1 class="text-white text-2xl font-bold text-center mb-1">Créer un compte</h1>
-            <p class="text-white/40 text-sm text-center mb-8">Rejoignez LarryPDF gratuitement</p>
-
-            {# ── Flash errors ── #}
-            {% for flash_error in app.flashes('verify_email_error') %}
-                <div class="flex items-center gap-2 bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3 text-red-400 text-sm mb-6">
-                    <i class="fa-solid fa-circle-exclamation"></i>
-                    <span>{{ flash_error }}</span>
-                </div>
-            {% endfor %}
-
-            {% if registrationForm.vars.errors|length > 0 %}
-                <div class="flex items-center gap-2 bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3 text-red-400 text-sm mb-6">
-                    <i class="fa-solid fa-circle-exclamation"></i>
-                    <span>{{ form_errors(registrationForm) }}</span>
-                </div>
-            {% endif %}
-
-            {{ form_start(registrationForm, {'attr': {'novalidate': 'novalidate'}}) }}
-
-                {# ── Nom / Prénom ── #}
-                <div class="grid grid-cols-2 gap-4 mb-5">
-                    <div>
-                        <label for="{{ registrationForm.lastname.vars.id }}" class="block text-white/60 text-sm font-medium mb-2">Nom</label>
-                        <div class="auth-icon-wrap relative">
-                            <i class="fa-solid fa-user absolute left-4 top-1/2 -translate-y-1/2 text-white/20 text-sm pointer-events-none z-2"></i>
-                            {{ form_widget(registrationForm.lastname, {'attr': {'class': 'auth-input', 'placeholder': 'Dupont'}}) }}
-                        </div>
-                        <div class="text-red-400 text-xs mt-1">{{ form_errors(registrationForm.lastname) }}</div>
-                    </div>
-                    <div>
-                        <label for="{{ registrationForm.firstname.vars.id }}" class="block text-white/60 text-sm font-medium mb-2">Prénom</label>
-                        <div class="auth-icon-wrap relative">
-                            <i class="fa-solid fa-user absolute left-4 top-1/2 -translate-y-1/2 text-white/20 text-sm pointer-events-none z-2"></i>
-                            {{ form_widget(registrationForm.firstname, {'attr': {'class': 'auth-input', 'placeholder': 'Jean'}}) }}
-                        </div>
-                        <div class="text-red-400 text-xs mt-1">{{ form_errors(registrationForm.firstname) }}</div>
-                    </div>
-                </div>
-
-                {# ── Email ── #}
-                <div class="mb-5">
-                    <label for="{{ registrationForm.email.vars.id }}" class="block text-white/60 text-sm font-medium mb-2">Adresse email</label>
-                    <div class="auth-icon-wrap relative">
-                        <i class="fa-solid fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-white/20 text-sm pointer-events-none z-2"></i>
-                        {{ form_widget(registrationForm.email, {'attr': {'class': 'auth-input', 'placeholder': 'exemple@email.com'}}) }}
-                    </div>
-                    <div class="text-red-400 text-xs mt-1">{{ form_errors(registrationForm.email) }}</div>
-                </div>
-
-                {# ── Mot de passe ── #}
-                <div class="mb-5">
-                    <label for="{{ registrationForm.plainPassword.vars.id }}" class="block text-white/60 text-sm font-medium mb-2">Mot de passe</label>
-                    <div class="auth-icon-wrap relative">
-                        <i class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-white/20 text-sm pointer-events-none z-2"></i>
-                        {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'auth-input', 'placeholder': 'Minimum 6 caractères'}}) }}
-                    </div>
-                    <div class="text-red-400 text-xs mt-1">{{ form_errors(registrationForm.plainPassword) }}</div>
-                </div>
-
-                {# ── Date de naissance / Téléphone ── #}
-                <div class="grid grid-cols-2 gap-4 mb-5">
-                    <div>
-                        <label for="{{ registrationForm.dob.vars.id }}" class="block text-white/60 text-sm font-medium mb-2">Date de naissance</label>
-                        <div class="auth-icon-wrap relative">
-                            <i class="fa-solid fa-calendar absolute left-4 top-1/2 -translate-y-1/2 text-white/20 text-sm pointer-events-none z-2"></i>
-                            {{ form_widget(registrationForm.dob, {'attr': {'class': 'auth-input'}}) }}
-                        </div>
-                        <div class="text-red-400 text-xs mt-1">{{ form_errors(registrationForm.dob) }}</div>
-                    </div>
-                    <div>
-                        <label for="{{ registrationForm.phone.vars.id }}" class="block text-white/60 text-sm font-medium mb-2">Téléphone</label>
-                        <div class="auth-icon-wrap relative">
-                            <i class="fa-solid fa-phone absolute left-4 top-1/2 -translate-y-1/2 text-white/20 text-sm pointer-events-none z-2"></i>
-                            {{ form_widget(registrationForm.phone, {'attr': {'class': 'auth-input', 'placeholder': '06 12 34 56 78'}}) }}
-                        </div>
-                        <div class="text-red-400 text-xs mt-1">{{ form_errors(registrationForm.phone) }}</div>
-                    </div>
-                </div>
-
-                {# ── Couleur préférée ── #}
-                <div class="mb-6">
-                    <label for="{{ registrationForm.favoriteColor.vars.id }}" class="block text-white/60 text-sm font-medium mb-2">Couleur préférée</label>
-                    <div class="auth-icon-wrap relative">
-                        <i class="fa-solid fa-palette absolute left-4 top-1/2 -translate-y-1/2 text-white/20 text-sm pointer-events-none z-2"></i>
-                        {{ form_widget(registrationForm.favoriteColor, {'attr': {'class': 'auth-input', 'placeholder': 'Violet, Bleu...'}}) }}
-                    </div>
-                    <div class="text-red-400 text-xs mt-1">{{ form_errors(registrationForm.favoriteColor) }}</div>
-                </div>
-
-                {# ── Checkbox CGU ── #}
-                <div class="flex items-start gap-3 mb-6">
-                    {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'w-4 h-4 accent-violet-larry cursor-pointer shrink-0 mt-0.5'}}) }}
-                    <label for="{{ registrationForm.agreeTerms.vars.id }}" class="text-white/45 text-xs leading-relaxed cursor-pointer">
-                        J'accepte les <a href="#" class="text-violet-larry hover:underline">conditions d'utilisation</a>
-                        et la <a href="#" class="text-violet-larry hover:underline">politique de confidentialité</a>
-                    </label>
-                </div>
-                <div class="text-red-400 text-xs mb-4">{{ form_errors(registrationForm.agreeTerms) }}</div>
-
-                {# ── Submit ── #}
-                <button type="submit" class="auth-submit">
-                    <span>Créer mon compte</span>
-                </button>
-
-            {{ form_end(registrationForm) }}
-        </div>
-
-        {# ── Footer link ── #}
-        <p class="text-center text-white/40 text-sm mt-7">
-            Déjà un compte ?
-            <a href="{{ path('app_login') }}" class="text-violet-larry hover:text-white transition font-medium">Se connecter</a>
-        </p>
-    </div>
+    <div {{ react_component('pages/auth/Register', {
+        csrfToken: csrf_token('register_form'),
+        errors: errors,
+        lastValues: lastValues,
+        flashError: app.flashes('verify_email_error')|first,
+        registerUrl: path('app_register'),
+        loginUrl: path('app_login'),
+        homeUrl: path('app_home'),
+        logoUrl: asset('images/LogoLarryPDF.png')
+    }) }}></div>
 {% endblock %}

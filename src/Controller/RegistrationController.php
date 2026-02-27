@@ -30,6 +30,10 @@ class RegistrationController extends AbstractController
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
+        if ($form->isSubmitted() && !$this->isCsrfTokenValid('register_form', $request->request->all()['registration_form']['_token'] ?? '')) {
+            $form->addError(new \Symfony\Component\Form\FormError('Le token CSRF est invalide.'));
+        }
+
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var string $plainPassword */
             $plainPassword = $form->get('plainPassword')->getData();
@@ -54,8 +58,23 @@ class RegistrationController extends AbstractController
             return $security->login($user, 'form_login', 'main');
         }
 
+        $errors = [];
+        foreach ($form->getErrors(true) as $error) {
+            $field = $error->getOrigin()->getName();
+            $errors[$field] = $errors[$field] ?? $error->getMessage();
+        }
+
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form,
+            'errors' => $errors,
+            'lastValues' => [
+                'lastname' => $form->get('lastname')->getData(),
+                'firstname' => $form->get('firstname')->getData(),
+                'email' => $form->get('email')->getData(),
+                'dob' => $form->get('dob')->getData()?->format('Y-m-d'),
+                'phone' => $form->get('phone')->getData(),
+                'favoriteColor' => $form->get('favoriteColor')->getData(),
+            ],
         ]);
     }
 

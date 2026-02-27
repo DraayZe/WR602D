@@ -3,77 +3,13 @@
 {% block title %}Connexion - LarryPDF{% endblock %}
 
 {% block body %}
-    <div class="max-w-md mx-auto">
-
-        {# ── Logo ── #}
-        <div class="text-center mb-10">
-            <a href="{{ path('app_home') }}" class="inline-flex items-center gap-2 no-underline">
-                <img src="{{ asset('images/LogoLarryPDF.png') }}" alt="LarryPDF" class="h-12 w-auto">
-                <span class="text-white text-2xl font-bold">LarryPDF</span>
-            </a>
-        </div>
-
-        {# ── Card ── #}
-        <div class="auth-card">
-            <h1 class="text-white text-2xl font-bold text-center mb-1">Connexion</h1>
-            <p class="text-white/40 text-sm text-center mb-8">Accédez à votre espace LarryPDF</p>
-
-            {% if error %}
-                <div class="flex items-center gap-2 bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3 text-red-400 text-sm mb-6">
-                    <i class="fa-solid fa-circle-exclamation"></i>
-                    <span>{{ error.messageKey|trans(error.messageData, 'security') }}</span>
-                </div>
-            {% endif %}
-
-            {% if app.user %}
-                <div class="text-white/50 text-sm text-center mb-6">
-                    Connecté en tant que {{ app.user.userIdentifier }},
-                    <a href="{{ logout_path() }}" class="text-violet-larry hover:underline">Se déconnecter</a>
-                </div>
-            {% endif %}
-
-            <form method="post">
-                {# ── Email ── #}
-                <div class="mb-5">
-                    <label for="username" class="block text-white/60 text-sm font-medium mb-2">Adresse email</label>
-                    <div class="auth-icon-wrap relative">
-                        <i class="fa-solid fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-white/20 text-sm pointer-events-none z-2"></i>
-                        <input type="email" value="{{ last_username }}" name="_username" id="username"
-                               class="auth-input"
-                               placeholder="exemple@email.com"
-                               autocomplete="email" required autofocus>
-                    </div>
-                </div>
-
-                {# ── Password ── #}
-                <div class="mb-4">
-                    <label for="password" class="block text-white/60 text-sm font-medium mb-2">Mot de passe</label>
-                    <div class="auth-icon-wrap relative">
-                        <i class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-white/20 text-sm pointer-events-none z-2"></i>
-                        <input type="password" name="_password" id="password"
-                               class="auth-input"
-                               placeholder="Votre mot de passe"
-                               autocomplete="current-password" required>
-                    </div>
-                </div>
-
-                <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
-
-                <div class="text-right mb-5">
-                    <a href="{{ path('app_forgot_password_request') }}" class="text-violet-larry hover:text-violet-larry/70 text-xs font-medium transition">Mot de passe oublié ?</a>
-                </div>
-
-                {# ── Submit ── #}
-                <button type="submit" class="auth-submit">
-                    <span>Se connecter</span>
-                </button>
-            </form>
-        </div>
-
-        {# ── Footer link ── #}
-        <p class="text-center text-white/40 text-sm mt-7">
-            Pas encore de compte ?
-            <a href="{{ path('app_register') }}" class="text-violet-larry hover:text-white transition font-medium">Créer un compte</a>
-        </p>
-    </div>
+    <div {{ react_component('pages/auth/Login', {
+        csrfToken: csrf_token('authenticate'),
+        lastUsername: last_username,
+        error: error ? (error.messageKey|trans(error.messageData, 'security')) : null,
+        forgotPasswordUrl: path('app_forgot_password_request'),
+        registerUrl: path('app_register'),
+        homeUrl: path('app_home'),
+        logoUrl: asset('images/LogoLarryPDF.png')
+    }) }}></div>
 {% endblock %}

@@ -15,8 +15,18 @@ final class HomeController extends AbstractController
     public function index(PlanRepository $planRepository, ToolRepository $toolRepository): Response
     {
 
-        $plans = $planRepository->findAll();
-        $tools = $toolRepository->findAll();
+        $plans = array_map(fn($p) => [
+            'name' => $p->getName(),
+            'description' => $p->getDescription(),
+            'price' => $p->getPrice(),
+        ], $planRepository->findAll());
+
+        $tools = array_map(fn($t) => [
+            'name' => $t->getName(),
+            'icon' => $t->getIcon(),
+            'color' => $t->getColor(),
+            'description' => $t->getDescription(),
+        ], $toolRepository->findAll());
 
         return $this->render('home/index.html.twig', [
             'plans' => $plans,

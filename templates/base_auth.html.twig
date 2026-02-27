@@ -19,26 +19,5 @@
             {% block body %}{% endblock %}
         </div>
 
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                function checkInputs() {
-                    document.querySelectorAll('.auth-icon-wrap').forEach(function(wrap) {
-                        var input = wrap.querySelector('input');
-                        var icon = wrap.querySelector('i');
-                        if (input && icon) {
-                            if (input.value.length > 0) {
-                                icon.classList.add('has-value-icon');
-                            } else {
-                                icon.classList.remove('has-value-icon');
-                            }
-                        }
-                    });
-                }
-                checkInputs();
-                document.addEventListener('input', checkInputs);
-                setTimeout(checkInputs, 200);
-                setTimeout(checkInputs, 1000);
-            });
-        </script>
     </body>
 </html>

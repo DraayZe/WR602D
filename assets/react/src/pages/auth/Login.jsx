@@ -7,9 +7,9 @@ export default function Login({ csrfToken, lastUsername = '', error, forgotPassw
 
     return (
         <div className="max-w-md mx-auto">
-            <div className="text-center mb-10">
+            <div className="text-center mb-6">
                 <a href={homeUrl} className="inline-flex items-center gap-2 no-underline">
-                    <img src={logoUrl} alt="LarryPDF" className="h-12 w-auto" />
+                    <img src={logoUrl} alt="LarryPDF" className="h-auto w-10" />
                     <span className="text-white text-2xl font-bold">LarryPDF</span>
                 </a>
             </div>

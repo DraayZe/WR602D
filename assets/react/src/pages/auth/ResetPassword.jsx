@@ -6,18 +6,16 @@ export default function ResetPassword({ csrfToken, errors = {}, loginUrl, homeUr
 
     return (
         <div className="max-w-md mx-auto">
-            <div className="text-center mb-10">
+            <div className="text-center mb-6">
                 <a href={homeUrl} className="inline-flex items-center gap-2 no-underline">
-                    <img src={logoUrl} alt="LarryPDF" className="h-12 w-auto" />
+                    <img src={logoUrl} alt="LarryPDF" className="h-auto w-10" />
                     <span className="text-white text-2xl font-bold">LarryPDF</span>
                 </a>
             </div>
 
             <div className="auth-card">
                 <div className="text-center mb-6">
-                    <div className="w-14 h-14 rounded-full bg-gradient-to-br from-violet-larry/25 to-blue-500/25 border border-violet-larry/30 inline-flex items-center justify-center mb-4">
-                        <i className="fa-solid fa-lock text-violet-larry text-xl"></i>
-                    </div>
+
                     <h1 className="text-white text-2xl font-bold mb-1">Nouveau mot de passe</h1>
                     <p className="text-white/40 text-sm">Choisissez votre nouveau mot de passe</p>
                 </div>

@@ -13,27 +13,27 @@ class AppFixtures extends Fixture
     {
         // Plan gratuit
         $planFree = new Plan();
-        $planFree->setName("FREE");
-        $planFree->setDescription("Abonnement gratuit");
+        $planFree->setName("Gratuit");
+        $planFree->setDescription("La formule parfaite pour commencer et prendre en main.");
         $planFree->setPrice(0);
-        $planFree->setLimitGeneration(2);
+        $planFree->setLimitGeneration(5);
         $planFree->setActive(true);
 
         $manager->persist($planFree);
 
-        // Plan basic
-        $planBasic = new Plan();
-        $planBasic->setName("BASIC");
-        $planBasic->setDescription("Abonnement basic : 20 générations par jour");
-        $planBasic->setPrice(9.9);
-        $planBasic->setLimitGeneration(20);
-        $planBasic->setActive(true);
-        $manager->persist($planBasic);
+        // Plan pro
+        $planPro = new Plan();
+        $planPro->setName("Pro");
+        $planPro->setDescription("Pour une utilisation régulière et un besoin vital.");
+        $planPro->setPrice(9.9);
+        $planPro->setLimitGeneration(20);
+        $planPro->setActive(true);
+        $manager->persist($planPro);
 
         // Plan premium
         $planPremium = new Plan();
-        $planPremium->setName("PREMIUM");
-        $planPremium->setDescription("Abonnement PREMIUM : 200 générations par jour");
+        $planPremium->setName("Premium");
+        $planPremium->setDescription("Pour les professionnels ou les entreprises.");
         $planPremium->setPrice(45);
         $planPremium->setLimitGeneration(200);
         $planPremium->setActive(true);
@@ -79,6 +79,26 @@ class AppFixtures extends Fixture
         $toolCompresser->setRoute(null);
         $toolCompresser->addPlan($planFree);
         $manager->persist($toolCompresser);
+
+        $toolWord = new Tool();
+        $toolWord->setName("Word en PDF");
+        $toolWord->setIcon("fa-brands fa-wordpress-simple");
+        $toolWord->setDescription("Convertissez un fichier word en PDF");
+        $toolWord->setColor("#08e2ea");
+        $toolWord->setIsActive(true);
+        $toolWord->setRoute(null);
+        $toolWord->addPlan($planPro);
+        $manager->persist($toolWord);
+
+        $toolImage = new Tool();
+        $toolImage->setName("Image en PDF");
+        $toolImage->setIcon("fa-regular fa-image");
+        $toolImage->setDescription("Convertissez une image (PNG, JPEG, JPG) en PDF");
+        $toolImage->setColor("#EC4899");
+        $toolImage->setIsActive(true);
+        $toolImage->setRoute(null);
+        $toolImage->addPlan($planPro);
+        $manager->persist($toolImage);
 
         $manager->flush();
     }

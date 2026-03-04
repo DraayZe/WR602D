@@ -88,11 +88,13 @@ export default function Home({ tools = [], plans = [], heroImageUrl, mascotImage
 
                     <div className="flex justify-center items-center gap-8">
                         {plans.map((plan, index) => {
-                            const isFeatured = plan.name === 'BASIC';
+                            const isFeatured = plan.name === 'Pro';
                             return (
-                                <div key={index} className={isFeatured ? 'pricing-card pricing-card--featured' : 'pricing-card'}>
+                                <div key={index}
+                                     className={isFeatured ? 'pricing-card pricing-card--featured' : 'pricing-card'}>
                                     {isFeatured && (
-                                        <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-white text-black text-xs font-semibold px-4 py-1.5 rounded-full whitespace-nowrap">
+                                        <span
+                                            className="absolute -top-3 left-1/2 -translate-x-1/2 bg-white text-black text-xs font-semibold px-4 py-1.5 rounded-full whitespace-nowrap">
                                             Le plus populaire
                                         </span>
                                     )}
@@ -105,15 +107,39 @@ export default function Home({ tools = [], plans = [], heroImageUrl, mascotImage
                                     </div>
 
                                     <div className="mt-2">
-                                        <span className="text-white text-5xl font-bold">{formatPrice(plan.price)}€</span>
+                                        <span
+                                            className="text-white text-5xl font-bold">{formatPrice(plan.price)}€</span>
                                         <span className="text-stone-400 text-base ml-1">/mois</span>
                                     </div>
 
-                                    <div className="mt-4">
-                                        <a href="#" className="btn-larry-1 w-full text-center">
-                                            <span>Commencer</span>
+                                    <div key={index}
+                                         className="mt-4">
+                                        <a href="#" className={isFeatured ? 'btn-larry-2 block' : 'btn-larry-1 block'}>
+                                            <span className="text-center">Commencer</span>
                                         </a>
                                     </div>
+
+                                    <div className="mt-2 flex">
+                                        <div className="bg-[#8D3ED0]/20 rounded-full">
+                                            <i className="fa-solid fa-check text-[#8D3ED0] p-2"></i>
+                                        </div>
+                                        <span className="text-stone-400 text-sm ml-2 flex items-center">
+                                          {plan.limitGeneration} générations/jour
+                                        </span>
+                                    </div>
+                                    {plan.tool.map((tool,i) => (
+                                    <div className="mt-2 flex">
+                                        <div className="bg-[#8D3ED0]/20 rounded-full">
+                                            <i className="fa-solid fa-check text-[#8D3ED0] p-2"></i>
+                                        </div>
+                                        <span className="text-stone-400 text-sm ml-2 flex items-center">
+
+                                              <div key={i}>{tool.name}</div>
+
+                                        </span>
+                                    </div>
+                                    ))}
+
                                 </div>
                             );
                         })}

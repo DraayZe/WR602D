@@ -29,6 +29,11 @@ export default function ProfileModal({ user = {}, plans = [], csrfToken, planCsr
     const [profileErrors, setProfileErrors] = useState({});
     const [passwordErrors, setPasswordErrors] = useState({});
 
+    useEffect(() => {
+        document.body.style.overflow = 'hidden';
+        return () => { document.body.style.overflow = ''; };
+    }, []);
+
     const iconClass = (value) => value ? 'text-violet-larry' : 'text-white/20';
     const currentPhotoSrc = photoPreview || (user.photo ? `/uploads/avatars/${user.photo}` : null);
     const currentPlanData = plans.find(p => p.id === currentPlanId);

@@ -30,7 +30,6 @@ export default function Register({ csrfToken, errors = {}, lastValues = {}, plan
                 </a>
             </div>
 
-            {/* Indicateur de progression */}
             <div className="flex items-center gap-3 mb-6">
                 <div className={`flex-1 h-1 rounded-full transition-all ${step >= 1 ? 'bg-violet-larry' : 'bg-white/10'}`}></div>
                 <div className={`flex-1 h-1 rounded-full transition-all ${step >= 2 ? 'bg-violet-larry' : 'bg-white/10'}`}></div>
@@ -182,7 +181,7 @@ export default function Register({ csrfToken, errors = {}, lastValues = {}, plan
                         </div>
 
                         <div className="flex gap-3">
-                            <button type="button" onClick={() => setStep(1)} className="flex-1 py-3 rounded-xl border border-white/10 text-white/60 hover:text-white hover:border-white/30 transition text-sm font-medium">
+                            <button type="button" onClick={() => setStep(1)} className="hover:cursor-pointer flex-1 py-3 rounded-xl border border-white/10 text-white/60 hover:text-white hover:border-white/30 transition text-sm font-medium">
                                 ← Retour
                             </button>
                             <button type="submit" className="flex-2 btn-larry-1" style={{flex: 2}}>

@@ -1,0 +1,9 @@
+{% extends 'base_tools.html.twig' %}
+
+{% block title %}HTML en PDF - LarryPDF{% endblock %}
+
+{% block body %}
+    <div {{ react_component('pages/tools/HtmlToPdf', {
+        pdfFromUrlEndpoint: path('app_pdf_from_html'),
+    }) }}></div>
+{% endblock %}

@@ -70,7 +70,7 @@ export default function Login({ csrfToken, lastUsername = '', error, forgotPassw
                         </a>
                     </div>
 
-                    <button type="submit" className="auth-submit">
+                    <button type="submit" className="w-full btn-larry-1">
                         <span>Se connecter</span>
                     </button>
                 </form>

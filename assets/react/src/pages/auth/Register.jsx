@@ -115,7 +115,7 @@ export default function Register({ csrfToken, errors = {}, lastValues = {}, flas
                     </div>
                     {errors.agreeTerms && <div className="text-red-400 text-xs mb-4">{errors.agreeTerms}</div>}
 
-                    <button type="submit" className="auth-submit">
+                    <button type="submit" className="w-full btn-larry-1">
                         <span>Créer mon compte</span>
                     </button>
                 </form>

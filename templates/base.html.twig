@@ -16,8 +16,9 @@
         <img class="absolute top-0 right-0 z-0" src="{{ asset('images/Ellipse2bleu.png') }}">
 
         <div {{ react_component('components/Navbar', {
-            user: app.user ? { firstname: app.user.firstname } : null,
+            user: app.user ? { firstname: app.user.firstname, lastname: app.user.lastname, photo: app.user.photo, plan: app.user.plan ? app.user.plan.name : null } : null,
             logoutUrl: logout_path(),
+            profileUrl: path('app_profile'),
             loginUrl: path('app_login'),
             registerUrl: path('app_register'),
             logoUrl: asset('images/LogoLarryPDF.png')

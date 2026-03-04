@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class PdfController extends AbstractController
 {
@@ -35,10 +36,17 @@ final class PdfController extends AbstractController
         );
     }
 
+    #[IsGranted("ROLE_USER")]
     #[Route('/tools/url-to-pdf', name: 'app_tool_url_to_pdf', methods: ['GET'])]
     public function urlToPdfPage(): Response
     {
         return $this->render('tools/url-to-pdf.html.twig');
+    }
+
+    #[Route('/tools/html-to-pdf', name: 'app_tool_html_to_pdf', methods: ['GET'])]
+    public function htmlToPdfPage() : Response
+    {
+        return $this->render('tools/html-to-pdf.html.twig');
     }
 
     #[Route('/forms/chromium/convert/url', name: 'app_pdf_from_url', methods: ['POST', 'GET'])]

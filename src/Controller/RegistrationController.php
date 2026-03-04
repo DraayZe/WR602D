@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Repository\PlanRepository;
 use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -24,27 +25,40 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, Security $security, EntityManagerInterface $entityManager): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, Security $security, EntityManagerInterface $entityManager, PlanRepository $planRepository): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && !$this->isCsrfTokenValid('register_form', $request->request->all()['registration_form']['_token'] ?? '')) {
+        if ($form->isSubmitted() && !$this->isCsrfTokenValid('register_form', $request->request->all('registration_form')['_token'] ?? '')) {
             $form->addError(new \Symfony\Component\Form\FormError('Le token CSRF est invalide.'));
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var string $plainPassword */
             $plainPassword = $form->get('plainPassword')->getData();
-
-            // encode the plain password
             $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
+
+            // Assigner le plan choisi
+            $planId = $request->request->all()['registration_form']['plan'] ?? null;
+            if ($planId) {
+                $plan = $planRepository->find((int) $planId);
+                if ($plan && $plan->isActive()) {
+                    $user->setPlan($plan);
+                }
+            }
+            // Fallback : plan FREE si aucun plan valide sélectionné
+            if (!$user->getPlan()) {
+                $freePlan = $planRepository->findOneBy(['name' => 'FREE', 'active' => true]);
+                if ($freePlan) {
+                    $user->setPlan($freePlan);
+                }
+            }
 
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
                     ->from(new Address('noreply@larrypdf.com', 'Lenny'))
@@ -52,8 +66,6 @@ class RegistrationController extends AbstractController
                     ->subject('Please Confirm your Email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
-
-            // do anything else you need here, like send an email
 
             return $security->login($user, 'form_login', 'main');
         }
@@ -64,9 +76,19 @@ class RegistrationController extends AbstractController
             $errors[$field] = $errors[$field] ?? $error->getMessage();
         }
 
+        // Charger les plans actifs pour les props React
+        $plans = array_map(fn($p) => [
+            'id' => $p->getId(),
+            'name' => $p->getName(),
+            'price' => (float) $p->getPrice(),
+            'description' => $p->getDescription(),
+            'limitGeneration' => $p->getLimitGeneration(),
+        ], $planRepository->findBy(['active' => true]));
+
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form,
             'errors' => $errors,
+            'plans' => $plans,
             'lastValues' => [
                 'lastname' => $form->get('lastname')->getData(),
                 'firstname' => $form->get('firstname')->getData(),
@@ -83,20 +105,16 @@ class RegistrationController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        // validate email confirmation link, sets User::isVerified=true and persists
         try {
             /** @var User $user */
             $user = $this->getUser();
             $this->emailVerifier->handleEmailConfirmation($request, $user);
         } catch (VerifyEmailExceptionInterface $exception) {
             $this->addFlash('verify_email_error', $translator->trans($exception->getReason(), [], 'VerifyEmailBundle'));
-
             return $this->redirectToRoute('app_home');
         }
 
-        // @TODO Change the redirect on success and handle or remove the flash message in your templates
         $this->addFlash('success', 'Your email address has been verified.');
-
         return $this->redirectToRoute('app_home');
     }
 }

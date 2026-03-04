@@ -7,6 +7,7 @@
         csrfToken: csrf_token('register_form'),
         errors: errors,
         lastValues: lastValues,
+        plans: plans,
         flashError: app.flashes('verify_email_error')|first,
         registerUrl: path('app_register'),
         loginUrl: path('app_login'),

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\ProfileFormType;
 use App\Form\ProfilePasswordFormType;
+use App\Repository\PlanRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +18,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class ProfileController extends AbstractController
 {
     #[Route('/profile', name: 'app_profile', methods: ['GET', 'POST'])]
-    public function index(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager): Response
+    public function index(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager, PlanRepository $planRepository): Response
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -86,9 +87,20 @@ class ProfileController extends AbstractController
             }
         }
 
+        $plans = array_map(fn($p) => [
+            'id' => $p->getId(),
+            'name' => $p->getName(),
+            'price' => (float) $p->getPrice(),
+            'description' => $p->getDescription(),
+            'limitGeneration' => $p->getLimitGeneration(),
+        ], $planRepository->findBy(['active' => true]));
+
+        $currentPlan = $user->getPlan();
+
         return $this->render('profile/index.html.twig', [
             'errors' => $errors,
             'success' => $success,
+            'plans' => $plans,
             'user' => [
                 'lastname' => $user->getLastname(),
                 'firstname' => $user->getFirstname(),
@@ -97,7 +109,33 @@ class ProfileController extends AbstractController
                 'phone' => $user->getPhone(),
                 'favoriteColor' => $user->getFavoriteColor(),
                 'photo' => $user->getPhoto(),
+                'plan' => $currentPlan ? ['id' => $currentPlan->getId(), 'name' => $currentPlan->getName()] : null,
             ],
         ]);
+    }
+
+    #[Route('/profile/plan', name: 'app_profile_plan', methods: ['POST'])]
+    public function changePlan(Request $request, EntityManagerInterface $entityManager, PlanRepository $planRepository): Response
+    {
+        if (!$this->isCsrfTokenValid('profile_plan_form', $request->request->get('_csrf_token', ''))) {
+            $this->addFlash('error', 'Token CSRF invalide.');
+            return $this->redirectToRoute('app_profile');
+        }
+
+        $planId = (int) $request->request->get('plan_id');
+        $plan = $planRepository->find($planId);
+
+        if (!$plan || !$plan->isActive()) {
+            $this->addFlash('error', 'Plan invalide.');
+            return $this->redirectToRoute('app_profile');
+        }
+
+        /** @var User $user */
+        $user = $this->getUser();
+        $user->setPlan($plan);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Votre plan a été mis à jour.');
+        return $this->redirectToRoute('app_profile');
     }
 }

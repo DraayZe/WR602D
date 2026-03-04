@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 
-export default function Profile({ csrfToken, user = {}, errors = {}, success = false, profileUrl, homeUrl, logoUrl }) {
+export default function Profile({ csrfToken, planCsrfToken, user = {}, errors = {}, success = false, flashSuccess = null, flashError = null, plans = [], profileUrl, planUrl, homeUrl, logoUrl }) {
     const [profileValues, setProfileValues] = useState({
         lastname: user.lastname || '',
         firstname: user.firstname || '',
@@ -18,6 +18,8 @@ export default function Profile({ csrfToken, user = {}, errors = {}, success = f
 
     const [photoPreview, setPhotoPreview] = useState(null);
     const fileInputRef = useRef(null);
+    const [showPlanModal, setShowPlanModal] = useState(false);
+    const [selectedPlan, setSelectedPlan] = useState(user.plan?.id ?? null);
 
     const handleProfileChange = (field) => (e) => {
         setProfileValues(v => ({ ...v, [field]: e.target.value }));
@@ -37,8 +39,9 @@ export default function Profile({ csrfToken, user = {}, errors = {}, success = f
     };
 
     const iconClass = (value) => value ? 'text-violet-larry' : 'text-white/20';
-
     const currentPhotoSrc = photoPreview || (user.photo ? `/uploads/avatars/${user.photo}` : null);
+
+    const currentPlanData = plans.find(p => p.id === (user.plan?.id));
 
     return (
         <div className="max-w-2xl mx-auto">
@@ -63,6 +66,21 @@ export default function Profile({ csrfToken, user = {}, errors = {}, success = f
                 </div>
             )}
 
+            {flashSuccess && (
+                <div className="flex items-center gap-2 bg-green-500/10 border border-green-500/20 rounded-xl px-4 py-3 text-green-400 text-sm mb-6">
+                    <i className="fa-solid fa-circle-check"></i>
+                    <span>{flashSuccess}</span>
+                </div>
+            )}
+
+            {flashError && (
+                <div className="flex items-center gap-2 bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3 text-red-400 text-sm mb-6">
+                    <i className="fa-solid fa-circle-exclamation"></i>
+                    <span>{flashError}</span>
+                </div>
+            )}
+
+            {/* Infos personnelles */}
             <div className="auth-card mb-6">
                 <h1 className="text-white text-2xl font-bold text-center mb-1">Mon profil</h1>
                 <p className="text-white/40 text-sm text-center mb-8">Modifiez vos informations personnelles</p>
@@ -89,14 +107,7 @@ export default function Profile({ csrfToken, user = {}, errors = {}, success = f
                             >
                                 <i className="fa-solid fa-camera text-white text-xs"></i>
                             </button>
-                            <input
-                                ref={fileInputRef}
-                                type="file"
-                                name="photo"
-                                accept="image/*"
-                                className="hidden"
-                                onChange={handlePhotoChange}
-                            />
+                            <input ref={fileInputRef} type="file" name="photo" accept="image/*" className="hidden" onChange={handlePhotoChange} />
                         </div>
                     </div>
 
@@ -162,7 +173,8 @@ export default function Profile({ csrfToken, user = {}, errors = {}, success = f
                 </form>
             </div>
 
-            <div className="auth-card">
+            {/* Mot de passe */}
+            <div className="auth-card mb-6">
                 <h2 className="text-white text-xl font-bold text-center mb-1">Changer le mot de passe</h2>
                 <p className="text-white/40 text-sm text-center mb-8">Mettez à jour votre mot de passe</p>
 
@@ -191,7 +203,7 @@ export default function Profile({ csrfToken, user = {}, errors = {}, success = f
                         <label className="block text-white/60 text-sm font-medium mb-2">Confirmer le mot de passe</label>
                         <div className="auth-icon-wrap relative">
                             <i className={`fa-solid fa-circle-check absolute left-4 top-1/2 -translate-y-1/2 text-sm pointer-events-none z-2 ${iconClass(passwordValues.confirmPassword)}`}></i>
-                            <input type="password" name="profile_password_form[confirmPassword]" className="auth-input" placeholder="Confirmez votre nouveau mot de passe" value={passwordValues.confirmPassword} onChange={handlePasswordChange('confirmPassword')} />
+                            <input type="password" name="profile_password_form[confirmPassword]" className="auth-input" placeholder="Confirmez votre nouveau mot de passe" value={passwordValues.confirmPassword} onChange={handlePasswordChange('confirmPassword')} autoComplete="new-password" />
                         </div>
                         {errors.confirmPassword && <div className="text-red-400 text-xs mt-1">{errors.confirmPassword}</div>}
                     </div>
@@ -202,11 +214,89 @@ export default function Profile({ csrfToken, user = {}, errors = {}, success = f
                 </form>
             </div>
 
+            {/* Mon plan */}
+            <div className="auth-card mb-6">
+                <h2 className="text-white text-xl font-bold text-center mb-1">Mon plan</h2>
+                <p className="text-white/40 text-sm text-center mb-6">Votre abonnement actuel</p>
+
+                <div className="flex items-center justify-between p-4 rounded-2xl border border-violet-larry/30 bg-violet-larry/5 mb-6">
+                    <div>
+                        <p className="text-white font-bold text-lg">{currentPlanData?.name ?? user.plan?.name ?? 'Aucun plan'}</p>
+                        {currentPlanData && (
+                            <p className="text-white/50 text-sm mt-0.5">
+                                {currentPlanData.price === 0 ? 'Gratuit' : `${currentPlanData.price}€/mois`}
+                                {currentPlanData.limitGeneration ? ` · ${currentPlanData.limitGeneration} générations/jour` : ''}
+                            </p>
+                        )}
+                    </div>
+                    <i className="fa-solid fa-crown text-violet-larry text-2xl"></i>
+                </div>
+
+                <button type="button" onClick={() => setShowPlanModal(true)} className="btn-larry-1 w-full">
+                    <span>Changer de plan</span>
+                </button>
+            </div>
+
             <p className="text-center text-white/40 text-sm mt-7">
                 <a href={homeUrl} className="text-violet-larry hover:text-white transition font-medium">
                     ← Retour à l'accueil
                 </a>
             </p>
+
+            {/* Modale changement de plan */}
+            {showPlanModal && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+                    <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={() => setShowPlanModal(false)}></div>
+                    <div className="relative z-10 w-full max-w-lg bg-[#0a0118] border border-white/10 rounded-2xl p-6">
+                        <h3 className="text-white text-xl font-bold text-center mb-1">Changer de plan</h3>
+                        <p className="text-white/40 text-sm text-center mb-6">Sélectionnez votre nouveau plan</p>
+
+                        <form method="post" action={planUrl} data-turbo="false">
+                            <input type="hidden" name="_csrf_token" value={planCsrfToken} />
+                            <input type="hidden" name="plan_id" value={selectedPlan ?? ''} />
+
+                            <div className="grid grid-cols-1 gap-3 mb-6">
+                                {plans.map(plan => (
+                                    <div
+                                        key={plan.id}
+                                        onClick={() => setSelectedPlan(plan.id)}
+                                        className={`cursor-pointer rounded-xl border p-4 transition-all ${
+                                            selectedPlan === plan.id
+                                                ? 'border-violet-larry bg-violet-larry/10'
+                                                : 'border-white/10 bg-white/[0.04] hover:border-white/20'
+                                        }`}
+                                    >
+                                        <div className="flex items-center justify-between">
+                                            <div className="flex items-center gap-3">
+                                                {selectedPlan === plan.id
+                                                    ? <i className="fa-solid fa-circle-check text-violet-larry"></i>
+                                                    : <i className="fa-regular fa-circle text-white/20"></i>
+                                                }
+                                                <div>
+                                                    <p className="text-white font-semibold">{plan.name}</p>
+                                                    <p className="text-white/40 text-xs">{plan.description}</p>
+                                                </div>
+                                            </div>
+                                            <span className="text-violet-larry font-bold">
+                                                {plan.price === 0 ? 'Gratuit' : `${plan.price}€/mois`}
+                                            </span>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <div className="flex gap-3">
+                                <button type="button" onClick={() => setShowPlanModal(false)} className="flex-1 py-3 rounded-xl border border-white/10 text-white/60 hover:text-white hover:border-white/30 transition text-sm font-medium">
+                                    Annuler
+                                </button>
+                                <button type="submit" disabled={!selectedPlan} className="btn-larry-1" style={{flex: 2}}>
+                                    <span>Confirmer</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

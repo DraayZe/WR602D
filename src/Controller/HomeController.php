@@ -19,6 +19,8 @@ final class HomeController extends AbstractController
             'name' => $p->getName(),
             'description' => $p->getDescription(),
             'price' => $p->getPrice(),
+            'limitGeneration' => $p->getLimitGeneration(),
+            'tool' => array_map(fn($t) => ['name' => $t->getName()], $p->getTools()->toArray()),
         ], $planRepository->findAll());
 
         $tools = array_map(fn($t) => [

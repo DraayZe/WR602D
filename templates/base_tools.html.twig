@@ -16,12 +16,27 @@
 <img class="absolute top-0 right-0 z-0" src="{{ asset('images/Ellipse2bleu.png') }}">
 
 <div {{ react_component('components/Navbar', {
-    user: app.user ? { firstname: app.user.firstname } : null,
+    user: app.user ? {
+        firstname: app.user.firstname,
+        lastname: app.user.lastname,
+        photo: app.user.photo,
+        plan: app.user.plan ? app.user.plan.name : null,
+        email: app.user.email,
+        dob: app.user.dob ? app.user.dob|date('Y-m-d') : null,
+        phone: app.user.phone,
+        favoriteColor: app.user.favoriteColor,
+        planId: app.user.plan ? app.user.plan.id : null
+    } : null,
+    plans: active_plans,
+    csrfToken: csrf_token('profile_form'),
+    planCsrfToken: csrf_token('profile_plan_form'),
+    profileUrl: path('app_profile_update'),
+    planUrl: path('app_profile_plan'),
     logoutUrl: logout_path(),
     loginUrl: path('app_login'),
     registerUrl: path('app_register'),
     logoUrl: asset('images/LogoLarryPDF.png'),
-    pathHomeUrl : path('app_home')
+    pathHomeUrl: path('app_home')
 }) }}></div>
 
 

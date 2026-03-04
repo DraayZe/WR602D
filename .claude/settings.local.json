@@ -11,7 +11,8 @@
       "Bash(grep:*)",
       "Bash(php /home/WR602D/www/html/wr602d/bin/console debug:asset-map:*)",
       "Bash(php:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(npm run:*)"
     ]
   }
 }

@@ -12,11 +12,19 @@ body {
 }
 
 .btn-larry-1 {
-    @apply p-[2px] rounded-2xl bg-gradient-to-b from-white/40 to-white/10 inline-block border-1 border-white/50 shadow-[0_0_15px_3px_rgba(100,80,200,0.6)] hover:cursor-pointer;
+    @apply p-[2px] rounded-2xl bg-gradient-to-r from-white/35 via-white/8 to-[#7C4DFF]/35 border-1 border-white/60 shadow-[0_0_15px_3px_rgba(100,80,200,0.6)] hover:cursor-pointer;
 }
 
 .btn-larry-1 span {
-    @apply block px-6 py-2 text-base text-white rounded-2xl bg-gradient-to-b from-[#6b6b8d] to-[#3b3260] hover:from-[#7a7a9d] hover:to-[#4a4170] transition;
+    @apply block px-6 py-2 text-base text-white rounded-2xl  hover:from-[#7a7a9d] hover:to-[#4a4170] transition;
+}
+
+.btn-larry-2 {
+    @apply p-[2px] rounded-2xl bg-[#FFF4F4] hover:cursor-pointer;
+}
+
+.btn-larry-2 span {
+    @apply block px-6 py-2 text-base text-black rounded-2xl hover:bg-black transition;
 }
 
 
@@ -45,7 +53,7 @@ body {
 }
 
 .pricing-card {
-    @apply relative bg-white/[0.04] backdrop-blur-sm rounded-xl border border-white/10 p-8 flex flex-col gap-4 w-72;
+    @apply relative bg-white/[0.04] backdrop-blur-sm rounded-xl border border-white/10 p-8 flex flex-col gap-4 w-72 h-200;
     transition: all 0.3s ease;
 }
 

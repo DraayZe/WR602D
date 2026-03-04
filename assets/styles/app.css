@@ -12,12 +12,13 @@ body {
 }
 
 .btn-larry-1 {
-    @apply p-[2px] rounded-2xl bg-gradient-to-b from-white/40 to-white/10 inline-block border-1 border-white/50 shadow-[0_0_15px_3px_rgba(100,80,200,0.6)];
+    @apply p-[2px] rounded-2xl bg-gradient-to-b from-white/40 to-white/10 inline-block border-1 border-white/50 shadow-[0_0_15px_3px_rgba(100,80,200,0.6)] hover:cursor-pointer;
 }
 
 .btn-larry-1 span {
     @apply block px-6 py-2 text-base text-white rounded-2xl bg-gradient-to-b from-[#6b6b8d] to-[#3b3260] hover:from-[#7a7a9d] hover:to-[#4a4170] transition;
 }
+
 
 .scroll-arrow {
     animation: bounce-down 2s ease-in-out infinite;
@@ -163,24 +164,6 @@ body {
 .auth-select option {
     background: #1a0e2e;
     @apply text-white;
-}
-
-.auth-submit {
-    @apply w-full p-[2px] rounded-xl bg-gradient-to-b from-white/35 to-white/[0.08] block border border-white/80 cursor-pointer mt-2;
-    box-shadow: 0 0 18px 3px rgba(100, 80, 200, 0.5);
-    transition: box-shadow 0.3s;
-}
-
-.auth-submit:hover {
-    box-shadow: 0 0 25px 5px rgba(130, 90, 230, 0.6);
-}
-
-.auth-submit span {
-    @apply block w-full py-3 text-base text-white font-semibold rounded-xl bg-gradient-to-b from-[#6b6b8d] to-[#3b3260] text-center transition-all duration-200;
-}
-
-.auth-submit:hover span {
-    @apply bg-gradient-to-b from-[#7d7d9f] to-[#4a4170];
 }
 
 .auth-icon-wrap .has-value-icon {

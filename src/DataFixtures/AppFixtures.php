@@ -46,7 +46,7 @@ class AppFixtures extends Fixture
         $toolHTML->setDescription("Convertissez une page HTML en PDF");
         $toolHTML->setColor("#EF4444");
         $toolHTML->setIsActive(true);
-        $toolHTML->setRoute(null);
+        $toolHTML->setRoute("app_tool_html_to_pdf");
         $toolHTML->addPlan($planFree);
         $manager->persist($toolHTML);
 

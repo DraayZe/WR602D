@@ -12,6 +12,7 @@ import ResetRequest from './react/dist/pages/auth/ResetRequest.js';
 import ResetPassword from './react/dist/pages/auth/ResetPassword.js';
 import CheckEmail from './react/dist/pages/auth/CheckEmail.js';
 import UrlToPdf from './react/dist/pages/tools/UrlToPdf.js';
+import Profile from './react/dist/pages/Profile.js';
 
 registerReactControllerComponents({
     'Hello': Hello,
@@ -24,4 +25,5 @@ registerReactControllerComponents({
     'pages/auth/ResetPassword': ResetPassword,
     'pages/auth/CheckEmail': CheckEmail,
     'pages/tools/UrlToPdf': UrlToPdf,
+    'pages/Profile': Profile,
 });

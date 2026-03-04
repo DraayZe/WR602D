@@ -1,0 +1,15 @@
+{% extends 'base_auth.html.twig' %}
+
+{% block title %}Mon profil - LarryPDF{% endblock %}
+
+{% block body %}
+    <div {{ react_component('pages/Profile', {
+        csrfToken: csrf_token('profile_form'),
+        user: user,
+        errors: errors,
+        success: success,
+        profileUrl: path('app_profile'),
+        homeUrl: path('app_home'),
+        logoUrl: asset('images/LogoLarryPDF.png')
+    }) }}></div>
+{% endblock %}

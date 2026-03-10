@@ -3,6 +3,8 @@
 @theme {
     --color-violet-larry: #B155FF;
     --color-violet-larry-dark: #7C4DFF;
+    --color-blue-larry: #2B25D9;
+    --color-blue-larry-dark: #1e1a9e;
     --color-bg-dark: #01030e;
     --color-card-bg: rgba(255, 255, 255, 0.04);
     --color-card-border: rgba(255, 255, 255, 0.1);
@@ -185,4 +187,20 @@ body {
 
 @keyframes authFadeIn {
     to { opacity: 1; transform: translateY(0); }
+}
+
+/* Profile modal — overrides violet → blue */
+.profile-modal .auth-card::before {
+    background: linear-gradient(90deg, transparent, rgba(43, 37, 217, 0.4), transparent);
+}
+
+.profile-modal .auth-input:focus {
+    @apply border-blue-larry bg-white/[0.07];
+    box-shadow: 0 0 0 3px rgba(43, 37, 217, 0.08), 0 0 20px rgba(43, 37, 217, 0.06);
+}
+
+.profile-modal .auth-input:-webkit-autofill,
+.profile-modal .auth-input:-webkit-autofill:hover,
+.profile-modal .auth-input:-webkit-autofill:focus {
+    border-color: rgba(43, 37, 217, 0.3);
 }

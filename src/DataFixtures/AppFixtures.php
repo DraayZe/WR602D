@@ -17,6 +17,7 @@ class AppFixtures extends Fixture
         $planFree->setDescription("La formule parfaite pour commencer et prendre en main.");
         $planFree->setPrice(0);
         $planFree->setLimitGeneration(5);
+
         $planFree->setActive(true);
 
         $manager->persist($planFree);
@@ -28,6 +29,7 @@ class AppFixtures extends Fixture
         $planPro->setPrice(9.9);
         $planPro->setLimitGeneration(20);
         $planPro->setActive(true);
+        $planPro->setStripePriceId("price_1T9L632NjawVyw3STEBuOIAj");
         $manager->persist($planPro);
 
         // Plan premium
@@ -37,6 +39,7 @@ class AppFixtures extends Fixture
         $planPremium->setPrice(45);
         $planPremium->setLimitGeneration(200);
         $planPremium->setActive(true);
+        $planPremium->setStripePriceId("price_1T9L6d2NjawVyw3Sd6jEtXsd");
         $manager->persist($planPremium);
 
 

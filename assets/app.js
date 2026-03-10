@@ -13,6 +13,8 @@ import ResetPassword from './react/dist/pages/auth/ResetPassword.js';
 import CheckEmail from './react/dist/pages/auth/CheckEmail.js';
 import UrlToPdf from './react/dist/pages/tools/UrlToPdf.js';
 import Profile from './react/dist/pages/Profile.js';
+import PaymentSuccess from './react/dist/pages/payment/success.js';
+import PaymentCancel from './react/dist/pages/payment/cancel.js';
 
 registerReactControllerComponents({
     'Hello': Hello,
@@ -26,4 +28,6 @@ registerReactControllerComponents({
     'pages/auth/CheckEmail': CheckEmail,
     'pages/tools/UrlToPdf': UrlToPdf,
     'pages/Profile': Profile,
+    'pages/payment/success': PaymentSuccess,
+    'pages/payment/cancel': PaymentCancel,
 });

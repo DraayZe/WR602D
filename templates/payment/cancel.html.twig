@@ -1,0 +1,9 @@
+{% extends 'base_auth.html.twig' %}
+
+{% block title %}LarryPDF - Paiement annulé{% endblock %}
+
+{% block body %}
+    <div {{ react_component('pages/payment/cancel', {
+        homeUrl: path('app_home')
+    }) }}></div>
+{% endblock %}

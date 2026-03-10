@@ -34,7 +34,7 @@ export default function ProfileModal({ user = {}, plans = [], csrfToken, planCsr
         return () => { document.body.style.overflow = ''; };
     }, []);
 
-    const iconClass = (value) => value ? 'text-violet-larry' : 'text-white/20';
+    const iconClass = (value) => value ? 'text-blue-larry' : 'text-white/20';
     const currentPhotoSrc = photoPreview || (user.photo ? `/uploads/avatars/${user.photo}` : null);
     const currentPlanData = plans.find(p => p.id === currentPlanId);
 
@@ -144,10 +144,10 @@ export default function ProfileModal({ user = {}, plans = [], csrfToken, planCsr
     };
 
     return (
-        <div className="fixed inset-0 z-50 flex items-start justify-center p-4 pt-16 overflow-y-auto">
+        <div className="profile-modal fixed inset-0 z-50 flex items-start justify-center p-4 pt-16 overflow-y-auto">
             <div className="fixed inset-0 bg-black/60 backdrop-blur-md" onClick={onClose}></div>
 
-            <div className="relative z-10 w-full max-w-2xl bg-[#0a0118] border border-white/10 rounded-2xl p-8 mb-8">
+            <div className="relative z-10 w-full max-w-2xl bg-bg-dark border border-white/10 rounded-2xl p-8 mb-8">
                 <div className="flex items-center justify-between mb-8">
                     <h2 className="text-white text-2xl font-bold">Mon profil</h2>
                     <button onClick={onClose} aria-label="Fermer" className="hover:cursor-pointer w-8 h-8 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/10 text-white/60 hover:text-white transition">
@@ -176,7 +176,7 @@ export default function ProfileModal({ user = {}, plans = [], csrfToken, planCsr
                         <div className="flex justify-center mb-6">
                             <div className="relative">
                                 <div
-                                    className="w-20 h-20 rounded-full overflow-hidden border-2 border-violet-larry/50 bg-white/5 flex items-center justify-center cursor-pointer"
+                                    className="w-20 h-20 rounded-full overflow-hidden border-2 border-blue-larry/50 bg-white/5 flex items-center justify-center cursor-pointer"
                                     onClick={() => fileInputRef.current?.click()}
                                 >
                                     {currentPhotoSrc ? (
@@ -186,7 +186,7 @@ export default function ProfileModal({ user = {}, plans = [], csrfToken, planCsr
                                     )}
                                 </div>
                                 <button type="button" onClick={() => fileInputRef.current?.click()}
-                                    className="absolute bottom-0 right-0 w-6 h-6 rounded-full bg-violet-larry flex items-center justify-center hover:bg-violet-larry/80 transition">
+                                    className="absolute bottom-0 right-0 w-6 h-6 rounded-full bg-blue-larry flex items-center justify-center hover:bg-blue-larry/80 transition">
                                     <i className="fa-solid fa-camera text-white text-xs"></i>
                                 </button>
                                 <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handlePhotoChange} />
@@ -317,7 +317,7 @@ export default function ProfileModal({ user = {}, plans = [], csrfToken, planCsr
                         </div>
                     )}
 
-                    <div className="flex items-center justify-between p-4 rounded-2xl border border-violet-larry/30 bg-violet-larry/5 mb-4">
+                    <div className="flex items-center justify-between p-4 rounded-2xl border border-blue-larry/30 bg-blue-larry/5 mb-4">
                         <div>
                             <p className="text-white font-bold text-lg">{currentPlanData?.name ?? currentPlanName ?? 'Aucun plan'}</p>
                             {currentPlanData && (
@@ -327,7 +327,7 @@ export default function ProfileModal({ user = {}, plans = [], csrfToken, planCsr
                                 </p>
                             )}
                         </div>
-                        <i className="fa-solid fa-crown text-violet-larry text-2xl"></i>
+                        <i className="fa-solid fa-crown text-blue-larry text-2xl"></i>
                     </div>
 
                     {!showPlanPicker && (
@@ -345,14 +345,14 @@ export default function ProfileModal({ user = {}, plans = [], csrfToken, planCsr
                                         onClick={() => setSelectedPlan(plan.id)}
                                         className={`cursor-pointer rounded-xl border p-4 transition-all ${
                                             selectedPlan === plan.id
-                                                ? 'border-violet-larry bg-violet-larry/10'
+                                                ? 'border-blue-larry bg-blue-larry/10'
                                                 : 'border-white/10 bg-white/[0.04] hover:border-white/20'
                                         }`}
                                     >
                                         <div className="flex items-center justify-between">
                                             <div className="flex items-center gap-3">
                                                 {selectedPlan === plan.id
-                                                    ? <i className="fa-solid fa-circle-check text-violet-larry"></i>
+                                                    ? <i className="fa-solid fa-circle-check text-blue-larry"></i>
                                                     : <i className="fa-regular fa-circle text-white/20"></i>
                                                 }
                                                 <div>
@@ -360,7 +360,7 @@ export default function ProfileModal({ user = {}, plans = [], csrfToken, planCsr
                                                     <p className="text-white/40 text-xs">{plan.description}</p>
                                                 </div>
                                             </div>
-                                            <span className="text-violet-larry font-bold">
+                                            <span className="text-blue-larry font-bold">
                                                 {plan.price === 0 ? 'Gratuit' : `${plan.price}€/mois`}
                                             </span>
                                         </div>

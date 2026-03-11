@@ -26,7 +26,7 @@ body {
 }
 
 .btn-larry-2 span {
-    @apply block px-6 py-2 text-base text-black rounded-2xl hover:bg-black transition;
+    @apply block px-6 py-2 text-base text-black rounded-2xl hover:bg-white/80 transition;
 }
 
 
@@ -89,7 +89,7 @@ body {
 }
 
 .footer-bg-social-media {
-    @apply bg-violet-larry-dark/30 backdrop-blur-lg border-white/30 border-1 rounded-md
+    @apply bg-violet-larry-dark/30 backdrop-blur-lg border-white/30 border-1 rounded-md p-1
 }
 
 .footer-link {
@@ -189,7 +189,6 @@ body {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Profile modal — overrides violet → blue */
 .profile-modal .auth-card::before {
     background: linear-gradient(90deg, transparent, rgba(43, 37, 217, 0.4), transparent);
 }

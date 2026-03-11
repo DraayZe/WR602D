@@ -16,11 +16,13 @@ final class HomeController extends AbstractController
     {
 
         $plans = array_map(fn($p) => [
+            'id' => $p->getId(),
             'name' => $p->getName(),
             'description' => $p->getDescription(),
             'price' => $p->getPrice(),
             'limitGeneration' => $p->getLimitGeneration(),
             'tool' => array_map(fn($t) => ['name' => $t->getName()], $p->getTools()->toArray()),
+            'checkoutUrl' => $p->getStripePriceId() ? $this->generateUrl('app_payment_checkout', ['id' => $p->getId()]) : null,
         ], $planRepository->findAll());
 
         $tools = array_map(fn($t) => [

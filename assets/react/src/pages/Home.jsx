@@ -7,7 +7,7 @@ function formatPrice(price) {
         : num.toFixed(2).replace('.', ',');
 }
 
-export default function Home({ tools = [], plans = [], heroImageUrl, mascotImageUrl }) {
+export default function Home({ tools = [], plans = [], heroImageUrl, mascotImageUrl,checkoutUrl }) {
     return (
         <>
             <section className="min-h-screen flex flex-col justify-center mx-auto max-w-3/4">
@@ -114,7 +114,7 @@ export default function Home({ tools = [], plans = [], heroImageUrl, mascotImage
 
                                     <div key={index}
                                          className="mt-4">
-                                        <a href="#" className={isFeatured ? 'btn-larry-2 block' : 'btn-larry-1 block'}>
+                                        <a href={plan.checkoutUrl ?? '#'} data-turbo="false" className={isFeatured ? 'btn-larry-2 block' : 'btn-larry-1 block'}>
                                             <span className="text-center">Commencer</span>
                                         </a>
                                     </div>

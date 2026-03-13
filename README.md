@@ -8,26 +8,28 @@ Commande pour lancer les watchers :
 
 ## Outils LarryPDF par plan
 
+> Tous les outils utilisent Gotenberg (conteneur Docker sur le port 3009).
+> ❌ = non faisable avec Gotenberg, nécessite un service externe.
+
 ### Plan Gratuit
-- **HTML en PDF** ✅
-- **Lien en PDF** ✅
+- **HTML en PDF** ✅ (fait)
+- **Lien en PDF** ✅ (fait)
 - **Fusionner des PDF** - combiner plusieurs PDF en un seul
 - **Compresser un PDF** - réduire la taille du fichier
 
 ### Plan Pro
-- **Word en PDF** (.docx → PDF)
-- **PDF en Word** (PDF → .docx)
-- **Image en PDF** (JPG/PNG → PDF)
-- **PDF en Image** (PDF → JPG/PNG)
+- **Word en PDF** (.docx → PDF) - via LibreOffice (Gotenberg)
+- **Image en PDF** (JPG/PNG → PDF) - via Gotenberg
+- **PDF en Image** (PDF → JPG/PNG) - via Gotenberg
 - **Diviser un PDF** - extraire des pages spécifiques
 - **Protéger un PDF** - ajouter un mot de passe
 - **Déverrouiller un PDF** - retirer la protection
 
-### Plan Entreprise
-- **Excel en PDF** (.xlsx → PDF)
-- **PDF en Excel** (PDF → .xlsx)
-- **PowerPoint en PDF** (.pptx → PDF)
+### Plan Premium
+- **Excel en PDF** (.xlsx → PDF) - via LibreOffice (Gotenberg)
+- **PowerPoint en PDF** (.pptx → PDF) - via LibreOffice (Gotenberg)
 - **Filigraner un PDF** - ajouter un watermark texte/image
-- **OCR** - extraire le texte d'un PDF scanné
-- **Signer un PDF** - ajouter une signature électronique
-- **Éditer un PDF** - modifier le texte directement
+- **PDF en Word** (.docx) ❌ - service externe requis
+- **PDF en Excel** (.xlsx) ❌ - service externe requis
+- **OCR** ❌ - Tesseract non inclus dans Gotenberg
+- **Signer un PDF** ❌ - nécessite une lib PHP dédiée

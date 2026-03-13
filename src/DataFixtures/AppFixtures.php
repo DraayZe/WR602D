@@ -103,6 +103,16 @@ class AppFixtures extends Fixture
         $toolImage->addPlan($planPro);
         $manager->persist($toolImage);
 
+        $toolDiviser = new Tool();
+        $toolDiviser->setName("Diviser un PDF");
+        $toolDiviser->setIcon("fa-solid fa-divide");
+        $toolDiviser->setDescription("Divisez vos fichiers PDFs en un seul");
+        $toolDiviser->setColor("#F97316");
+        $toolDiviser->setIsActive(true);
+        $toolDiviser->setRoute(null);
+        $toolDiviser->addPlan($planPro);
+        $manager->persist($toolDiviser);
+
         $manager->flush();
     }
 

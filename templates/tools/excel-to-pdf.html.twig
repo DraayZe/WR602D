@@ -1,0 +1,9 @@
+{% extends 'base_tools.html.twig' %}
+
+{% block title %}Excel en PDF - LarryPDF{% endblock %}
+
+{% block body %}
+    <div {{ react_component('pages/tools/ExcelToPdf', {
+        endpoint: path('app_api_excel_to_pdf'),
+    }) }}></div>
+{% endblock %}

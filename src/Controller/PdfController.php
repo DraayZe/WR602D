@@ -36,6 +36,8 @@ final class PdfController extends AbstractController
         );
     }
 
+    // ── Page routes ──────────────────────────────────────────────────────────
+
     #[IsGranted("ROLE_USER")]
     #[Route('/tools/url-to-pdf', name: 'app_tool_url_to_pdf', methods: ['GET'])]
     public function urlToPdfPage(): Response
@@ -43,11 +45,56 @@ final class PdfController extends AbstractController
         return $this->render('tools/url-to-pdf.html.twig');
     }
 
+    #[IsGranted("ROLE_USER")]
     #[Route('/tools/html-to-pdf', name: 'app_tool_html_to_pdf', methods: ['GET'])]
-    public function htmlToPdfPage() : Response
+    public function htmlToPdfPage(): Response
     {
         return $this->render('tools/html-to-pdf.html.twig');
     }
+
+    #[IsGranted("ROLE_USER")]
+    #[Route('/tools/merge-pdf', name: 'app_tool_merge_pdf', methods: ['GET'])]
+    public function mergePdfPage(): Response
+    {
+        return $this->render('tools/merge-pdf.html.twig');
+    }
+
+    #[IsGranted("ROLE_USER")]
+    #[Route('/tools/word-to-pdf', name: 'app_tool_word_to_pdf', methods: ['GET'])]
+    public function wordToPdfPage(): Response
+    {
+        return $this->render('tools/word-to-pdf.html.twig');
+    }
+
+    #[IsGranted("ROLE_USER")]
+    #[Route('/tools/image-to-pdf', name: 'app_tool_image_to_pdf', methods: ['GET'])]
+    public function imageToPdfPage(): Response
+    {
+        return $this->render('tools/image-to-pdf.html.twig');
+    }
+
+    #[IsGranted("ROLE_USER")]
+    #[Route('/tools/split-pdf', name: 'app_tool_split_pdf', methods: ['GET'])]
+    public function splitPdfPage(): Response
+    {
+        return $this->render('tools/split-pdf.html.twig');
+    }
+
+    #[IsGranted("ROLE_USER")]
+    #[Route('/tools/excel-to-pdf', name: 'app_tool_excel_to_pdf', methods: ['GET'])]
+    public function excelToPdfPage(): Response
+    {
+        return $this->render('tools/excel-to-pdf.html.twig');
+    }
+
+    #[IsGranted("ROLE_USER")]
+    #[Route('/tools/powerpoint-to-pdf', name: 'app_tool_powerpoint_to_pdf', methods: ['GET'])]
+    public function powerpointToPdfPage(): Response
+    {
+        return $this->render('tools/powerpoint-to-pdf.html.twig');
+    }
+
+    // ── API routes ────────────────────────────────────────────────────────────
 
     #[Route('/forms/chromium/convert/url', name: 'app_pdf_from_url', methods: ['POST', 'GET'])]
     public function fromUrl(Request $request): Response
@@ -62,37 +109,23 @@ final class PdfController extends AbstractController
         if (!$url) {
             return $this->json([
                 'error' => 'URL parameter is required',
-                'usage' => [
-                    'query_param' => 'POST /pdf/from-url?url=https://example.com',
-                    'json_body' => 'POST /pdf/from-url with {"url": "https://example.com"}'
-                ]
             ], Response::HTTP_BAD_REQUEST);
         }
 
         if (!filter_var($url, FILTER_VALIDATE_URL)) {
-            return $this->json([
-                'error' => 'Invalid URL format'
-            ], Response::HTTP_BAD_REQUEST);
+            return $this->json(['error' => 'Invalid URL format'], Response::HTTP_BAD_REQUEST);
         }
 
         try {
             $pdfContent = $this->gotenbergService->generatePdfFromUrl($url);
-
             $filename = 'webpage-' . date('Y-m-d-His') . '.pdf';
 
-            return new Response(
-                $pdfContent,
-                Response::HTTP_OK,
-                [
-                    'Content-Type' => 'application/pdf',
-                    'Content-Disposition' => 'inline; filename="' . $filename . '"',
-                ]
-            );
+            return new Response($pdfContent, Response::HTTP_OK, [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="' . $filename . '"',
+            ]);
         } catch (\Exception $e) {
-            return $this->json([
-                'error' => 'Failed to generate PDF',
-                'message' => $e->getMessage()
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->json(['error' => 'Failed to generate PDF', 'message' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -109,47 +142,244 @@ final class PdfController extends AbstractController
         }
 
         if (!$file) {
-            return $this->json([
-                'error' => 'HTML file is required',
-                'usage' => 'POST /forms/chromium/convert/html with multipart/form-data field "files" containing an HTML file',
-                'debug' => [
-                    'received_files' => array_keys($request->files->all()),
-                    'content_type' => $request->headers->get('Content-Type'),
-                ]
-            ], Response::HTTP_BAD_REQUEST);
+            return $this->json(['error' => 'HTML file is required'], Response::HTTP_BAD_REQUEST);
         }
 
         if ($file->getClientOriginalExtension() !== 'html' && $file->getClientMimeType() !== 'text/html') {
-            return $this->json([
-                'error' => 'File must be an HTML file',
-                'received_type' => $file->getClientMimeType()
-            ], Response::HTTP_BAD_REQUEST);
+            return $this->json(['error' => 'File must be an HTML file'], Response::HTTP_BAD_REQUEST);
         }
 
         try {
             $htmlContent = file_get_contents($file->getPathname());
-
-            if ($htmlContent === false) {
-                throw new \RuntimeException('Unable to read HTML file content');
-            }
-
             $pdfContent = $this->gotenbergService->generatePdfFromHtml($htmlContent);
+            $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.pdf';
+
+            return new Response($pdfContent, Response::HTTP_OK, [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="' . $filename . '"',
+            ]);
+        } catch (\Exception $e) {
+            return $this->json(['error' => 'Failed to generate PDF from HTML', 'message' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    #[IsGranted("ROLE_USER")]
+    #[Route('/api/tools/merge-pdf', name: 'app_api_merge_pdf', methods: ['POST'])]
+    public function mergePdf(Request $request): Response
+    {
+        $files = $request->files->all()['files'] ?? [];
+
+        if (count($files) < 2) {
+            return $this->json(['error' => 'Au moins 2 fichiers PDF sont requis'], Response::HTTP_BAD_REQUEST);
+        }
+
+        $fileList = [];
+        foreach ($files as $file) {
+            if (strtolower($file->getClientOriginalExtension()) !== 'pdf') {
+                return $this->json(['error' => 'Tous les fichiers doivent être des PDF'], Response::HTTP_BAD_REQUEST);
+            }
+            $fileList[] = [
+                'path' => $file->getPathname(),
+                'filename' => $file->getClientOriginalName(),
+            ];
+        }
+
+        try {
+            $pdfContent = $this->gotenbergService->mergePdfs($fileList);
+
+            return new Response($pdfContent, Response::HTTP_OK, [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="merged.pdf"',
+            ]);
+        } catch (\Exception $e) {
+            return $this->json(['error' => 'Erreur lors de la fusion', 'message' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    #[IsGranted("ROLE_USER")]
+    #[Route('/api/tools/word-to-pdf', name: 'app_api_word_to_pdf', methods: ['POST'])]
+    public function wordToPdf(Request $request): Response
+    {
+        $file = $request->files->get('file');
+
+        if (!$file) {
+            return $this->json(['error' => 'Fichier Word requis'], Response::HTTP_BAD_REQUEST);
+        }
+
+        $ext = strtolower($file->getClientOriginalExtension());
+        if (!in_array($ext, ['doc', 'docx'])) {
+            return $this->json(['error' => 'Le fichier doit être un document Word (.doc ou .docx)'], Response::HTTP_BAD_REQUEST);
+        }
+
+        try {
+            $mimeType = $ext === 'docx'
+                ? 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+                : 'application/msword';
+
+            $pdfContent = $this->gotenbergService->convertWithLibreOffice(
+                $file->getPathname(),
+                $file->getClientOriginalName(),
+                $mimeType
+            );
 
             $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.pdf';
 
-            return new Response(
-                $pdfContent,
-                Response::HTTP_OK,
-                [
-                    'Content-Type' => 'application/pdf',
-                    'Content-Disposition' => 'inline; filename="' . $filename . '"',
-                ]
-            );
+            return new Response($pdfContent, Response::HTTP_OK, [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="' . $filename . '"',
+            ]);
         } catch (\Exception $e) {
-            return $this->json([
-                'error' => 'Failed to generate PDF from HTML',
-                'message' => $e->getMessage()
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->json(['error' => 'Erreur lors de la conversion', 'message' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    #[IsGranted("ROLE_USER")]
+    #[Route('/api/tools/image-to-pdf', name: 'app_api_image_to_pdf', methods: ['POST'])]
+    public function imageToPdf(Request $request): Response
+    {
+        $file = $request->files->get('file');
+
+        if (!$file) {
+            return $this->json(['error' => 'Image requise'], Response::HTTP_BAD_REQUEST);
+        }
+
+        $ext = strtolower($file->getClientOriginalExtension());
+        $allowedExts = ['jpg', 'jpeg', 'png', 'webp', 'gif', 'bmp', 'tiff'];
+        if (!in_array($ext, $allowedExts)) {
+            return $this->json(['error' => 'Format non supporté. Utilisez JPG, PNG, WEBP, GIF, BMP ou TIFF'], Response::HTTP_BAD_REQUEST);
+        }
+
+        try {
+            $mimeType = $file->getMimeType() ?: 'image/' . $ext;
+
+            $pdfContent = $this->gotenbergService->convertWithLibreOffice(
+                $file->getPathname(),
+                $file->getClientOriginalName(),
+                $mimeType
+            );
+
+            $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.pdf';
+
+            return new Response($pdfContent, Response::HTTP_OK, [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="' . $filename . '"',
+            ]);
+        } catch (\Exception $e) {
+            return $this->json(['error' => 'Erreur lors de la conversion', 'message' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    #[IsGranted("ROLE_USER")]
+    #[Route('/api/tools/split-pdf', name: 'app_api_split_pdf', methods: ['POST'])]
+    public function splitPdf(Request $request): Response
+    {
+        $file = $request->files->get('file');
+
+        if (!$file) {
+            return $this->json(['error' => 'Fichier PDF requis'], Response::HTTP_BAD_REQUEST);
+        }
+
+        if (strtolower($file->getClientOriginalExtension()) !== 'pdf') {
+            return $this->json(['error' => 'Le fichier doit être un PDF'], Response::HTTP_BAD_REQUEST);
+        }
+
+        $splitMode = $request->request->get('splitMode', 'intervals');
+        $splitParam = $request->request->get('splitParam', '1');
+
+        if (!in_array($splitMode, ['intervals', 'pages'])) {
+            return $this->json(['error' => 'Mode de division invalide'], Response::HTTP_BAD_REQUEST);
+        }
+
+        try {
+            $zipContent = $this->gotenbergService->splitPdf(
+                $file->getPathname(),
+                $file->getClientOriginalName(),
+                $splitMode,
+                $splitParam
+            );
+
+            $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '-split.zip';
+
+            return new Response($zipContent, Response::HTTP_OK, [
+                'Content-Type' => 'application/zip',
+                'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+            ]);
+        } catch (\Exception $e) {
+            return $this->json(['error' => 'Erreur lors de la division', 'message' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    #[IsGranted("ROLE_USER")]
+    #[Route('/api/tools/excel-to-pdf', name: 'app_api_excel_to_pdf', methods: ['POST'])]
+    public function excelToPdf(Request $request): Response
+    {
+        $file = $request->files->get('file');
+
+        if (!$file) {
+            return $this->json(['error' => 'Fichier Excel requis'], Response::HTTP_BAD_REQUEST);
+        }
+
+        $ext = strtolower($file->getClientOriginalExtension());
+        if (!in_array($ext, ['xls', 'xlsx'])) {
+            return $this->json(['error' => 'Le fichier doit être un classeur Excel (.xls ou .xlsx)'], Response::HTTP_BAD_REQUEST);
+        }
+
+        try {
+            $mimeType = $ext === 'xlsx'
+                ? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                : 'application/vnd.ms-excel';
+
+            $pdfContent = $this->gotenbergService->convertWithLibreOffice(
+                $file->getPathname(),
+                $file->getClientOriginalName(),
+                $mimeType
+            );
+
+            $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.pdf';
+
+            return new Response($pdfContent, Response::HTTP_OK, [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="' . $filename . '"',
+            ]);
+        } catch (\Exception $e) {
+            return $this->json(['error' => 'Erreur lors de la conversion', 'message' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    #[IsGranted("ROLE_USER")]
+    #[Route('/api/tools/powerpoint-to-pdf', name: 'app_api_powerpoint_to_pdf', methods: ['POST'])]
+    public function powerpointToPdf(Request $request): Response
+    {
+        $file = $request->files->get('file');
+
+        if (!$file) {
+            return $this->json(['error' => 'Fichier PowerPoint requis'], Response::HTTP_BAD_REQUEST);
+        }
+
+        $ext = strtolower($file->getClientOriginalExtension());
+        if (!in_array($ext, ['ppt', 'pptx'])) {
+            return $this->json(['error' => 'Le fichier doit être une présentation PowerPoint (.ppt ou .pptx)'], Response::HTTP_BAD_REQUEST);
+        }
+
+        try {
+            $mimeType = $ext === 'pptx'
+                ? 'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+                : 'application/vnd.ms-powerpoint';
+
+            $pdfContent = $this->gotenbergService->convertWithLibreOffice(
+                $file->getPathname(),
+                $file->getClientOriginalName(),
+                $mimeType
+            );
+
+            $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.pdf';
+
+            return new Response($pdfContent, Response::HTTP_OK, [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="' . $filename . '"',
+            ]);
+        } catch (\Exception $e) {
+            return $this->json(['error' => 'Erreur lors de la conversion', 'message' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }

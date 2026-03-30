@@ -1,0 +1,9 @@
+{% extends 'base_tools.html.twig' %}
+
+{% block title %}Fusionner des PDF - LarryPDF{% endblock %}
+
+{% block body %}
+    <div {{ react_component('pages/tools/MergePdf', {
+        endpoint: path('app_api_merge_pdf'),
+    }) }}></div>
+{% endblock %}

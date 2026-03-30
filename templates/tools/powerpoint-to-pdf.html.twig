@@ -1,0 +1,9 @@
+{% extends 'base_tools.html.twig' %}
+
+{% block title %}PowerPoint en PDF - LarryPDF{% endblock %}
+
+{% block body %}
+    <div {{ react_component('pages/tools/PowerPointToPdf', {
+        endpoint: path('app_api_powerpoint_to_pdf'),
+    }) }}></div>
+{% endblock %}

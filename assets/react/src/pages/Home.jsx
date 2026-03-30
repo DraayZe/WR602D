@@ -7,7 +7,7 @@ function formatPrice(price) {
         : num.toFixed(2).replace('.', ',');
 }
 
-export default function Home({ tools = [], plans = [], heroImageUrl, mascotImageUrl,checkoutUrl }) {
+export default function Home({ tools = [], plans = [], userPlanLevel = -1, loginUrl = '#', heroImageUrl, mascotImageUrl }) {
     return (
         <>
             <section className="min-h-screen flex flex-col justify-center mx-auto max-w-3/4">
@@ -50,23 +50,42 @@ export default function Home({ tools = [], plans = [], heroImageUrl, mascotImage
 
                     <div className="grid grid-cols-4 gap-6">
                         {tools.map((tool, index) => {
-                            const Tag = tool.url ? 'a' : 'div';
-                            const linkProps = tool.url ? { href: tool.url } : {};
+                            const notLoggedIn = userPlanLevel === -1;
+                            const isLocked = notLoggedIn
+                                ? tool.requiredPlanLevel > 0
+                                : userPlanLevel < tool.requiredPlanLevel;
+                            const isClickable = !isLocked && !notLoggedIn && tool.url;
+                            const Tag = isClickable ? 'a' : 'div';
+                            const linkProps = isClickable ? { href: tool.url } : {};
+                            const clickProps = notLoggedIn ? { onClick: () => { window.location.href = loginUrl; }, style: { cursor: 'pointer' } } : {};
                             return (
-                                <Tag key={index} className={`feature-card fade-up fade-up-delay-${index + 1}${tool.url ? ' cursor-pointer' : ''}`} {...linkProps}>
-                                    <div className="flex items-center mb-2">
-                                        <div
-                                            className="w-10 h-10 flex rounded-xl items-center justify-center"
-                                            style={{
-                                                backgroundColor: tool.color + '20',
-                                                border: `1px solid ${tool.color}40`,
-                                            }}
-                                        >
-                                            <i className={`${tool.icon} text-lg`} style={{ color: tool.color }}></i>
+                                <Tag
+                                    key={index}
+                                    className={`feature-card fade-up fade-up-delay-${index + 1} relative`}
+                                    {...linkProps}
+                                    {...clickProps}
+                                >
+                                    <div style={isLocked ? { filter: 'grayscale(1)', opacity: 0.45 } : {}}>
+                                        <div className="flex items-center mb-2">
+                                            <div
+                                                className="w-10 h-10 flex rounded-xl items-center justify-center"
+                                                style={{
+                                                    backgroundColor: tool.color + '20',
+                                                    border: `1px solid ${tool.color}40`,
+                                                }}
+                                            >
+                                                <i className={`${tool.icon} text-lg`} style={{ color: tool.color }}></i>
+                                            </div>
+                                            <h3 className="text-white text-lg font-semibold ml-2">{tool.name}</h3>
                                         </div>
-                                        <h3 className="text-white text-lg font-semibold ml-2">{tool.name}</h3>
+                                        <p className="text-stone-400 text-sm leading-relaxed">{tool.description}</p>
                                     </div>
-                                    <p className="text-stone-400 text-sm leading-relaxed">{tool.description}</p>
+                                    {isLocked && tool.requiredPlanName && (
+                                        <span className="absolute top-3 right-3 flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#B155FF]/20 border border-[#B155FF]/40 text-[#B155FF] text-xs font-medium">
+                                            <i className="fa-solid fa-lock text-[9px]"></i>
+                                            {tool.requiredPlanName}
+                                        </span>
+                                    )}
                                 </Tag>
                             );
                         })}

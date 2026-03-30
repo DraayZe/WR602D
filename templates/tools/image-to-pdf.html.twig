@@ -1,0 +1,9 @@
+{% extends 'base_tools.html.twig' %}
+
+{% block title %}Image en PDF - LarryPDF{% endblock %}
+
+{% block body %}
+    <div {{ react_component('pages/tools/ImageToPdf', {
+        endpoint: path('app_api_image_to_pdf'),
+    }) }}></div>
+{% endblock %}

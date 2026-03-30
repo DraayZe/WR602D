@@ -12,6 +12,12 @@ import ResetRequest from './react/dist/pages/auth/ResetRequest.js';
 import ResetPassword from './react/dist/pages/auth/ResetPassword.js';
 import CheckEmail from './react/dist/pages/auth/CheckEmail.js';
 import UrlToPdf from './react/dist/pages/tools/UrlToPdf.js';
+import MergePdf from './react/dist/pages/tools/MergePdf.js';
+import WordToPdf from './react/dist/pages/tools/WordToPdf.js';
+import ImageToPdf from './react/dist/pages/tools/ImageToPdf.js';
+import SplitPdf from './react/dist/pages/tools/SplitPdf.js';
+import ExcelToPdf from './react/dist/pages/tools/ExcelToPdf.js';
+import PowerPointToPdf from './react/dist/pages/tools/PowerPointToPdf.js';
 import Profile from './react/dist/pages/Profile.js';
 import PaymentSuccess from './react/dist/pages/payment/success.js';
 import PaymentCancel from './react/dist/pages/payment/cancel.js';
@@ -27,6 +33,12 @@ registerReactControllerComponents({
     'pages/auth/ResetPassword': ResetPassword,
     'pages/auth/CheckEmail': CheckEmail,
     'pages/tools/UrlToPdf': UrlToPdf,
+    'pages/tools/MergePdf': MergePdf,
+    'pages/tools/WordToPdf': WordToPdf,
+    'pages/tools/ImageToPdf': ImageToPdf,
+    'pages/tools/SplitPdf': SplitPdf,
+    'pages/tools/ExcelToPdf': ExcelToPdf,
+    'pages/tools/PowerPointToPdf': PowerPointToPdf,
     'pages/Profile': Profile,
     'pages/payment/success': PaymentSuccess,
     'pages/payment/cancel': PaymentCancel,

@@ -17,9 +17,7 @@ class AppFixtures extends Fixture
         $planFree->setDescription("La formule parfaite pour commencer et prendre en main.");
         $planFree->setPrice(0);
         $planFree->setLimitGeneration(5);
-
         $planFree->setActive(true);
-
         $manager->persist($planFree);
 
         // Plan pro
@@ -42,6 +40,7 @@ class AppFixtures extends Fixture
         $planPremium->setStripePriceId("price_1T9L6d2NjawVyw3Sd6jEtXsd");
         $manager->persist($planPremium);
 
+        // ── Plan Gratuit ──────────────────────────────────────────────────────
 
         $toolHTML = new Tool();
         $toolHTML->setName("HTML en PDF");
@@ -63,17 +62,17 @@ class AppFixtures extends Fixture
         $toolLien->addPlan($planFree);
         $manager->persist($toolLien);
 
-        $toolFusionner  = new Tool();
+        $toolFusionner = new Tool();
         $toolFusionner->setName("Fusionner des PDF");
         $toolFusionner->setIcon("fa-solid fa-code-merge");
         $toolFusionner->setDescription("Fusionnez vos fichiers PDFs en un seul");
         $toolFusionner->setColor("#22C55E");
         $toolFusionner->setIsActive(true);
-        $toolFusionner->setRoute(null);
+        $toolFusionner->setRoute("app_tool_merge_pdf");
         $toolFusionner->addPlan($planFree);
         $manager->persist($toolFusionner);
 
-        $toolCompresser  = new Tool();
+        $toolCompresser = new Tool();
         $toolCompresser->setName("Compresser un PDF");
         $toolCompresser->setIcon("fa-solid fa-down-left-and-up-right-to-center");
         $toolCompresser->setDescription("Réduisez la taille de votre fichier PDF");
@@ -83,13 +82,15 @@ class AppFixtures extends Fixture
         $toolCompresser->addPlan($planFree);
         $manager->persist($toolCompresser);
 
+        // ── Plan Pro ──────────────────────────────────────────────────────────
+
         $toolWord = new Tool();
         $toolWord->setName("Word en PDF");
         $toolWord->setIcon("fa-brands fa-wordpress-simple");
         $toolWord->setDescription("Convertissez un fichier word en PDF");
         $toolWord->setColor("#08e2ea");
         $toolWord->setIsActive(true);
-        $toolWord->setRoute(null);
+        $toolWord->setRoute("app_tool_word_to_pdf");
         $toolWord->addPlan($planPro);
         $manager->persist($toolWord);
 
@@ -99,12 +100,42 @@ class AppFixtures extends Fixture
         $toolImage->setDescription("Convertissez une image (PNG, JPEG, JPG) en PDF");
         $toolImage->setColor("#EC4899");
         $toolImage->setIsActive(true);
-        $toolImage->setRoute(null);
+        $toolImage->setRoute("app_tool_image_to_pdf");
         $toolImage->addPlan($planPro);
         $manager->persist($toolImage);
 
+        $toolDiviser = new Tool();
+        $toolDiviser->setName("Diviser un PDF");
+        $toolDiviser->setIcon("fa-solid fa-divide");
+        $toolDiviser->setDescription("Divisez votre PDF en plusieurs fichiers");
+        $toolDiviser->setColor("#F97316");
+        $toolDiviser->setIsActive(true);
+        $toolDiviser->setRoute("app_tool_split_pdf");
+        $toolDiviser->addPlan($planPro);
+        $manager->persist($toolDiviser);
+
+        // ── Plan Premium ──────────────────────────────────────────────────────
+
+        $toolExcel = new Tool();
+        $toolExcel->setName("Excel en PDF");
+        $toolExcel->setIcon("fa-solid fa-table");
+        $toolExcel->setDescription("Convertissez un fichier Excel en PDF");
+        $toolExcel->setColor("#16A34A");
+        $toolExcel->setIsActive(true);
+        $toolExcel->setRoute("app_tool_excel_to_pdf");
+        $toolExcel->addPlan($planPremium);
+        $manager->persist($toolExcel);
+
+        $toolPowerPoint = new Tool();
+        $toolPowerPoint->setName("PowerPoint en PDF");
+        $toolPowerPoint->setIcon("fa-solid fa-display");
+        $toolPowerPoint->setDescription("Convertissez une présentation PowerPoint en PDF");
+        $toolPowerPoint->setColor("#EA580C");
+        $toolPowerPoint->setIsActive(true);
+        $toolPowerPoint->setRoute("app_tool_powerpoint_to_pdf");
+        $toolPowerPoint->addPlan($planPremium);
+        $manager->persist($toolPowerPoint);
+
         $manager->flush();
     }
-
-
 }

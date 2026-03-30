@@ -74,16 +74,13 @@ class WebhookController extends AbstractController
 
 
             case 'customer.subscription.deleted':
-                // L'abonnement a été annulé (depuis le Dashboard Stripe ou le portail client)
-                // On repasse l'utilisateur sur le plan FREE
+                // L'abonnement a été annulé → repasse l'utilisateur sur le plan Gratuit
                 $subscription = $event->data->object;
                 $userId = $subscription->metadata->user_id ?? null;
 
-
                 if ($userId) {
                     $user = $userRepository->find($userId);
-                    $freePlan = $planRepository->findOneBy(['name' => 'FREE']);
-
+                    $freePlan = $planRepository->findOneBy(['name' => 'Gratuit']);
 
                     if ($user && $freePlan) {
                         $user->setPlan($freePlan);

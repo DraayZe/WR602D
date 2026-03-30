@@ -118,6 +118,7 @@ export default function Navbar({ user, logoutUrl, loginUrl, registerUrl, logoUrl
                     planCsrfToken={planCsrfToken}
                     profileUrl={profileUrl}
                     planUrl={planUrl}
+                    plansPageUrl={pathHomeUrl + '#plans'}
                     onClose={() => setShowProfile(false)}
                     onUserUpdate={handleUserUpdate}
                 />

@@ -93,7 +93,7 @@ export default function Home({ tools = [], plans = [], userPlanLevel = -1, login
                 </div>
             </section>
 
-            <section className="py-24">
+            <section id="plans" className="py-24">
                 <div className="mx-auto max-w-3/4">
                     <div className="flex items-center justify-center gap-16 mb-16">
                         <img className="h-80 w-auto" src={mascotImageUrl} alt="Mascotte LarryPDF" />

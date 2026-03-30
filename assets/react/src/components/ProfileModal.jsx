@@ -371,7 +371,7 @@ export default function ProfileModal({ user = {}, plans = [], csrfToken, planCsr
                                     <i className="fa-solid fa-crown text-blue-larry text-2xl"></i>
                                 </div>
 
-                                <a href={plansPageUrl} data-turbo="false" className="btn-larry-1 block w-full">
+                                <a href={plansPageUrl} data-turbo="false" onClick={onClose} className="btn-larry-1 block w-full">
                                     <span className="text-center">Voir les plans</span>
                                 </a>
                             </div>

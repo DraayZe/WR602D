@@ -36,7 +36,8 @@
     loginUrl: path('app_login'),
     registerUrl: path('app_register'),
     logoUrl: asset('images/LogoLarryPDF.png'),
-    pathHomeUrl: path('app_home')
+    pathHomeUrl: path('app_home'),
+    quotaUrl: app.user ? path('app_api_quota') : null
 }) }}></div>
 
 

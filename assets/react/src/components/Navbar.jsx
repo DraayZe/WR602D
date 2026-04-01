@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ProfileModal from './ProfileModal.js';
+import { useQuota } from '../hooks/useQuota.js';
 
-export default function Navbar({ user, logoutUrl, loginUrl, registerUrl, logoUrl, pathHomeUrl, profileUrl, plans, csrfToken, planCsrfToken, planUrl }) {
+export default function Navbar({ user, logoutUrl, loginUrl, registerUrl, logoUrl, pathHomeUrl, profileUrl, plans, csrfToken, planCsrfToken, planUrl, quotaUrl }) {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [showProfile, setShowProfile] = useState(false);
     const [currentUser, setCurrentUser] = useState(user);
     const dropdownRef = useRef(null);
+    const { quota } = useQuota(user ? quotaUrl : null);
 
     useEffect(() => {
         function handleClickOutside(e) {
@@ -77,6 +79,23 @@ export default function Navbar({ user, logoutUrl, loginUrl, registerUrl, logoUrl
                                                 )}
                                             </div>
                                         </div>
+
+                                        {quota && quota.hasPlan && (
+                                            <div className="px-5 py-3 border-b border-white/10">
+                                                <div className="flex items-center justify-between mb-1.5">
+                                                    <span className="text-white/30 text-xs">Générations aujourd'hui</span>
+                                                    <span className={`text-xs font-medium ${quota.remaining === 0 ? 'text-red-400' : quota.used / quota.limit >= 0.8 ? 'text-orange-400' : 'text-white/50'}`}>
+                                                        {quota.used} / {quota.limit}
+                                                    </span>
+                                                </div>
+                                                <div className="h-1 bg-white/10 rounded-full overflow-hidden">
+                                                    <div
+                                                        className={`h-full rounded-full transition-all ${quota.remaining === 0 ? 'bg-red-500' : quota.used / quota.limit >= 0.8 ? 'bg-orange-400' : 'bg-violet-larry'}`}
+                                                        style={{ width: `${Math.min(100, (quota.used / quota.limit) * 100)}%` }}
+                                                    />
+                                                </div>
+                                            </div>
+                                        )}
 
                                         <div className="py-2">
                                             <button

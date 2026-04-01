@@ -1,6 +1,9 @@
 import React, { useState, useRef } from 'react';
+import { useQuota } from '../../hooks/useQuota.js';
+import QuotaBar from '../../components/QuotaBar.js';
 
-export default function MergePdf({ endpoint }) {
+export default function MergePdf({ endpoint, quotaUrl }) {
+    const { quota, refreshQuota } = useQuota(quotaUrl);
     const [files, setFiles] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -61,6 +64,7 @@ export default function MergePdf({ endpoint }) {
             const blobUrl = URL.createObjectURL(blob);
             blobRef.current = blobUrl;
             setPdf({ blobUrl, filename: 'merged.pdf' });
+            refreshQuota();
         } catch (err) {
             setError(err.message);
         } finally {
@@ -75,6 +79,10 @@ export default function MergePdf({ endpoint }) {
                 <p className="text-stone-400 text-lg max-w-xl mx-auto">
                     Combinez plusieurs fichiers PDF en un seul document.
                 </p>
+            </div>
+
+            <div className="max-w-2xl mx-auto fade-up fade-up-delay-1">
+                <QuotaBar quota={quota} />
             </div>
 
             <div className="max-w-2xl mx-auto mb-8 fade-up fade-up-delay-1">
@@ -110,7 +118,7 @@ export default function MergePdf({ endpoint }) {
 
                         <button
                             type="submit"
-                            disabled={loading || files.length < 2}
+                            disabled={loading || files.length < 2 || (quota && quota.remaining === 0)}
                             className="btn-larry-1 w-full disabled:opacity-60 disabled:cursor-not-allowed"
                         >
                             <span className="flex items-center justify-center gap-2">

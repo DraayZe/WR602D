@@ -1,6 +1,9 @@
 import React, { useState, useRef } from 'react';
+import { useQuota } from '../../hooks/useQuota.js';
+import QuotaBar from '../../components/QuotaBar.js';
 
-export default function WordToPdf({ endpoint }) {
+export default function WordToPdf({ endpoint, quotaUrl }) {
+    const { quota, refreshQuota } = useQuota(quotaUrl);
     const [file, setFile] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -56,6 +59,7 @@ export default function WordToPdf({ endpoint }) {
             blobRef.current = blobUrl;
             const filename = file.name.replace(/\.[^.]+$/, '') + '.pdf';
             setPdf({ blobUrl, filename });
+            refreshQuota();
         } catch (err) {
             setError(err.message);
         } finally {
@@ -70,6 +74,10 @@ export default function WordToPdf({ endpoint }) {
                 <p className="text-stone-400 text-lg max-w-xl mx-auto">
                     Convertissez vos documents Word en PDF en quelques secondes.
                 </p>
+            </div>
+
+            <div className="max-w-2xl mx-auto fade-up fade-up-delay-1">
+                <QuotaBar quota={quota} />
             </div>
 
             <div className="max-w-2xl mx-auto mb-8 fade-up fade-up-delay-1">
@@ -99,7 +107,7 @@ export default function WordToPdf({ endpoint }) {
 
                         <button
                             type="submit"
-                            disabled={loading || !file}
+                            disabled={loading || !file || (quota && quota.remaining === 0)}
                             className="btn-larry-1 w-full disabled:opacity-60 disabled:cursor-not-allowed"
                         >
                             <span className="flex items-center justify-center gap-2">

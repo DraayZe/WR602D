@@ -31,6 +31,7 @@ RUN echo '<VirtualHost *:80>\n\
     <Directory /var/www/html/public>\n\
         AllowOverride All\n\
         Require all granted\n\
+        FallbackResource /index.php\n\
     </Directory>\n\
 </VirtualHost>' > /etc/apache2/sites-enabled/000-default.conf
 

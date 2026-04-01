@@ -36,5 +36,6 @@ EXPOSE 80
 
 # Migrations + cache warmup au démarrage (les variables d'env sont dispo ici)
 CMD bash -c "php bin/console doctrine:migrations:migrate --no-interaction --env=prod && \
+             php bin/console tailwind:build --env=prod && \
              php bin/console cache:warmup --env=prod && \
              apache2-foreground"

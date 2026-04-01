@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import ProfileModal from './ProfileModal.js';
 import { useQuota } from '../hooks/useQuota.js';
 
-export default function Navbar({ user, logoutUrl, loginUrl, registerUrl, logoUrl, pathHomeUrl, profileUrl, plans, csrfToken, planCsrfToken, planUrl, quotaUrl }) {
+export default function Navbar({ user, logoutUrl, loginUrl, registerUrl, logoUrl, pathHomeUrl, profileUrl, plans, csrfToken, planCsrfToken, planUrl, quotaUrl, historyUrl }) {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [showProfile, setShowProfile] = useState(false);
     const [currentUser, setCurrentUser] = useState(user);
@@ -98,6 +98,15 @@ export default function Navbar({ user, logoutUrl, loginUrl, registerUrl, logoUrl
                                         )}
 
                                         <div className="py-2">
+                                            {historyUrl && (
+                                                <a
+                                                    href={historyUrl}
+                                                    className="flex items-center gap-3 px-5 py-2.5 text-stone-300 hover:bg-white/10 hover:text-white transition text-sm"
+                                                >
+                                                    <i className="fa-solid fa-clock-rotate-left text-xs w-4 text-center"></i>
+                                                    Historique
+                                                </a>
+                                            )}
                                             <button
                                                 onClick={() => { setDropdownOpen(false); setShowProfile(true); }}
                                                 className="hover:cursor-pointer w-full flex items-center gap-3 px-5 py-2.5 text-stone-300 hover:bg-white/10 hover:text-white transition text-sm"

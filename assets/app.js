@@ -21,6 +21,7 @@ import PowerPointToPdf from './react/dist/pages/tools/PowerPointToPdf.js';
 import Profile from './react/dist/pages/Profile.js';
 import PaymentSuccess from './react/dist/pages/payment/success.js';
 import PaymentCancel from './react/dist/pages/payment/cancel.js';
+import AccountHistory from './react/dist/pages/account/History.js';
 
 registerReactControllerComponents({
     'Hello': Hello,
@@ -42,4 +43,5 @@ registerReactControllerComponents({
     'pages/Profile': Profile,
     'pages/payment/success': PaymentSuccess,
     'pages/payment/cancel': PaymentCancel,
+    'pages/account/History': AccountHistory,
 });

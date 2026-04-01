@@ -61,6 +61,8 @@ final class HomeController extends AbstractController
             'tools' => $tools,
             'userPlanLevel' => $userPlanLevel,
             'loginUrl' => $this->generateUrl('app_login'),
+            'registerUrl' => $this->generateUrl('app_register'),
+            'isLogged' => (bool) $user,
         ]);
     }
 }

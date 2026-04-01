@@ -1,0 +1,40 @@
+FROM php:8.3-apache
+
+# Activer mod_rewrite pour Symfony
+RUN a2enmod rewrite
+
+# Extensions PHP nécessaires
+RUN apt-get update && apt-get install -y \
+    git curl libzip-dev libicu-dev libonig-dev \
+    && docker-php-ext-install pdo pdo_mysql zip intl opcache \
+    && rm -rf /var/lib/apt/lists/*
+
+# Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+WORKDIR /var/www/html
+
+# Copier le projet
+COPY . .
+
+# Installer les dépendances sans les scripts qui ont besoin de l'env
+RUN APP_ENV=prod composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
+
+# Config Apache : pointer vers public/
+RUN echo '<VirtualHost *:80>\n\
+    DocumentRoot /var/www/html/public\n\
+    <Directory /var/www/html/public>\n\
+        AllowOverride All\n\
+        Require all granted\n\
+    </Directory>\n\
+</VirtualHost>' > /etc/apache2/sites-enabled/000-default.conf
+
+# Permissions
+RUN chown -R www-data:www-data /var/www/html/var
+
+EXPOSE 80
+
+# Migrations + cache warmup au démarrage (les variables d'env sont dispo ici)
+CMD bash -c "php bin/console doctrine:migrations:migrate --no-interaction --env=prod && \
+             php bin/console cache:warmup --env=prod && \
+             apache2-foreground"

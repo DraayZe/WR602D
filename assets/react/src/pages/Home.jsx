@@ -7,7 +7,7 @@ function formatPrice(price) {
         : num.toFixed(2).replace('.', ',');
 }
 
-export default function Home({ tools = [], plans = [], userPlanLevel = -1, loginUrl = '#', heroImageUrl, mascotImageUrl }) {
+export default function Home({ tools = [], plans = [], userPlanLevel = -1, loginUrl = '#', registerUrl = '#', isLogged = false, heroImageUrl, mascotImageUrl }) {
     return (
         <>
             <section className="min-h-screen flex flex-col justify-center mx-auto max-w-3/4">
@@ -21,11 +21,11 @@ export default function Home({ tools = [], plans = [], userPlanLevel = -1, login
                             Plateforme professionnelle de conversion et création de PDF. Rapide, sécurisé et sans limite.
                         </p>
                         <div className="flex items-center gap-4 mt-2">
-                            <a href="#" className="text-black bg-[#F8F4F4] px-6 py-3 rounded-2xl transition text-base font-medium hover:bg-white">
+                            <a href={isLogged ? '#outils' : registerUrl} className="text-black bg-[#F8F4F4] px-6 py-3 rounded-2xl transition text-base font-medium hover:bg-white">
                                 Commencer gratuitement
                             </a>
-                            <a href="#" className="btn-larry-1">
-                                <span>Partager</span>
+                            <a href="#plans" className="btn-larry-1">
+                                <span>Voir les tarifs</span>
                             </a>
                         </div>
                     </div>
@@ -41,7 +41,7 @@ export default function Home({ tools = [], plans = [], userPlanLevel = -1, login
                 </div>
             </section>
 
-            <section>
+            <section id="outils">
                 <div className="mx-auto max-w-3/4">
                     <div className="text-center mb-16">
                         <h2 className="text-white text-4xl font-bold mb-4">Tout ce dont vous avez besoin</h2>

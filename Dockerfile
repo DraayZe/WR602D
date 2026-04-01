@@ -30,12 +30,14 @@ RUN echo '<VirtualHost *:80>\n\
 </VirtualHost>' > /etc/apache2/sites-enabled/000-default.conf
 
 # Permissions
-RUN mkdir -p /var/www/html/var && chown -R www-data:www-data /var/www/html/var
+RUN mkdir -p /var/www/html/var && \
+    chown -R www-data:www-data /var/www/html/var && \
+    chmod -R 775 /var/www/html/var
 
 EXPOSE 80
 
-# Migrations + cache warmup au démarrage (les variables d'env sont dispo ici)
 CMD bash -c "php bin/console doctrine:migrations:migrate --no-interaction --env=prod && \
              php bin/console tailwind:build --env=prod && \
              php bin/console cache:warmup --env=prod && \
+             chown -R www-data:www-data /var/www/html/var && \
              apache2-foreground"

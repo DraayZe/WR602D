@@ -172,7 +172,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->userContacts->contains($userContact)) {
             $this->userContacts->add($userContact);
-            $userContact->setUserId($this);
+            $userContact->setUser($this);
         }
 
         return $this;
@@ -182,8 +182,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->userContacts->removeElement($userContact)) {
             // set the owning side to null (unless already changed)
-            if ($userContact->getUserId() === $this) {
-                $userContact->setUserId(null);
+            if ($userContact->getUser() === $this) {
+                $userContact->setUser(null);
             }
         }
 
@@ -274,7 +274,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->generations->contains($generation)) {
             $this->generations->add($generation);
-            $generation->setUserId($this);
+            $generation->setUser($this);
         }
 
         return $this;
@@ -284,8 +284,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->generations->removeElement($generation)) {
             // set the owning side to null (unless already changed)
-            if ($generation->getUserId() === $this) {
-                $generation->setUserId(null);
+            if ($generation->getUser() === $this) {
+                $generation->setUser(null);
             }
         }
 

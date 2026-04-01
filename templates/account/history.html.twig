@@ -1,0 +1,9 @@
+{% extends 'base_tools.html.twig' %}
+
+{% block title %}Historique des générations - LarryPDF{% endblock %}
+
+{% block body %}
+    <div {{ react_component('pages/account/History', {
+        generations: generations
+    }) }}></div>
+{% endblock %}

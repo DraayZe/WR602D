@@ -35,10 +35,11 @@ export default function Navbar({ user, logoutUrl, loginUrl, registerUrl, logoUrl
                     </a>
 
                     <div className="flex items-center gap-8">
-                        <a href="#" className="text-stone-300 hover:text-white transition text-base">Outils</a>
-                        <a href="#" className="text-stone-300 hover:text-white transition text-base">Tarifs</a>
-                        <a href="#" className="text-stone-300 hover:text-white transition text-base">Conversion</a>
-                        <a href="#" className="text-stone-300 hover:text-white transition text-base">Historique</a>
+                        <a href={`${pathHomeUrl}#outils`} className="text-stone-300 hover:text-white transition text-base">Outils</a>
+                        <a href={`${pathHomeUrl}#plans`} className="text-stone-300 hover:text-white transition text-base">Tarifs</a>
+                        {user && historyUrl && (
+                            <a href={historyUrl} className="text-stone-300 hover:text-white transition text-base">Historique</a>
+                        )}
                     </div>
 
                     <div className="flex items-center gap-4">

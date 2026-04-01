@@ -1,6 +1,9 @@
 import React, { useState, useRef } from 'react';
+import { useQuota } from '../../hooks/useQuota.js';
+import QuotaBar from '../../components/QuotaBar.js';
 
-export default function UrlToPdf({ pdfFromUrlEndpoint }) {
+export default function UrlToPdf({ pdfFromUrlEndpoint, quotaUrl }) {
+    const { quota, refreshQuota } = useQuota(quotaUrl);
     const [url, setUrl] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -47,6 +50,7 @@ export default function UrlToPdf({ pdfFromUrlEndpoint }) {
             } catch (_) {}
 
             setPdf({ blobUrl, filename });
+            refreshQuota();
         } catch (err) {
             setError(err.message);
         } finally {
@@ -58,14 +62,14 @@ export default function UrlToPdf({ pdfFromUrlEndpoint }) {
         <div className="max-w-5xl mx-auto px-6 pt-14 pb-24">
 
             <div className="text-center mb-12 fade-up">
-                {/*<div className="inline-flex items-center gap-2 bg-violet-larry/10 border border-violet-larry/20 rounded-full px-4 py-1.5 mb-6">
-                    <i className="fa-solid fa-link text-violet-larry text-xs"></i>
-                    <span className="text-violet-larry text-sm font-medium">Outil gratuit</span>
-                </div> */}
                 <h1 className="text-white text-4xl font-bold mb-3">Lien en PDF</h1>
                 <p className="text-stone-400 text-lg max-w-xl mx-auto">
                     Convertissez n'importe quelle page web en document PDF en un clic.
                 </p>
+            </div>
+
+            <div className="max-w-2xl mx-auto fade-up fade-up-delay-1">
+                <QuotaBar quota={quota} />
             </div>
 
             <div className="max-w-2xl mx-auto mb-8 fade-up fade-up-delay-1">
@@ -86,7 +90,7 @@ export default function UrlToPdf({ pdfFromUrlEndpoint }) {
                             </div>
                             <button
                                 type="submit"
-                                disabled={loading}
+                                disabled={loading || (quota && quota.remaining === 0)}
                                 className="btn-larry-1 shrink-0 disabled:opacity-60 disabled:cursor-not-allowed"
                             >
                                 <span className="flex items-center gap-2 hover:cursor-pointer">

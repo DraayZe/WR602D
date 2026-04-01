@@ -1,7 +1,7 @@
 FROM php:8.3-apache
 
-# Activer mod_rewrite pour Symfony
-RUN a2enmod rewrite
+# Activer mod_rewrite et remoteip pour Symfony derrière un reverse proxy
+RUN a2enmod rewrite remoteip
 
 # Extensions PHP nécessaires + Node.js
 RUN apt-get update && apt-get install -y \
@@ -25,7 +25,7 @@ RUN APP_ENV=prod composer install --no-dev --optimize-autoloader --no-interactio
 # Builder React
 RUN cd assets/react/build && npm install && npm run build
 
-# Config Apache : pointer vers public/
+# Config Apache
 RUN echo '<VirtualHost *:80>\n\
     DocumentRoot /var/www/html/public\n\
     <Directory /var/www/html/public>\n\
@@ -33,6 +33,7 @@ RUN echo '<VirtualHost *:80>\n\
         Require all granted\n\
         FallbackResource /index.php\n\
     </Directory>\n\
+    RemoteIPHeader X-Forwarded-For\n\
 </VirtualHost>' > /etc/apache2/sites-enabled/000-default.conf
 
 # Permissions

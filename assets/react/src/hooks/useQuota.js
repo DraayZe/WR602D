@@ -15,3 +15,4 @@ export function useQuota(quotaUrl) {
 
     return { quota, refreshQuota: refresh };
 }
+export default useQuota;

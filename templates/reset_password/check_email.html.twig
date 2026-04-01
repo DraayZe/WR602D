@@ -1,0 +1,13 @@
+{% extends 'base_auth.html.twig' %}
+
+{% block title %}Email envoyé - LarryPDF{% endblock %}
+
+{% block body %}
+    <div {{ react_component('pages/auth/CheckEmail', {
+        expirationMessage: resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle'),
+        retryUrl: path('app_forgot_password_request'),
+        loginUrl: path('app_login'),
+        homeUrl: path('app_home'),
+        logoUrl: asset('images/LogoLarryPDF.png')
+    }) }}></div>
+{% endblock %}

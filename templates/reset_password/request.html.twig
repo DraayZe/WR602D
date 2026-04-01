@@ -1,0 +1,14 @@
+{% extends 'base_auth.html.twig' %}
+
+{% block title %}Mot de passe oublié - LarryPDF{% endblock %}
+
+{% block body %}
+    <div {{ react_component('pages/auth/ResetRequest', {
+        csrfToken: csrf_token('reset_password_request_form'),
+        errors: errors,
+        requestUrl: path('app_forgot_password_request'),
+        loginUrl: path('app_login'),
+        homeUrl: path('app_home'),
+        logoUrl: asset('images/LogoLarryPDF.png')
+    }) }}></div>
+{% endblock %}

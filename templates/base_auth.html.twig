@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}LarryPDF{% endblock %}</title>
+        <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>&#x26AB;&#xFE0F;</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        {% block stylesheets %}{% endblock %}
+        {% block javascripts %}
+            {% block importmap %}{{ importmap('app') }}{% endblock %}
+        {% endblock %}
+    </head>
+    <body class="min-h-screen bg-[#0a0118] flex items-center justify-center relative  py-8 px-4">
+        <img class="absolute top-0 left-0 z-0 pointer-events-none opacity-60" src="{{ asset('images/Ellipse1violet.png') }}" alt="">
+        <img class="absolute top-0 right-0 z-0 pointer-events-none opacity-60" src="{{ asset('images/Ellipse2bleu.png') }}" alt="">
+
+        <div class="auth-fade-in relative z-10 w-full">
+            {% block body %}{% endblock %}
+        </div>
+
+    </body>
+</html>

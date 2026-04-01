@@ -1,0 +1,10 @@
+{% extends 'base_tools.html.twig' %}
+
+{% block title %}Lien en PDF - LarryPDF{% endblock %}
+
+{% block body %}
+    <div {{ react_component('pages/tools/UrlToPdf', {
+        pdfFromUrlEndpoint: path('app_pdf_from_url'),
+        quotaUrl: path('app_api_quota'),
+    }) }}></div>
+{% endblock %}

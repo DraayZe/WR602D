@@ -3,10 +3,13 @@
 /.env.local
 /.env.local.php
 /.env.*.local
+/.claude
+/.idea
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
 /var/
 /vendor/
+/docs
 ###< symfony/framework-bundle ###
 
 ###> phpunit/phpunit ###
@@ -18,3 +21,8 @@
 /public/assets/
 /assets/vendor/
 ###< symfony/asset-mapper ###
+
+###> react/babel ###
+/assets/react/build/node_modules/
+/assets/react/dist/
+###< react/babel ###

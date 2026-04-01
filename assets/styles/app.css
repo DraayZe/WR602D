@@ -1,3 +1,205 @@
+@import "tailwindcss";
+
+@theme {
+    --color-violet-larry: #B155FF;
+    --color-violet-larry-dark: #7C4DFF;
+    --color-blue-larry: #2B25D9;
+    --color-blue-larry-dark: #1e1a9e;
+    --color-bg-dark: #01030e;
+    --color-card-bg: rgba(255, 255, 255, 0.04);
+    --color-card-border: rgba(255, 255, 255, 0.1);
+}
 body {
-    background-color: skyblue;
+    background-color: #01030e;
+}
+
+.btn-larry-1 {
+    @apply p-[2px] rounded-2xl bg-gradient-to-r from-white/35 via-white/8 to-[#7C4DFF]/35 border-1 border-white/60 shadow-[0_0_15px_3px_rgba(100,80,200,0.6)] hover:cursor-pointer;
+}
+
+.btn-larry-1 span {
+    @apply block px-6 py-2 text-base text-white rounded-2xl  hover:from-[#7a7a9d] hover:to-[#4a4170] transition;
+}
+
+.btn-larry-2 {
+    @apply p-[2px] rounded-2xl bg-[#FFF4F4] hover:cursor-pointer;
+}
+
+.btn-larry-2 span {
+    @apply block px-6 py-2 text-base text-black rounded-2xl hover:bg-white/80 transition;
+}
+
+
+.scroll-arrow {
+    animation: bounce-down 2s ease-in-out infinite;
+}
+
+@keyframes bounce-down {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(12px); }
+}
+
+.feature-card {
+    @apply relative bg-white/[0.04] backdrop-blur-md rounded-xl border border-white/10 p-6 transition-all duration-300;
+}
+
+.feature-card:hover {
+    @apply bg-white/[0.08] border-violet-larry/30;
+    box-shadow: 0 0 30px rgba(177, 85, 255, 0.08);
+}
+
+.feature-icon {
+    @apply w-12 h-12 rounded-full flex items-center justify-center mb-4;
+    background: linear-gradient(135deg, rgba(177, 85, 255, 0.25), rgba(80, 120, 255, 0.25));
+    border: 1px solid rgba(177, 85, 255, 0.3);
+}
+
+.pricing-card {
+    @apply relative bg-white/[0.04] backdrop-blur-sm rounded-xl border border-white/10 p-8 flex flex-col gap-4 w-102 h-200;
+    transition: all 0.3s ease;
+}
+
+.pricing-card:hover {
+    @apply bg-white/[0.07];
+}
+
+.pricing-card--featured {
+    @apply bg-violet-larry/[0.20] border-violet-larry/40 scale-105;
+    box-shadow: 0 0 40px rgba(177, 85, 255, 0.15);
+}
+
+.pricing-card--featured:hover {
+    @apply bg-violet-larry/[0.12];
+}
+
+.footer-main {
+    position: relative;
+    overflow: hidden;
+}
+
+.footer-main::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background: linear-gradient(to top, rgba(177, 85, 255, 0.06), transparent);
+    pointer-events: none;
+}
+
+.footer-bg-social-media {
+    @apply bg-violet-larry-dark/30 backdrop-blur-lg border-white/30 border-1 rounded-md p-1
+}
+
+.footer-link {
+    @apply text-stone-400 hover:text-white transition-colors duration-200 text-sm;
+}
+
+.footer-divider {
+    @apply border-t border-white/20;
+}
+
+.fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeUp 0.7s ease forwards;
+}
+
+@keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-up-delay-1 { animation-delay: 0.1s; }
+.fade-up-delay-2 { animation-delay: 0.2s; }
+.fade-up-delay-3 { animation-delay: 0.3s; }
+.fade-up-delay-4 { animation-delay: 0.4s; }
+.fade-up-delay-5 { animation-delay: 0.5s; }
+.fade-up-delay-6 { animation-delay: 0.6s; }
+
+.auth-card {
+    @apply bg-white/[0.04] backdrop-blur-xl rounded-2xl border border-white/[0.08] p-10 relative z-1;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.05);
+}
+
+.auth-card::before {
+    content: '';
+    @apply absolute top-0 left-1/2 -translate-x-1/2 w-3/5 h-px;
+    background: linear-gradient(90deg, transparent, rgba(177,85,255,0.4), transparent);
+}
+
+.auth-input {
+    @apply w-full bg-white/[0.04] border border-white/10 rounded-xl py-3 pl-11 pr-4 text-white text-sm outline-none transition-all duration-200;
+}
+
+.auth-input::placeholder {
+    @apply text-white/25;
+}
+
+.auth-input:focus {
+    @apply border-violet-larry/50 bg-white/[0.07];
+    box-shadow: 0 0 0 3px rgba(177, 85, 255, 0.08), 0 0 20px rgba(177,85,255,0.06);
+}
+
+.auth-input:-webkit-autofill,
+.auth-input:-webkit-autofill:hover,
+.auth-input:-webkit-autofill:focus {
+    -webkit-text-fill-color: #ffffff;
+    -webkit-box-shadow: 0 0 0 1000px rgba(30, 15, 50, 0.99) inset;
+    border-color: rgba(177, 85, 255, 0.3);
+    caret-color: #ffffff;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+.auth-input[type="date"] {
+    color-scheme: dark;
+}
+
+.auth-input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1) brightness(0.7);
+    @apply cursor-pointer;
+}
+
+.auth-select {
+    @apply bg-white/[0.04] border border-white/10 rounded-xl py-3 px-2 text-white text-sm outline-none transition-all duration-200 w-full appearance-none;
+}
+
+.auth-select:focus {
+    @apply border-violet-larry/50 bg-white/[0.07];
+}
+
+.auth-select option {
+    background: #1a0e2e;
+    @apply text-white;
+}
+
+.auth-icon-wrap .has-value-icon {
+    @apply text-violet-larry;
+}
+
+.auth-fade-in {
+    @apply opacity-0 translate-y-4;
+    animation: authFadeIn 0.5s ease forwards;
+}
+
+@keyframes authFadeIn {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.profile-modal .auth-card::before {
+    background: linear-gradient(90deg, transparent, rgba(43, 37, 217, 0.4), transparent);
+}
+
+.profile-modal .auth-input:focus {
+    @apply border-blue-larry bg-white/[0.07];
+    box-shadow: 0 0 0 3px rgba(43, 37, 217, 0.08), 0 0 20px rgba(43, 37, 217, 0.06);
+}
+
+.profile-modal .auth-input:-webkit-autofill,
+.profile-modal .auth-input:-webkit-autofill:hover,
+.profile-modal .auth-input:-webkit-autofill:focus {
+    border-color: rgba(43, 37, 217, 0.3);
 }

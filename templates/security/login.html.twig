@@ -1,0 +1,15 @@
+{% extends 'base_auth.html.twig' %}
+
+{% block title %}Connexion - LarryPDF{% endblock %}
+
+{% block body %}
+    <div {{ react_component('pages/auth/Login', {
+        csrfToken: csrf_token('authenticate'),
+        lastUsername: last_username,
+        error: error ? (error.messageKey|trans(error.messageData, 'security')) : null,
+        forgotPasswordUrl: path('app_forgot_password_request'),
+        registerUrl: path('app_register'),
+        homeUrl: path('app_home'),
+        logoUrl: asset('images/LogoLarryPDF.png')
+    }) }}></div>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'base_tools.html.twig' %}
+
+{% block title %}Word en PDF - LarryPDF{% endblock %}
+
+{% block body %}
+    <div {{ react_component('pages/tools/WordToPdf', {
+        endpoint: path('app_api_word_to_pdf'),
+        quotaUrl: path('app_api_quota'),
+    }) }}></div>
+{% endblock %}

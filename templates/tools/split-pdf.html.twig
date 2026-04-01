@@ -1,0 +1,10 @@
+{% extends 'base_tools.html.twig' %}
+
+{% block title %}Diviser un PDF - LarryPDF{% endblock %}
+
+{% block body %}
+    <div {{ react_component('pages/tools/SplitPdf', {
+        endpoint: path('app_api_split_pdf'),
+        quotaUrl: path('app_api_quota'),
+    }) }}></div>
+{% endblock %}

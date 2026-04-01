@@ -1,0 +1,14 @@
+{% extends 'base_auth.html.twig' %}
+
+{% block title %}Nouveau mot de passe - LarryPDF{% endblock %}
+
+{% block body %}
+    <div {{ react_component('pages/auth/ResetPassword', {
+        csrfToken: csrf_token('change_password_form'),
+        errors: errors,
+        resetUrl: path('app_reset_password'),
+        loginUrl: path('app_login'),
+        homeUrl: path('app_home'),
+        logoUrl: asset('images/LogoLarryPDF.png')
+    }) }}></div>
+{% endblock %}

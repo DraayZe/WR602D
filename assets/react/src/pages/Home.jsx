@@ -1,0 +1,170 @@
+import React from 'react';
+
+function formatPrice(price) {
+    const num = parseFloat(price);
+    return num % 1 === 0
+        ? num.toFixed(0)
+        : num.toFixed(2).replace('.', ',');
+}
+
+export default function Home({ tools = [], plans = [], userPlanLevel = -1, loginUrl = '#', heroImageUrl, mascotImageUrl }) {
+    return (
+        <>
+            <section className="min-h-screen flex flex-col justify-center mx-auto max-w-3/4">
+                <div className="flex items-center justify-center gap-16 mb-14">
+                    <div className="flex-1 flex flex-col gap-6">
+                        <h1 className="text-white text-6xl font-bold leading-tight">
+                            Convertissez vos PDFs<br />
+                            <span className="text-violet-larry">en quelques secondes</span>
+                        </h1>
+                        <p className="text-stone-300 text-lg max-w-xl">
+                            Plateforme professionnelle de conversion et création de PDF. Rapide, sécurisé et sans limite.
+                        </p>
+                        <div className="flex items-center gap-4 mt-2">
+                            <a href="#" className="text-black bg-[#F8F4F4] px-6 py-3 rounded-2xl transition text-base font-medium hover:bg-white">
+                                Commencer gratuitement
+                            </a>
+                            <a href="#" className="btn-larry-1">
+                                <span>Partager</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div className="flex-1 flex justify-end">
+                        <img className="h-114 w-auto" src={heroImageUrl} alt="Image d'illustration" />
+                    </div>
+                </div>
+
+                <div className="flex justify-center mt-12">
+                    <svg className="scroll-arrow w-8 h-8 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                    </svg>
+                </div>
+            </section>
+
+            <section>
+                <div className="mx-auto max-w-3/4">
+                    <div className="text-center mb-16">
+                        <h2 className="text-white text-4xl font-bold mb-4">Tout ce dont vous avez besoin</h2>
+                        <p className="text-stone-400 text-lg">Des outils pour tous vos besoins PDF</p>
+                    </div>
+
+                    <div className="grid grid-cols-4 gap-6">
+                        {tools.map((tool, index) => {
+                            const notLoggedIn = userPlanLevel === -1;
+                            const isLocked = notLoggedIn
+                                ? tool.requiredPlanLevel > 0
+                                : userPlanLevel < tool.requiredPlanLevel;
+                            const isClickable = !isLocked && !notLoggedIn && tool.url;
+                            const Tag = isClickable ? 'a' : 'div';
+                            const linkProps = isClickable ? { href: tool.url } : {};
+                            const clickProps = notLoggedIn ? { onClick: () => { window.location.href = loginUrl; }, style: { cursor: 'pointer' } } : {};
+                            return (
+                                <Tag
+                                    key={index}
+                                    className={`feature-card fade-up fade-up-delay-${index + 1} relative`}
+                                    {...linkProps}
+                                    {...clickProps}
+                                >
+                                    <div style={isLocked ? { filter: 'grayscale(1)', opacity: 0.45 } : {}}>
+                                        <div className="flex items-center mb-2">
+                                            <div
+                                                className="w-10 h-10 flex rounded-xl items-center justify-center"
+                                                style={{
+                                                    backgroundColor: tool.color + '20',
+                                                    border: `1px solid ${tool.color}40`,
+                                                }}
+                                            >
+                                                <i className={`${tool.icon} text-lg`} style={{ color: tool.color }}></i>
+                                            </div>
+                                            <h3 className="text-white text-lg font-semibold ml-2">{tool.name}</h3>
+                                        </div>
+                                        <p className="text-stone-400 text-sm leading-relaxed">{tool.description}</p>
+                                    </div>
+                                    {isLocked && tool.requiredPlanName && (
+                                        <span className="absolute top-3 right-3 flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#B155FF]/20 border border-[#B155FF]/40 text-[#B155FF] text-xs font-medium">
+                                            <i className="fa-solid fa-lock text-[9px]"></i>
+                                            {tool.requiredPlanName}
+                                        </span>
+                                    )}
+                                </Tag>
+                            );
+                        })}
+                    </div>
+                </div>
+            </section>
+
+            <section id="plans" className="py-24">
+                <div className="mx-auto max-w-3/4">
+                    <div className="flex items-center justify-center gap-16 mb-16">
+                        <img className="h-80 w-auto" src={mascotImageUrl} alt="Mascotte LarryPDF" />
+                        <div className="flex flex-col gap-4">
+                            <h2 className="text-white text-4xl font-bold">Choisissez votre formule</h2>
+                            <p className="text-stone-400 text-lg max-w-md">
+                                Des tarifs pour tous types de portefeuilles, adaptés à tous vos besoins.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="flex justify-center items-center gap-8">
+                        {plans.map((plan, index) => {
+                            const isFeatured = plan.name === 'Pro';
+                            return (
+                                <div key={index}
+                                     className={isFeatured ? 'pricing-card pricing-card--featured' : 'pricing-card'}>
+                                    {isFeatured && (
+                                        <span
+                                            className="absolute -top-3 left-1/2 -translate-x-1/2 bg-white text-black text-xs font-semibold px-4 py-1.5 rounded-full whitespace-nowrap">
+                                            Le plus populaire
+                                        </span>
+                                    )}
+
+                                    <div>
+                                        <h3 className="text-white text-lg font-semibold mb-1">
+                                            {plan.name.charAt(0).toUpperCase() + plan.name.slice(1).toLowerCase()}
+                                        </h3>
+                                        <p className="text-stone-400 text-sm leading-relaxed">{plan.description}</p>
+                                    </div>
+
+                                    <div className="mt-2">
+                                        <span
+                                            className="text-white text-5xl font-bold">{formatPrice(plan.price)}€</span>
+                                        <span className="text-stone-400 text-base ml-1">/mois</span>
+                                    </div>
+
+                                    <div key={index}
+                                         className="mt-4">
+                                        <a href={plan.checkoutUrl ?? '#'} data-turbo="false" className={isFeatured ? 'btn-larry-2 block' : 'btn-larry-1 block'}>
+                                            <span className="text-center">Commencer</span>
+                                        </a>
+                                    </div>
+
+                                    <div className="mt-2 flex">
+                                        <div className="bg-[#8D3ED0]/20 rounded-full">
+                                            <i className="fa-solid fa-check text-[#8D3ED0] p-2"></i>
+                                        </div>
+                                        <span className="text-stone-400 text-sm ml-2 flex items-center">
+                                          {plan.limitGeneration} générations/jour
+                                        </span>
+                                    </div>
+                                    {plan.tool.map((tool,i) => (
+                                    <div className="mt-2 flex">
+                                        <div className="bg-[#8D3ED0]/20 rounded-full">
+                                            <i className="fa-solid fa-check text-[#8D3ED0] p-2"></i>
+                                        </div>
+                                        <span className="text-stone-400 text-sm ml-2 flex items-center">
+
+                                              <div key={i}>{tool.name}</div>
+
+                                        </span>
+                                    </div>
+                                    ))}
+
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+            </section>
+        </>
+    );
+}

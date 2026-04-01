@@ -23,7 +23,7 @@ COPY . .
 RUN APP_ENV=prod composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
 
 # Builder React
-RUN cd assets/react && npm install && npm run build
+RUN cd assets/react/build && npm install && npm run build
 
 # Config Apache : pointer vers public/
 RUN echo '<VirtualHost *:80>\n\

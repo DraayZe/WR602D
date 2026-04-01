@@ -3,10 +3,12 @@ FROM php:8.3-apache
 # Activer mod_rewrite pour Symfony
 RUN a2enmod rewrite
 
-# Extensions PHP nécessaires
+# Extensions PHP nécessaires + Node.js
 RUN apt-get update && apt-get install -y \
     git curl libzip-dev libicu-dev libonig-dev \
     && docker-php-ext-install pdo pdo_mysql zip intl opcache \
+    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/*
 
 # Composer
@@ -17,8 +19,11 @@ WORKDIR /var/www/html
 # Copier le projet
 COPY . .
 
-# Installer les dépendances sans les scripts qui ont besoin de l'env
+# Installer les dépendances PHP
 RUN APP_ENV=prod composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
+
+# Builder React
+RUN cd assets/react && npm install && npm run build
 
 # Config Apache : pointer vers public/
 RUN echo '<VirtualHost *:80>\n\
@@ -37,7 +42,9 @@ RUN mkdir -p /var/www/html/var && \
 EXPOSE 80
 
 CMD bash -c "php bin/console doctrine:migrations:migrate --no-interaction --env=prod && \
+             php bin/console importmap:install && \
              php bin/console tailwind:build --env=prod && \
+             php bin/console asset-map:compile --env=prod && \
              php bin/console cache:warmup --env=prod && \
              chown -R www-data:www-data /var/www/html/var && \
              apache2-foreground"

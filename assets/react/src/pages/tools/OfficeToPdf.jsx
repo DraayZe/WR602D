@@ -2,7 +2,18 @@ import React, { useState, useRef } from 'react';
 import { useQuota } from '../../hooks/useQuota.js';
 import QuotaBar from '../../components/QuotaBar.js';
 
-export default function HtmlToPdf({ endpoint, quotaUrl }) {
+const ACCEPTED = '.doc,.docx,.xls,.xlsx,.ppt,.pptx';
+
+const TYPE_MAP = {
+    doc: { label: 'Word', icon: 'fa-solid fa-file-word', color: 'text-blue-400' },
+    docx: { label: 'Word', icon: 'fa-solid fa-file-word', color: 'text-blue-400' },
+    xls: { label: 'Excel', icon: 'fa-solid fa-file-excel', color: 'text-green-400' },
+    xlsx: { label: 'Excel', icon: 'fa-solid fa-file-excel', color: 'text-green-400' },
+    ppt: { label: 'PowerPoint', icon: 'fa-solid fa-file-powerpoint', color: 'text-orange-400' },
+    pptx: { label: 'PowerPoint', icon: 'fa-solid fa-file-powerpoint', color: 'text-orange-400' },
+};
+
+export default function OfficeToPdf({ endpoint, quotaUrl }) {
     const { quota, refreshQuota } = useQuota(quotaUrl);
     const [file, setFile] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -11,11 +22,13 @@ export default function HtmlToPdf({ endpoint, quotaUrl }) {
     const blobRef = useRef(null);
     const inputRef = useRef(null);
 
+    const fileType = file ? TYPE_MAP[file.name.split('.').pop().toLowerCase()] : null;
+
     const handleFile = (f) => {
         if (!f) return;
         const ext = f.name.split('.').pop().toLowerCase();
-        if (!['html', 'htm'].includes(ext)) {
-            setError('Le fichier doit être un fichier HTML (.html ou .htm)');
+        if (!TYPE_MAP[ext]) {
+            setError('Format non supporté. Utilisez .doc, .docx, .xls, .xlsx, .ppt ou .pptx');
             return;
         }
         setFile(f);
@@ -39,7 +52,7 @@ export default function HtmlToPdf({ endpoint, quotaUrl }) {
         if (blobRef.current) { URL.revokeObjectURL(blobRef.current); blobRef.current = null; }
 
         const formData = new FormData();
-        formData.append('files', file);
+        formData.append('file', file);
 
         try {
             const res = await fetch(endpoint, { method: 'POST', body: formData });
@@ -67,9 +80,9 @@ export default function HtmlToPdf({ endpoint, quotaUrl }) {
         <div className="max-w-5xl mx-auto px-6 pt-14 pb-24">
 
             <div className="text-center mb-12 fade-up">
-                <h1 className="text-white text-4xl font-bold mb-3">HTML en PDF</h1>
+                <h1 className="text-white text-4xl font-bold mb-3">Office en PDF</h1>
                 <p className="text-stone-400 text-lg max-w-xl mx-auto">
-                    Convertissez un fichier <code className="bg-white/10 px-1.5 py-0.5 rounded text-sm">.html</code> en PDF fidèle au rendu navigateur.
+                    Convertissez vos documents Word, Excel ou PowerPoint en PDF en quelques secondes.
                 </p>
             </div>
 
@@ -81,6 +94,7 @@ export default function HtmlToPdf({ endpoint, quotaUrl }) {
                 <div className="bg-white/[0.04] backdrop-blur-xl rounded-2xl border border-white/[0.08] p-6">
                     <form onSubmit={handleSubmit}>
 
+                        {/* Drop zone */}
                         <div
                             onDragOver={e => e.preventDefault()}
                             onDrop={handleDrop}
@@ -90,23 +104,23 @@ export default function HtmlToPdf({ endpoint, quotaUrl }) {
                             <input
                                 ref={inputRef}
                                 type="file"
-                                accept=".html,.htm"
+                                accept={ACCEPTED}
                                 className="hidden"
                                 onChange={e => handleFile(e.target.files[0])}
                             />
                             {file ? (
                                 <div className="flex items-center justify-center gap-3">
-                                    <i className="fa-brands fa-html5 text-2xl text-orange-400"></i>
+                                    <i className={`${fileType?.icon} text-2xl ${fileType?.color}`}></i>
                                     <div className="text-left">
                                         <p className="text-white font-medium text-sm">{file.name}</p>
-                                        <p className="text-white/40 text-xs">{(file.size / 1024).toFixed(1)} Ko · HTML</p>
+                                        <p className="text-white/40 text-xs">{(file.size / 1024).toFixed(1)} Ko · {fileType?.label}</p>
                                     </div>
                                 </div>
                             ) : (
                                 <>
-                                    <i className="fa-brands fa-html5 text-3xl text-white/20 mb-3"></i>
+                                    <i className="fa-solid fa-file-arrow-up text-3xl text-white/20 mb-3"></i>
                                     <p className="text-white/50 text-sm">Glissez votre fichier ici ou <span className="text-violet-larry">parcourir</span></p>
-                                    <p className="text-white/20 text-xs mt-1">.html · .htm</p>
+                                    <p className="text-white/20 text-xs mt-1">.doc · .docx · .xls · .xlsx · .ppt · .pptx</p>
                                 </>
                             )}
                         </div>
@@ -135,9 +149,11 @@ export default function HtmlToPdf({ endpoint, quotaUrl }) {
 
             {loading && (
                 <div className="max-w-4xl mx-auto fade-up">
-                    <div className="bg-white/[0.04] backdrop-blur-xl rounded-2xl border border-white/[0.08] h-[200px] flex flex-col items-center justify-center gap-4 text-white/20">
-                        <i className="fa-solid fa-file-pdf text-5xl text-violet-larry/30 animate-pulse"></i>
-                        <p className="text-sm">Conversion en cours…</p>
+                    <div className="bg-white/[0.04] backdrop-blur-xl rounded-2xl border border-white/[0.08] overflow-hidden">
+                        <div className="h-[600px] flex flex-col items-center justify-center gap-4 text-white/20">
+                            <i className="fa-solid fa-file-pdf text-5xl text-violet-larry/30 animate-pulse"></i>
+                            <p className="text-sm">Conversion en cours…</p>
+                        </div>
                     </div>
                 </div>
             )}

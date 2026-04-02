@@ -2,9 +2,10 @@ import React, { useState, useRef } from 'react';
 import { useQuota } from '../../hooks/useQuota.js';
 import QuotaBar from '../../components/QuotaBar.js';
 
-export default function HtmlToPdf({ endpoint, quotaUrl }) {
+export default function MarkdownToPdf({ endpoint, quotaUrl }) {
     const { quota, refreshQuota } = useQuota(quotaUrl);
     const [file, setFile] = useState(null);
+    const [preview, setPreview] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [pdf, setPdf] = useState(null);
@@ -14,13 +15,17 @@ export default function HtmlToPdf({ endpoint, quotaUrl }) {
     const handleFile = (f) => {
         if (!f) return;
         const ext = f.name.split('.').pop().toLowerCase();
-        if (!['html', 'htm'].includes(ext)) {
-            setError('Le fichier doit être un fichier HTML (.html ou .htm)');
+        if (!['md', 'markdown'].includes(ext)) {
+            setError('Le fichier doit être un fichier Markdown (.md ou .markdown)');
             return;
         }
         setFile(f);
         setError(null);
         setPdf(null);
+
+        const reader = new FileReader();
+        reader.onload = (e) => setPreview(e.target.result);
+        reader.readAsText(f);
     };
 
     const handleDrop = (e) => {
@@ -39,7 +44,7 @@ export default function HtmlToPdf({ endpoint, quotaUrl }) {
         if (blobRef.current) { URL.revokeObjectURL(blobRef.current); blobRef.current = null; }
 
         const formData = new FormData();
-        formData.append('files', file);
+        formData.append('file', file);
 
         try {
             const res = await fetch(endpoint, { method: 'POST', body: formData });
@@ -67,9 +72,9 @@ export default function HtmlToPdf({ endpoint, quotaUrl }) {
         <div className="max-w-5xl mx-auto px-6 pt-14 pb-24">
 
             <div className="text-center mb-12 fade-up">
-                <h1 className="text-white text-4xl font-bold mb-3">HTML en PDF</h1>
+                <h1 className="text-white text-4xl font-bold mb-3">Markdown en PDF</h1>
                 <p className="text-stone-400 text-lg max-w-xl mx-auto">
-                    Convertissez un fichier <code className="bg-white/10 px-1.5 py-0.5 rounded text-sm">.html</code> en PDF fidèle au rendu navigateur.
+                    Convertissez votre fichier <code className="bg-white/10 px-1.5 py-0.5 rounded text-sm">.md</code> en PDF mis en page automatiquement.
                 </p>
             </div>
 
@@ -90,26 +95,36 @@ export default function HtmlToPdf({ endpoint, quotaUrl }) {
                             <input
                                 ref={inputRef}
                                 type="file"
-                                accept=".html,.htm"
+                                accept=".md,.markdown"
                                 className="hidden"
                                 onChange={e => handleFile(e.target.files[0])}
                             />
                             {file ? (
                                 <div className="flex items-center justify-center gap-3">
-                                    <i className="fa-brands fa-html5 text-2xl text-orange-400"></i>
+                                    <i className="fa-brands fa-markdown text-2xl text-indigo-400"></i>
                                     <div className="text-left">
                                         <p className="text-white font-medium text-sm">{file.name}</p>
-                                        <p className="text-white/40 text-xs">{(file.size / 1024).toFixed(1)} Ko · HTML</p>
+                                        <p className="text-white/40 text-xs">{(file.size / 1024).toFixed(1)} Ko · Markdown</p>
                                     </div>
                                 </div>
                             ) : (
                                 <>
-                                    <i className="fa-brands fa-html5 text-3xl text-white/20 mb-3"></i>
+                                    <i className="fa-brands fa-markdown text-3xl text-white/20 mb-3"></i>
                                     <p className="text-white/50 text-sm">Glissez votre fichier ici ou <span className="text-violet-larry">parcourir</span></p>
-                                    <p className="text-white/20 text-xs mt-1">.html · .htm</p>
+                                    <p className="text-white/20 text-xs mt-1">.md · .markdown</p>
                                 </>
                             )}
                         </div>
+
+                        {/* Aperçu du contenu */}
+                        {preview && (
+                            <div className="mb-4 rounded-xl border border-white/[0.08] bg-white/[0.02] p-4 max-h-48 overflow-y-auto">
+                                <p className="text-white/30 text-xs mb-2 flex items-center gap-1.5">
+                                    <i className="fa-solid fa-eye"></i> Aperçu
+                                </p>
+                                <pre className="text-white/60 text-xs font-mono whitespace-pre-wrap leading-relaxed">{preview.slice(0, 800)}{preview.length > 800 ? '…' : ''}</pre>
+                            </div>
+                        )}
 
                         <button
                             type="submit"

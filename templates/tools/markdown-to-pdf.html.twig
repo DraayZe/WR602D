@@ -1,0 +1,10 @@
+{% extends 'base_tools.html.twig' %}
+
+{% block title %}Markdown en PDF - LarryPDF{% endblock %}
+
+{% block body %}
+    <div {{ react_component('pages/tools/MarkdownToPdf', {
+        endpoint: path('app_api_convert_markdown'),
+        quotaUrl: path('app_api_quota'),
+    }) }}></div>
+{% endblock %}

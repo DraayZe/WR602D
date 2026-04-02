@@ -18,6 +18,10 @@ import ImageToPdf from './react/dist/pages/tools/ImageToPdf.js';
 import SplitPdf from './react/dist/pages/tools/SplitPdf.js';
 import ExcelToPdf from './react/dist/pages/tools/ExcelToPdf.js';
 import PowerPointToPdf from './react/dist/pages/tools/PowerPointToPdf.js';
+import OfficeToPdf from './react/dist/pages/tools/OfficeToPdf.js';
+import MarkdownToPdf from './react/dist/pages/tools/MarkdownToPdf.js';
+import Screenshot from './react/dist/pages/tools/Screenshot.js';
+import WysiwygToPdf from './react/dist/pages/tools/WysiwygToPdf.js';
 import Profile from './react/dist/pages/Profile.js';
 import PaymentSuccess from './react/dist/pages/payment/success.js';
 import PaymentCancel from './react/dist/pages/payment/cancel.js';
@@ -40,6 +44,10 @@ registerReactControllerComponents({
     'pages/tools/SplitPdf': SplitPdf,
     'pages/tools/ExcelToPdf': ExcelToPdf,
     'pages/tools/PowerPointToPdf': PowerPointToPdf,
+    'pages/tools/OfficeToPdf': OfficeToPdf,
+    'pages/tools/MarkdownToPdf': MarkdownToPdf,
+    'pages/tools/Screenshot': Screenshot,
+    'pages/tools/WysiwygToPdf': WysiwygToPdf,
     'pages/Profile': Profile,
     'pages/payment/success': PaymentSuccess,
     'pages/payment/cancel': PaymentCancel,

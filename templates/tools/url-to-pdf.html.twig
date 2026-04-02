@@ -4,7 +4,7 @@
 
 {% block body %}
     <div {{ react_component('pages/tools/UrlToPdf', {
-        pdfFromUrlEndpoint: path('app_pdf_from_url'),
+        pdfFromUrlEndpoint: path('app_api_convert_url'),
         quotaUrl: path('app_api_quota'),
     }) }}></div>
 {% endblock %}

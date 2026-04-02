@@ -1,0 +1,10 @@
+{% extends 'base_tools.html.twig' %}
+
+{% block title %}Éditeur WYSIWYG en PDF - LarryPDF{% endblock %}
+
+{% block body %}
+    <div {{ react_component('pages/tools/WysiwygToPdf', {
+        endpoint: path('app_api_convert_wysiwyg'),
+        quotaUrl: path('app_api_quota'),
+    }) }}></div>
+{% endblock %}

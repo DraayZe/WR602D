@@ -48,7 +48,7 @@ class AppFixtures extends Fixture
         $toolHTML->setDescription("Convertissez une page HTML en PDF");
         $toolHTML->setColor("#EF4444");
         $toolHTML->setIsActive(true);
-        $toolHTML->setRoute("app_tool_html_to_pdf");
+        $toolHTML->setRoute("app_convert_html");
         $toolHTML->addPlan($planFree);
         $manager->persist($toolHTML);
 
@@ -58,7 +58,7 @@ class AppFixtures extends Fixture
         $toolLien->setDescription("Convertissez un lien en PDF");
         $toolLien->setColor("#EAB308");
         $toolLien->setIsActive(true);
-        $toolLien->setRoute("app_tool_url_to_pdf");
+        $toolLien->setRoute("app_convert_url");
         $toolLien->addPlan($planFree);
         $manager->persist($toolLien);
 
@@ -68,9 +68,19 @@ class AppFixtures extends Fixture
         $toolFusionner->setDescription("Fusionnez vos fichiers PDFs en un seul");
         $toolFusionner->setColor("#22C55E");
         $toolFusionner->setIsActive(true);
-        $toolFusionner->setRoute("app_tool_merge_pdf");
+        $toolFusionner->setRoute("app_convert_merge");
         $toolFusionner->addPlan($planFree);
         $manager->persist($toolFusionner);
+
+        $toolWysiwyg = new Tool();
+        $toolWysiwyg->setName("Éditeur WYSIWYG");
+        $toolWysiwyg->setIcon("fa-solid fa-pen-to-square");
+        $toolWysiwyg->setDescription("Rédigez votre document et exportez-le en PDF");
+        $toolWysiwyg->setColor("#8B5CF6");
+        $toolWysiwyg->setIsActive(true);
+        $toolWysiwyg->setRoute("app_convert_wysiwyg");
+        $toolWysiwyg->addPlan($planFree);
+        $manager->persist($toolWysiwyg);
 
         $toolCompresser = new Tool();
         $toolCompresser->setName("Compresser un PDF");
@@ -84,15 +94,35 @@ class AppFixtures extends Fixture
 
         // ── Plan Pro ──────────────────────────────────────────────────────────
 
-        $toolWord = new Tool();
-        $toolWord->setName("Word en PDF");
-        $toolWord->setIcon("fa-brands fa-wordpress-simple");
-        $toolWord->setDescription("Convertissez un fichier word en PDF");
-        $toolWord->setColor("#08e2ea");
-        $toolWord->setIsActive(true);
-        $toolWord->setRoute("app_tool_word_to_pdf");
-        $toolWord->addPlan($planPro);
-        $manager->persist($toolWord);
+        $toolOffice = new Tool();
+        $toolOffice->setName("Office en PDF");
+        $toolOffice->setIcon("fa-solid fa-file-word");
+        $toolOffice->setDescription("Convertissez Word, Excel ou PowerPoint en PDF");
+        $toolOffice->setColor("#08e2ea");
+        $toolOffice->setIsActive(true);
+        $toolOffice->setRoute("app_convert_office");
+        $toolOffice->addPlan($planPro);
+        $manager->persist($toolOffice);
+
+        $toolMarkdown = new Tool();
+        $toolMarkdown->setName("Markdown en PDF");
+        $toolMarkdown->setIcon("fa-brands fa-markdown");
+        $toolMarkdown->setDescription("Convertissez un fichier Markdown (.md) en PDF");
+        $toolMarkdown->setColor("#6366F1");
+        $toolMarkdown->setIsActive(true);
+        $toolMarkdown->setRoute("app_convert_markdown");
+        $toolMarkdown->addPlan($planPro);
+        $manager->persist($toolMarkdown);
+
+        $toolScreenshot = new Tool();
+        $toolScreenshot->setName("Capture d'écran");
+        $toolScreenshot->setIcon("fa-solid fa-camera");
+        $toolScreenshot->setDescription("Capturez n'importe quelle page web en image PNG");
+        $toolScreenshot->setColor("#F59E0B");
+        $toolScreenshot->setIsActive(true);
+        $toolScreenshot->setRoute("app_convert_screenshot");
+        $toolScreenshot->addPlan($planPro);
+        $manager->persist($toolScreenshot);
 
         $toolImage = new Tool();
         $toolImage->setName("Image en PDF");
@@ -122,7 +152,7 @@ class AppFixtures extends Fixture
         $toolExcel->setDescription("Convertissez un fichier Excel en PDF");
         $toolExcel->setColor("#16A34A");
         $toolExcel->setIsActive(true);
-        $toolExcel->setRoute("app_tool_excel_to_pdf");
+        $toolExcel->setRoute("app_convert_office");
         $toolExcel->addPlan($planPremium);
         $manager->persist($toolExcel);
 
@@ -132,7 +162,7 @@ class AppFixtures extends Fixture
         $toolPowerPoint->setDescription("Convertissez une présentation PowerPoint en PDF");
         $toolPowerPoint->setColor("#EA580C");
         $toolPowerPoint->setIsActive(true);
-        $toolPowerPoint->setRoute("app_tool_powerpoint_to_pdf");
+        $toolPowerPoint->setRoute("app_convert_office");
         $toolPowerPoint->addPlan($planPremium);
         $manager->persist($toolPowerPoint);
 

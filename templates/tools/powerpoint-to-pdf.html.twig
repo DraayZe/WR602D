@@ -1,10 +1,10 @@
 {% extends 'base_tools.html.twig' %}
 
-{% block title %}PowerPoint en PDF - LarryPDF{% endblock %}
+{% block title %}Office en PDF - LarryPDF{% endblock %}
 
 {% block body %}
-    <div {{ react_component('pages/tools/PowerPointToPdf', {
-        endpoint: path('app_api_powerpoint_to_pdf'),
+    <div {{ react_component('pages/tools/OfficeToPdf', {
+        endpoint: path('app_api_convert_office'),
         quotaUrl: path('app_api_quota'),
     }) }}></div>
 {% endblock %}

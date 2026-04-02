@@ -1,0 +1,10 @@
+{% extends 'base_tools.html.twig' %}
+
+{% block title %}Capture d'écran - LarryPDF{% endblock %}
+
+{% block body %}
+    <div {{ react_component('pages/tools/Screenshot', {
+        endpoint: path('app_api_convert_screenshot'),
+        quotaUrl: path('app_api_quota'),
+    }) }}></div>
+{% endblock %}

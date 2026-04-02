@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Accès refusé — LarryPDF</title>
+    <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    {% block javascripts %}
+        {{ importmap('app') }}
+    {% endblock %}
+</head>
+<body class="min-h-screen bg-[#0a0118] flex items-center justify-center px-4">
+
+    <div class="max-w-lg w-full text-center">
+
+        <div class="mb-8">
+            <div class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-white/[0.04] border border-white/[0.08] mb-6">
+                <i class="fa-solid fa-lock text-4xl text-violet-larry"></i>
+            </div>
+            <div class="text-white/20 text-sm font-mono mb-3">Erreur 403</div>
+            <h1 class="text-white text-4xl font-bold mb-4">Accès refusé</h1>
+            <p class="text-stone-400 text-lg leading-relaxed">
+                Cet outil n'est pas inclus dans votre plan actuel ou vous devez être connecté pour y accéder.
+            </p>
+        </div>
+
+        {% if app.user %}
+            <div class="bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] rounded-2xl p-6 mb-8">
+                <p class="text-white/40 text-sm mb-1">Votre plan actuel</p>
+                <p class="text-white font-semibold text-xl">
+                    {% if app.user.plan %}
+                        <i class="fa-solid fa-circle-check text-green-400 mr-2"></i>{{ app.user.plan.name }}
+                    {% else %}
+                        <i class="fa-solid fa-circle-xmark text-red-400 mr-2"></i>Aucun plan actif
+                    {% endif %}
+                </p>
+            </div>
+        {% endif %}
+
+        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+            <a href="{{ path('app_home') }}"
+               class="inline-flex items-center justify-center gap-2 bg-white/[0.06] border border-white/[0.10] rounded-xl px-6 py-3 text-stone-300 font-medium hover:bg-white/[0.10] transition">
+                <i class="fa-solid fa-house text-sm"></i>
+                Accueil
+            </a>
+            <a href="{{ path('app_home') }}#plans"
+               class="inline-flex items-center justify-center gap-2 bg-violet-larry/15 border border-violet-larry/30 rounded-xl px-6 py-3 text-violet-larry font-medium hover:bg-violet-larry/25 transition">
+                <i class="fa-solid fa-arrow-up-right-dots text-sm"></i>
+                Voir les offres
+            </a>
+        </div>
+
+    </div>
+
+</body>
+</html>

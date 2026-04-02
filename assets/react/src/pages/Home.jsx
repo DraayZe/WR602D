@@ -54,18 +54,21 @@ export default function Home({ tools = [], plans = [], userPlanLevel = -1, login
                             const isLocked = notLoggedIn
                                 ? tool.requiredPlanLevel > 0
                                 : userPlanLevel < tool.requiredPlanLevel;
+                            const comingSoon = !isLocked && !tool.url;
                             const isClickable = !isLocked && !notLoggedIn && tool.url;
                             const Tag = isClickable ? 'a' : 'div';
                             const linkProps = isClickable ? { href: tool.url } : {};
                             const clickProps = notLoggedIn ? { onClick: () => { window.location.href = loginUrl; }, style: { cursor: 'pointer' } } : {};
+                            const cursorStyle = comingSoon ? { cursor: 'not-allowed' } : {};
                             return (
                                 <Tag
                                     key={index}
                                     className={`feature-card fade-up fade-up-delay-${index + 1} relative`}
+                                    style={cursorStyle}
                                     {...linkProps}
                                     {...clickProps}
                                 >
-                                    <div style={isLocked ? { filter: 'grayscale(1)', opacity: 0.45 } : {}}>
+                                    <div style={isLocked || comingSoon ? { filter: 'grayscale(1)', opacity: 0.45 } : {}}>
                                         <div className="flex items-center mb-2">
                                             <div
                                                 className="w-10 h-10 flex rounded-xl items-center justify-center"
@@ -84,6 +87,12 @@ export default function Home({ tools = [], plans = [], userPlanLevel = -1, login
                                         <span className="absolute top-3 right-3 flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#B155FF]/20 border border-[#B155FF]/40 text-[#B155FF] text-xs font-medium">
                                             <i className="fa-solid fa-lock text-[9px]"></i>
                                             {tool.requiredPlanName}
+                                        </span>
+                                    )}
+                                    {comingSoon && (
+                                        <span className="absolute top-3 right-3 flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/10 border border-white/20 text-white/40 text-xs font-medium">
+                                            <i className="fa-solid fa-clock text-[9px]"></i>
+                                            Bientôt
                                         </span>
                                     )}
                                 </Tag>

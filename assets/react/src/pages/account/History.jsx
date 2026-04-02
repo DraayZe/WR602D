@@ -4,11 +4,15 @@ const TOOL_COLORS = {
     'url-to-pdf':        'text-blue-400 bg-blue-400/10 border-blue-400/20',
     'html-to-pdf':       'text-orange-400 bg-orange-400/10 border-orange-400/20',
     'merge-pdf':         'text-green-400 bg-green-400/10 border-green-400/20',
+    'office-to-pdf':     'text-sky-400 bg-sky-400/10 border-sky-400/20',
     'word-to-pdf':       'text-sky-400 bg-sky-400/10 border-sky-400/20',
     'image-to-pdf':      'text-pink-400 bg-pink-400/10 border-pink-400/20',
     'split-pdf':         'text-yellow-400 bg-yellow-400/10 border-yellow-400/20',
     'excel-to-pdf':      'text-emerald-400 bg-emerald-400/10 border-emerald-400/20',
     'powerpoint-to-pdf': 'text-red-400 bg-red-400/10 border-red-400/20',
+    'markdown-to-pdf':   'text-indigo-400 bg-indigo-400/10 border-indigo-400/20',
+    'screenshot':        'text-amber-400 bg-amber-400/10 border-amber-400/20',
+    'wysiwyg-to-pdf':    'text-violet-400 bg-violet-400/10 border-violet-400/20',
 };
 
 export default function History({ generations }) {
@@ -28,7 +32,7 @@ export default function History({ generations }) {
                     </div>
                     <p className="text-white/60 text-base">Aucune génération pour le moment.</p>
                     <a
-                        href="/tools/url-to-pdf"
+                        href="/convert/url"
                         className="inline-flex items-center gap-2 bg-violet-larry/15 border border-violet-larry/30 rounded-xl px-5 py-2.5 text-violet-larry text-sm font-medium hover:bg-violet-larry/25 transition"
                     >
                         <i className="fa-solid fa-plus text-xs"></i>
